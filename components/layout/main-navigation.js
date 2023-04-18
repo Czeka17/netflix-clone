@@ -36,7 +36,7 @@ return <nav className={`fixed w-full text-white z-40 duration-300 ${navBg}`}>
             </Link>
         </li>
         <li>
-            <Link href={`watchlist?email=${session.user.email}`} className="p-5 hover:text-red-600 duration-200">
+            <Link href='/watchlist' className="p-5 hover:text-red-600 duration-200">
             My List
             </Link>
         </li>

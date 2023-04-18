@@ -4,6 +4,8 @@ import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
 import { BsPlusLg } from "react-icons/bs";
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
+import AliceCarousel from "react-alice-carousel";
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 async function addMovieHandler(email,movie){
   const response = await fetch('/api/watchlist/watchlist', {
@@ -49,6 +51,11 @@ function MovieList({ title, fetchURL }) {
     });
   }, [fetchURL]);
 
+  const responsive = {
+    0: { items: 2 },
+    568: { items: 3 },
+    1024: { items: 5 },
+};
 
   const handleMovieHover = (movie) => {
     setSelectedMovie(movie);
@@ -62,18 +69,25 @@ function MovieList({ title, fetchURL }) {
     }
   };
 
+
   return (
-    <div className="py-20 px-10 w-full h-[1500px] text-white ">
-      <h2 className="m-20">{title}</h2>
-      <div className="m-10 relative overflow-visible flex flex-row flex-wrap">
+    <div className="py-20 px-10 w-full h-[500px] text-white overflow-visible">
+      <h2 className="m-2">{title}</h2>
+      <div className="relative">
+        <AliceCarousel
+        infinite
+          items={movies}
+          responsive={responsive}
+  disableDotsControls={true} 
+          >
         {movies.map((movie, index) => (
           <div
             key={index}
             onMouseEnter={() => handleMovieHover(movie)}
             onMouseLeave={() => handleMouseLeave()}
-            className="h-[250px] w-[250px]"
+            className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px]"
           >
-            <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-20 relative py-4 duration-300 overflow-visible mx-4">
+            <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-20 relative my-20 py-4 duration-300 overflow-visible mx-2">
               <div className="absolute w-[50px] h-[200px] bg-gradient-to-r from-black"></div>
               <img
                 className="overflow-visible z-20"
@@ -111,6 +125,7 @@ function MovieList({ title, fetchURL }) {
               </div>
             </div>
           ))}
+          </AliceCarousel>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
       </div>
     </div>

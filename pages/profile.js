@@ -1,13 +1,16 @@
+import MainNavigation from "@/components/layout/main-navigation"
 import { useSession } from "next-auth/react"
 
 function Profile() {
     const { data: session, status } = useSession()
     return(
         <>
-        <h1>MY PROFILE</h1>
-        <p>{session.user.name}</p>
-        <img src={session.user.image} />
-        <p>{session.user.email}</p>
+        <MainNavigation />
+        <section className="text-white flex flex-col justify-center items-center h-screen">
+        <h1 className="p-4 m-4">My profile</h1>
+        <img className="w-[250px] h-[250px] rounded-full" src={session.user.image} />
+        <p className="p-4 m-4">{session.user.name}</p>
+        </section>
         </>
     )
 }
