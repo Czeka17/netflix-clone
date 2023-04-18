@@ -32,7 +32,8 @@ async function handler(req,res){
             name: name,
             email: email,
             password: hashedPassword,
-            image: image
+            image: image,
+            watchlist: []
         });
 
         res.status(201).json({message: 'Created user!'});

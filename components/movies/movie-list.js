@@ -3,13 +3,37 @@ import axios from "axios";
 import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
 import { BsPlusLg } from "react-icons/bs";
 import Modal from "../layout/modal";
+import { useSession } from "next-auth/react";
 
+async function addMovieHandler(email,movie){
+  const response = await fetch('/api/watchlist/watchlist', {
+    method: 'POST',
+    body: JSON.stringify({email,movie}),
+    headers: {
+			'Content-Type': 'application/json'
+		}
+  })
+  const data = await response.json();
+
+    if(!response.ok){
+        throw new Error(data.message || 'Something went wrong!')
+    }
+    return data;
+}
 function MovieList({ title, fetchURL }) {
+  const { data: session, status } = useSession()
+
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
+
+  async function addToWatchlistHandler() {
+    const result = await addMovieHandler(session.user.email, selectedMovie)
+    console.log(result)
+    return result
+  }
 
   const handleMovieClick = () => {
     setShowModal(true);
@@ -67,7 +91,7 @@ function MovieList({ title, fetchURL }) {
                         Like
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group">
+                    <div className="flex flex-col justify-center items-center group" onClick={addToWatchlistHandler}>
                       <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
                       <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         Add to list
