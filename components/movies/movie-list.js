@@ -71,8 +71,8 @@ function MovieList({ title, fetchURL }) {
 
 
   return (
-    <div className="py-20 px-10 w-full h-[500px] text-white overflow-visible">
-      <h2 className="m-2">{title}</h2>
+    <div className="py-2 px-10 w-full text-white overflow-visible">
+      <h2 className="m-2 text-3xl font-bold">{title}</h2>
       <div className="relative">
         <AliceCarousel
         infinite

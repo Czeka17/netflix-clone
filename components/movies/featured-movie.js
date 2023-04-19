@@ -35,7 +35,7 @@ function MovieList() {
     <img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.title} />
     <div className="absolute w-full top-[20%] p-4 md:p-8">
       <h2 className="my-4 text-5xl font-bold">{movie?.title}</h2>
-      <p className="flex max-w-2xl my-4">{movie?.overview}</p>
+      <p className="flex max-w-sm my-4">{movie?.overview}</p>
       <div className="flex flex-col items-start">
         <a href={`https://www.youtube.com/results?q=${movie?.title}+trailer`} target="_blank" className="py-2 px-8 my-2 bg-white text-black rounded font-bold flex items-center"><BsFillPlayCircleFill className="m-1 text-xl'" /> Play</a>
         <button className="py-2 px-8 my-2 bg-neutral-700  rounded font-bold flex items-center" onClick={handleMovieClick }><AiOutlineQuestionCircle className="m-1 text-xl" /> More information</button>

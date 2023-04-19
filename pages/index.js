@@ -1,3 +1,4 @@
+import Footer from "@/components/layout/footer";
 import MainNavigation from "@/components/layout/main-navigation";
 import FeaturedMovie from "@/components/movies/featured-movie";
 import MovieList from "@/components/movies/movie-list";
@@ -11,6 +12,7 @@ return <div>
     <MovieList title={'Popular'} fetchURL={requests.requestPopular} />
     <MovieList title={'Top Rated'} fetchURL={requests.requestTopRated} />
     <MovieList title={'Upcoming'} fetchURL={requests.requestUpcoming} />
+    <Footer />
 </div>
 }
 
