@@ -1,8 +1,7 @@
 import MainNavigation from "@/components/layout/main-navigation"
-import { useSession } from "next-auth/react"
+import { getSession } from "next-auth/react";
 
-function Profile() {
-    const { data: session, status } = useSession()
+function Profile({session}) {
     return(
         <>
         <MainNavigation />
@@ -14,5 +13,26 @@ function Profile() {
         </>
     )
 }
-
+export async function getServerSideProps(context) {
+    const session = await getSession(context);
+  
+    if (!session) {
+      // Handle case when session is not available
+      return {
+        props: {
+          session: null,
+        },
+      };
+    }
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch movie list');
+    }
+  
+    return {
+      props: {
+        session, // Include session data in the props
+      },
+    };
+  }
 export default Profile
