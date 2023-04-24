@@ -9,9 +9,11 @@ function MovieList() {
 
   const [movies,setMovies] = useState([])
   const [showModal, setShowModal] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const handleMovieClick = (e) => {
     e.preventDefault();
+    setSelectedMovie(movie)
     setShowModal(true);
   };
 
@@ -19,7 +21,8 @@ function MovieList() {
     setShowModal(false);
   };
  
-  const movie = movies[1]
+  const randomMovie = Math.floor(Math.random() * movies.length);
+  const movie = selectedMovie || movies[randomMovie];
   useEffect(() => {
     axios.get(requests.requestPopular).then((response) => {
       setMovies(response.data.results)
@@ -28,7 +31,7 @@ function MovieList() {
 
 
   return (
-    <div className="w-full h-[650px] text-white">
+    <div className="w-full h-[650px] text-white mb-10">
       {showModal && <Modal hideModal={hideModal} movie={movie} showModal={showModal} />}
       <div className="w-full h-full">
         <div className="absolute w-full h-[650px] bg-gradient-to-r from-black"></div>
@@ -39,7 +42,9 @@ function MovieList() {
       <div className="flex flex-col items-start">
         <a href={`https://www.youtube.com/results?q=${movie?.title}+trailer`} target="_blank" className="py-2 px-8 my-2 bg-white text-black rounded font-bold flex items-center"><BsFillPlayCircleFill className="m-1 text-xl'" /> Play</a>
         <button className="py-2 px-8 my-2 bg-neutral-700  rounded font-bold flex items-center" onClick={handleMovieClick }><AiOutlineQuestionCircle className="m-1 text-xl" /> More information</button>
-        <p>Vote average: {movie?.vote_average}</p>
+        <p className={`${
+                  movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
+                }`}>Vote average: {movie?.vote_average}</p>
       </div>
     </div>
       </div>

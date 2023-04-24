@@ -18,6 +18,12 @@ async function handler(req, res) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    const matchingMovie = user.watchlist.find(dbMovie => dbMovie.title === movie.title);
+    if(matchingMovie){
+      console.log('Movie already in list!')
+      client.close();
+      return res.status(404).json({ message: 'Movie already in list' });
+    }
     await db.collection('users').updateOne(
       { email: email },
       { $addToSet: { watchlist: movie } }

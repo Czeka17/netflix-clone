@@ -3,14 +3,17 @@ import { getSession } from "next-auth/react";
 function Watchlist({ movies, session }) {
   return (
     <section className="py-10">
-      <div className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px]">
-        <ul>
+      <h1 className="text-white flex justify-center items-center py-10">
+      Your Watchlist
+      </h1>
+     <div>
+        <ul className="flex flex-row flex-wrap justify-center items-center">
           {movies.map((movie) => (
-            <li key={movie.id}>
-              <p>{movie.title}</p>
+            <li className="w-[250px] h-[250px] p-2 flex-wrap" key={movie.id}>
               <img
                 src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
               />
+              <p className="text-white">{movie.title}</p>
             </li>
           ))}
         </ul>
@@ -29,6 +32,10 @@ export async function getServerSideProps(context) {
         session: null,
         movies: [],
       },
+      redirect: {
+        destination: '/auth',
+        permanent: false,
+      }
     };
   }
 
@@ -40,7 +47,6 @@ export async function getServerSideProps(context) {
       'Content-Type': 'application/json',
     },
   });
-
 
   if (!response.ok) {
     throw new Error('Failed to fetch movie list');

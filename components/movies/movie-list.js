@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
+import Notification from "../layout/notification";
 
 async function addMovieHandler(email,movie){
   const response = await fetch('/api/watchlist/watchlist', {
@@ -28,12 +29,31 @@ function MovieList({ title, fetchURL }) {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const [requestStatus, setRequestStatus] = useState();
+    const [requestError, setRequestError] = useState();
 
+    useEffect(() => {
+      if(requestStatus === 'success' || requestStatus === 'error'){
+          const timer = setTimeout(() =>{
+              setRequestStatus(null);
+              setRequestError(null)
+          }, 3000);
+
+          return () => clearTimeout(timer);
+      }
+  }, [requestStatus])
 
   async function addToWatchlistHandler() {
+    try{
+      setRequestStatus('pending')
     const result = await addMovieHandler(session.user.email, selectedMovie)
     console.log(result)
+    setRequestStatus('success')
     return result
+    }catch(error){
+      setRequestError(error.message)
+      setRequestStatus('error')
+    }
   }
 
   const handleMovieClick = () => {
@@ -68,6 +88,30 @@ function MovieList({ title, fetchURL }) {
     }
   };
 
+  let notification;
+
+  if(requestStatus === 'pending'){
+    notification = {
+        status: 'pending',
+        title: 'Sending message...',
+        message: 'Your message is on its way!'
+    }
+}
+
+if(requestStatus === 'success') {
+    notification = {
+        status: 'success',
+        title: 'Success!',
+        message: 'Message sent successfully'
+    }
+}
+if(requestStatus === 'error') {
+    notification = {
+        status: 'error',
+        title: 'Error!',
+        message: requestError
+    }
+}
 
   return (
     <div className="py-2 px-10 w-full text-white overflow-visible">
@@ -85,6 +129,7 @@ function MovieList({ title, fetchURL }) {
           </AliceCarousel>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
       </div>
+      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </div>
   );
 }

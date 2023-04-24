@@ -6,7 +6,7 @@ function Movie(props){
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px]"
+            className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px] mx-20"
           >
             <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-20 relative my-20 py-4 duration-300 overflow-visible mx-2">
               <div className="absolute w-[50px] h-[200px] bg-gradient-to-r from-black"></div>
@@ -18,7 +18,9 @@ function Movie(props){
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
                 <div className="absolute -bottom-1/2 left-0 right-0 bg-gray-700 rounded-b text-center">
                   <h2 className=" text-white pb-2">{props.movie?.title}</h2>
-                  <p className="pb-2">Vote average: {props.movie?.vote_average}</p>
+                  <p className={`pb-2 ${
+                  props.movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
+                }`}>Vote average: {props.movie?.vote_average}</p>
                   <div className="flex justify-evenly">
                     <div className="flex flex-col justify-center items-center group">
                       <AiOutlineLike className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />

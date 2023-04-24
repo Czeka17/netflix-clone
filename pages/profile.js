@@ -1,38 +1,34 @@
-import MainNavigation from "@/components/layout/main-navigation"
+import MainNavigation from "@/components/layout/main-navigation";
+import { useSession } from "next-auth/react";
 import { getSession } from "next-auth/react";
+function Profile() {
 
-function Profile({session}) {
-    return(
-        <>
-        <MainNavigation />
-        <section className="text-white flex flex-col justify-center items-center h-screen">
+  const { data: session, status } = useSession()
+  return (
+    <>
+      <MainNavigation />
+      <section className="text-white flex flex-col justify-center items-center h-screen">
         <h1 className="p-4 m-4">My profile</h1>
         <img className="w-[250px] h-[250px] rounded-full" src={session.user.image} />
         <p className="p-4 m-4">{session.user.name}</p>
-        </section>
-        </>
-    )
+      </section>
+    </>
+  );
 }
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
-  
-    if (!session) {
-      // Handle case when session is not available
-      return {
-        props: {
-          session: null,
-        },
-      };
-    }
-  
-    if (!response.ok) {
-      throw new Error('Failed to fetch movie list');
-    }
-  
+  const session = await getSession({req: context.req});
+
+  if(!session){
     return {
-      props: {
-        session, // Include session data in the props
-      },
+      redirect: {
+        destination: '/auth',
+        permanent: false,
+      }
     };
   }
-export default Profile
+
+  return {
+    props: { session },
+  };
+}
+export default Profile;

@@ -25,7 +25,7 @@ function MainNavigation() {
         return () => window.removeEventListener("scroll", handleScroll);
       }, []);
 return <nav className={`fixed w-full text-white z-40 duration-300 ${navBg}`}>
-    <ul className="flex flex-row my-4 justify-between items-center mr-20 p-2">
+    {session && <ul className="flex flex-row my-4 justify-between items-center mr-20 p-2">
         <li>
             <Link href='/' className=" hover:text-red-600 duration-200 mx-20 font-bold">
             MOOWIZ
@@ -49,7 +49,7 @@ return <nav className={`fixed w-full text-white z-40 duration-300 ${navBg}`}>
         <li>
             <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">Log out<FiLogOut className="mx-2 text-xl stroke-red-600"/></button>
         </li>
-    </ul>
+    </ul>}
 </nav>
 }
 export default MainNavigation;

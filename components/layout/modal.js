@@ -38,6 +38,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
               {movie?.title}
             </h3>
             <div className="mt-2">
+            <p className="text-sm text-gray-400 py-2">Release date: {movie?.release_date}</p>
               <p
                 className={`text-sm ${
                   movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
@@ -57,6 +58,12 @@ const Modal = ({ movie, showModal, hideModal }) => {
               onClick={() => hideModal()}
             >
               Close
+            </button>
+            <button
+              type="button"
+              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+            ><a href={`https://www.youtube.com/results?q=${movie?.title}+trailer`} target="_blank">Watch Trailer</a>
+              
             </button>
           </div>
         </div>

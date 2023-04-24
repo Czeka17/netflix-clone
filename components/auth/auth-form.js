@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/router";
-
 async function createUser(email,name,password){
     const response = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -22,10 +21,12 @@ function AuthForm() {
     const router = useRouter()
     const [authMode, setAuthMode] = useState(false);
     const [animate, setAnimate] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const nameInputRef = useRef();
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
+
 
     function authModeHandler(e){
         e.preventDefault()
@@ -77,8 +78,11 @@ function AuthForm() {
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double border-red-700 bg-neutral-800 w-full text-white" type="email" id="email" placeholder="email" ref={emailInputRef} />
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double  w-full border-red-700 bg-neutral-800 text-white" type="password" id="password" placeholder="password" ref={passwordInputRef} />
                 </div>
+                <div>
+                    <p></p>
+                </div>
                 <div className="absolute bottom-20 left-0 w-full flex flex-col items-center">
-                    <button className="m-4 py-3 w-full bg-red-700 text-white rounded">{authMode ? 'Log in' : 'Create account'}</button>
+                    <button className="m-4 py-3 w-full bg-red-700 text-white rounded">{authMode ? 'Log in' : 'Create account'}{isLoading && <p>Loading...</p>}</button>
                     <button className="text-white border-2 w-full py-2 rounded bg-neutral-800" onClick={authModeHandler}>{authMode ? 'Create new account' : 'I have existing account'}</button>
                 </div>
             </form>
