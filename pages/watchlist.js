@@ -26,7 +26,6 @@ export async function getServerSideProps(context) {
   const session = await getSession(context);
 
   if (!session) {
-    // Handle case when session is not available
     return {
       props: {
         session: null,
@@ -39,8 +38,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  // Access session.user.email and fetch data
-  const response = await fetch('http://localhost:3000/api/watchlist/getWatchlist', {
+  const response = await fetch('https://netflix-clone-fawn-sigma.vercel.app/api/watchlist/getWatchlist', {
     method: 'POST',
     body: JSON.stringify({ email: session.user.email }),
     headers: {

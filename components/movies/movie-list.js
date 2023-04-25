@@ -30,7 +30,7 @@ function MovieList({ title, fetchURL }) {
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [requestStatus, setRequestStatus] = useState();
-    const [requestError, setRequestError] = useState();
+  const [requestError, setRequestError] = useState();
 
     useEffect(() => {
       if(requestStatus === 'success' || requestStatus === 'error'){
@@ -72,7 +72,7 @@ function MovieList({ title, fetchURL }) {
 
   const responsive = {
     0: { items: 2 },
-    568: { items: 3 },
+    568: { items: 2 },
     1024: { items: 5 },
 };
 
@@ -93,8 +93,8 @@ function MovieList({ title, fetchURL }) {
   if(requestStatus === 'pending'){
     notification = {
         status: 'pending',
-        title: 'Sending message...',
-        message: 'Your message is on its way!'
+        title: 'Checking if movie is in list...',
+        message: 'Checking if movie is in list'
     }
 }
 
@@ -102,7 +102,7 @@ if(requestStatus === 'success') {
     notification = {
         status: 'success',
         title: 'Success!',
-        message: 'Message sent successfully'
+        message: 'Movie added successfully'
     }
 }
 if(requestStatus === 'error') {
@@ -130,6 +130,7 @@ if(requestStatus === 'error') {
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
+      <hr className="border-t border-red-800 my-4"/>
     </div>
   );
 }

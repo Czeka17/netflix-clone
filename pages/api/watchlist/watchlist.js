@@ -31,7 +31,7 @@ async function handler(req, res) {
 
     console.log('Movie added to watchlist');
     client.close();
-    return res.status(200).json({ message: 'Movie added to watchlist' });
+    return res.status(200).json({ message: 'Movie added to watchlist'});
   }
 }
 

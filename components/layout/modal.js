@@ -13,7 +13,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
 
   return (
     <div
-      className={`fixed z-30 inset-0 overflow-y-auto ${
+      className={`fixed z-50 inset-0 overflow-y-auto ${
         show ? "opacity-100 visible" : "opacity-0 invisible"
       } transition-opacity duration-500`}
     >
