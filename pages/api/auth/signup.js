@@ -8,8 +8,12 @@ async function handler(req,res){
 
         const { email,name,password } = data
 
-        if(!email || !email.includes("@") || !name || name.trim() === '' || !password || password.trim().length < 6){
-            res.status(422).json({message:"Invalid input - password should also be at least 6 characters long!"})
+        if(!email || !email.includes("@") || !name || name.trim() === '' || !password){
+            res.status(422).json({message:"Invalid input"})
+            return;
+        }
+        if(password.trim().length < 6){
+            res.status(422).json({message:"password should be at least 6 characters long!"})
             return;
         }
 

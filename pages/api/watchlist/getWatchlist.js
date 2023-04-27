@@ -1,12 +1,14 @@
 import { connectToDatabase } from '@/lib/db';
 
 export default async (req, res) => {
-  const { email } = JSON.parse(req.body);
+  const { email } = req.body;
+
 
   const client = await connectToDatabase();
   const db = client.db();
 
   try {
+
     const user = await db.collection('users').findOne({ email });
 
     if (!user) {
@@ -16,6 +18,7 @@ export default async (req, res) => {
     }
 
     const { watchlist } = user;
+
 
     res.status(200).json({ watchlist });
   } catch (error) {

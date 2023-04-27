@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
@@ -6,7 +6,7 @@ import AliceCarousel from "react-alice-carousel";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
 import Notification from "../layout/notification";
-
+import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
 async function addMovieHandler(email,movie){
   const response = await fetch('/api/watchlist/watchlist', {
     method: 'POST',
@@ -31,6 +31,7 @@ function MovieList({ title, fetchURL }) {
   const [isHovering, setIsHovering] = useState(false);
   const [requestStatus, setRequestStatus] = useState();
   const [requestError, setRequestError] = useState();
+  const carouselRef = useRef()
 
     useEffect(() => {
       if(requestStatus === 'success' || requestStatus === 'error'){
@@ -56,6 +57,13 @@ function MovieList({ title, fetchURL }) {
     }
   }
 
+  const handlePrevButtonClick = () => {
+    carouselRef.current.slidePrev(); 
+  };
+
+  const handleNextButtonClick = () => {
+    carouselRef.current.slideNext();
+  };
   const handleMovieClick = () => {
     setShowModal(true);
   };
@@ -72,7 +80,7 @@ function MovieList({ title, fetchURL }) {
 
   const responsive = {
     0: { items: 2 },
-    568: { items: 2 },
+    568: { items: 3 },
     1024: { items: 5 },
 };
 
@@ -114,20 +122,34 @@ if(requestStatus === 'error') {
 }
 
   return (
-    <div className="py-2 px-10 w-full text-white overflow-visible">
+    <div className="py-2 px-2 lg:px-10 w-full text-white overflow-visible">
       <h2 className="m-2 text-3xl font-bold">{title}</h2>
       <div className="relative">
         <AliceCarousel
         infinite
           items={movies}
           responsive={responsive}
-  disableDotsControls={true} 
+  disableDotsControls={true}
+  disableButtonsControls={true}
+  ref={carouselRef} 
           >
         {movies.map((movie, index) => (
           <Movie movie={movie} index={index} isHovering={isHovering} addToWatchlistHandler={addToWatchlistHandler} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
           ))}
           </AliceCarousel>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
+          <button
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3 text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
+        onClick={handlePrevButtonClick}
+      >
+        <MdArrowBackIosNew />
+      </button>
+      <button
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 p-3 text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
+        onClick={handleNextButtonClick}
+      >
+        <MdArrowForwardIos />
+      </button>
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
       <hr className="border-t border-red-800 my-4"/>

@@ -1,19 +1,25 @@
+import { useState } from 'react';
 import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
 import { BsPlusLg } from "react-icons/bs";
 
 function Movie(props){
+  const [isLiked, setIsLiked] = useState(false)
+  function likeHandler(){
+    setIsLiked((prevstate) => !prevstate)
+  }
      return <div
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px] mx-20"
+            className="h-[96px] w-[170px] lg:h-[250px] md:w-[250px] md:h-[200px] lg:w-[250px] my-20 lg:my-0 cursor-pointer"
           >
-            <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-20 relative my-20 py-4 duration-300 overflow-visible mx-2">
-              <div className="absolute w-[50px] h-[200px] bg-gradient-to-r from-black"></div>
+            <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative my-24 py-4 duration-300 overflow-visible">
+              <div className="absolute w-[50px] h-[200px] bg-gradient-to-r from-black"  onClick={props.handleMovieClick}></div>
               <img
                 className="overflow-visible z-20"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
                 alt={props.movie?.title}
+                onClick={props.handleMovieClick}
               />
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
                 <div className="absolute -bottom-1/2 left-0 right-0 bg-gray-700 rounded-b text-center">
@@ -23,9 +29,9 @@ function Movie(props){
                 }`}>Vote average: {props.movie?.vote_average}</p>
                   <div className="flex justify-evenly">
                     <div className="flex flex-col justify-center items-center group">
-                      <AiOutlineLike className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
-                      <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Like
+                      <AiOutlineLike className={`text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 ${isLiked ? 'fill-blue-700' : 'fill-white'}`} onClick={likeHandler}  style={{ transform: isLiked ? 'scale(1.2)' : 'scale(1)' }}/>
+                      <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isLiked ? 'text-blue-700' : 'text-white'}`}>
+                        {isLiked ? 'liked' : 'like'}
                       </span>
                     </div>
                     <div className="flex flex-col justify-center items-center group" onClick={props.addToWatchlistHandler}>

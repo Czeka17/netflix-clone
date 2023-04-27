@@ -4,7 +4,7 @@ import FeaturedMovie from "@/components/movies/featured-movie";
 import MovieList from "@/components/movies/movie-list";
 import requests from "@/Requests";
 import { getSession } from "next-auth/react";
-
+import React, { useState, useEffect } from 'react';
 function Home(){
 return <div>
     <MainNavigation />
