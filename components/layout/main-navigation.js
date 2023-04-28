@@ -1,14 +1,12 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-import { FiLogOut } from "react-icons/fi";
+import { useMediaQuery } from "@react-hook/media-query";
+import DesktopNav from "./desktop-nav";
+import MobileNavigation from "./mobile-nav";
 function MainNavigation() {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
     const { data: session, status } = useSession()
-    function logoutHandler() {
-      signOut();
-    }
 
 
     const [navBg, setNavBg] = useState("transparent");
@@ -24,32 +22,9 @@ function MainNavigation() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
       }, []);
-return <nav className={`fixed w-full text-white z-40 duration-300 ${navBg}`}>
-    {session && <ul className="flex flex-row my-4 justify-between items-center mr-20 p-2">
-        <li>
-            <Link href='/' className=" hover:text-red-600 duration-200 mx-20 font-bold">
-            MOOWIZ
-            </Link>
-        </li>
-        <li>
-            <Link href='/' className="hover:text-red-600 duration-200">
-            Films
-            </Link>
-        </li>
-        <li>
-            <Link href='/watchlist' className=" hover:text-red-600 duration-200">
-            My List
-            </Link>
-        </li>
-        <li>
-            <Link href='/profile' className="hover:text-red-600 duration-200 flex flex-row items-center">
-            Profile
-            </Link>
-        </li>
-        <li>
-            <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">Log out<FiLogOut className="mx-2 text-xl stroke-red-600"/></button>
-        </li>
-    </ul>}
-</nav>
+return <div>
+{!isDesktop && <MobileNavigation />}
+  {session && isDesktop ? <DesktopNav navBg={navBg} /> : ''}
+</div>
 }
 export default MainNavigation;

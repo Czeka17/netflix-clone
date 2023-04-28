@@ -22,7 +22,7 @@ async function addMovieHandler(email,movie){
     }
     return data;
 }
-function MovieList({ title, fetchURL }) {
+function MovieList({ title, movieslist }) {
   const { data: session, status } = useSession()
 
   const [movies, setMovies] = useState([]);
@@ -73,10 +73,8 @@ function MovieList({ title, fetchURL }) {
   };
 
   useEffect(() => {
-    axios.get(fetchURL).then((response) => {
-      setMovies(response.data.results);
-    });
-  }, [fetchURL]);
+      setMovies(movieslist);
+  }, [movieslist]);
 
   const responsive = {
     0: { items: 2 },

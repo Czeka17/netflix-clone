@@ -11,16 +11,16 @@ function Movie(props){
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-[96px] w-[170px] lg:h-[250px] md:w-[250px] md:h-[200px] lg:w-[250px] my-20 lg:my-0 cursor-pointer"
+            className="h-[100px] w-[170px] lg:h-[250px] md:w-[250px] md:h-[200px] lg:w-[250px] my-20 lg:my-0 cursor-pointer"
           >
             <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative my-24 py-4 duration-300 overflow-visible">
-              <div className="absolute w-[50px] h-[200px] bg-gradient-to-r from-black"  onClick={props.handleMovieClick}></div>
               <img
                 className="overflow-visible z-20"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
                 alt={props.movie?.title}
                 onClick={props.handleMovieClick}
               />
+             {props.selectedMovie?.title !== props.movie.title && <p className='flex justify-center items-center'>{props.movie.title}</p>}
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
                 <div className="absolute -bottom-1/2 left-0 right-0 bg-gray-700 rounded-b text-center">
                   <h2 className=" text-white pb-2">{props.movie?.title}</h2>

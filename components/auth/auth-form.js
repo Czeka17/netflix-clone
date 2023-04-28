@@ -45,7 +45,7 @@ function AuthForm() {
         password:enteredPassword
     })
     if(!result.error){
-        router.replace('/')
+        router.replace('/Greetings')
     }
         }
     return(

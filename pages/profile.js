@@ -6,7 +6,6 @@ function Profile() {
   const { data: session, status } = useSession()
   return (
     <>
-      <MainNavigation />
       <section className="text-white flex flex-col justify-center items-center h-screen">
         <h1 className="p-4 m-4">My profile</h1>
         <img className="w-[250px] h-[250px] rounded-full" src={session.user.image} />

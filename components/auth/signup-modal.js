@@ -85,12 +85,12 @@ function SignupModal({showModal, hideModal, createUser}) {
 
         <div className="inline-block align-bottom bg-red-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <h2 className="text-white text-2xl flex justify-center items-center p-4">Sign Up</h2>
-            <form className="flex flex-col" onSubmit={submitHandler}>
-                <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg" ref={nameInputRef} />
+            <form className="flex flex-col p-6" onSubmit={submitHandler}>
+                <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef} />
                 <input type="email" id="email" placeholder="email"
-                className="p-4 mx-10 my-2 rounded-lg" ref={emailInputRef} />
+                className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={emailInputRef} />
                 <input type="password" id="password" placeholder="password" 
-                className="p-4 mx-10 my-2 rounded-lg" ref={passwordInputRef}/>
+                className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={passwordInputRef}/>
                 <div className="flex flex-row justify-end items-end">
                 <button onClick={() => hideModal()} className="text-white p-2 m-2">Cancel</button>
                 <button className="border-2 border-white bg-white text-red-700 bg-red-700 p-2 m-2 rounded-lg hover:text-white hover:bg-red-700 duration-300">Sign up</button>
