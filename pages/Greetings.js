@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react"
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 function Greetings(){
     const { data: session, status } = useSession()
 
@@ -23,5 +24,20 @@ function Greetings(){
         </div>
     )
 }
-
+export async function getServerSideProps(context) {
+    const session = await getSession({req: context.req});
+  
+    if(!session){
+      return {
+        redirect: {
+          destination: '/auth',
+          permanent: false,
+        }
+      };
+    }
+  
+    return {
+      props: { session },
+    };
+  }
 export default Greetings;
