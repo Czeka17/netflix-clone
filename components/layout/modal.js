@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState, useEffect,} from "react";
+import ReactPlayer from "react-player";
+import axios from "axios";
 const Modal = ({ movie, showModal, hideModal }) => {
   const [show, setShow] = useState(false);
-
+  const [trailerUrl, setTrailerUrl] = useState('');
   useEffect(() => {
     if (showModal) {
       setShow(true);
@@ -10,6 +11,26 @@ const Modal = ({ movie, showModal, hideModal }) => {
       setShow(false);
     }
   }, [showModal]);
+
+  // const apiKey = 'AIzaSyDd8qd3v5UTYoA0K2vxp9GSjt5Llju5QcA'
+  useEffect(() => {
+    const fetchTrailerUrl = async () => {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${movie.id}/videos`,
+        {
+          params: {
+            api_key: '502c330772f772740b274f7363e5b00a',
+          },
+        }
+      );
+      const videos = response.data.results;
+      const trailer = videos.find((video) => video.type === 'Trailer');
+      if (trailer) {
+        setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
+      }
+    };
+    fetchTrailerUrl();
+  }, [movie.id]);
 
   return (
     <div
@@ -27,11 +48,8 @@ const Modal = ({ movie, showModal, hideModal }) => {
         </div>
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div>
-            <img
-              src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
-              alt={movie?.title}
-            />
+          <div className="flex justify-center items-center">
+            <ReactPlayer url={trailerUrl} controls={true}/>
           </div>
           <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 bg-black">
             <h3 className="text-lg leading-6 font-medium text-white">
@@ -54,16 +72,10 @@ const Modal = ({ movie, showModal, hideModal }) => {
           <div className="bg-black px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm my-2 "
+              className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm my-2 "
               onClick={() => hideModal()}
             >
               Close
-            </button>
-            <button
-              type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 my-2 lg:my-0 bg-white text-base font-medium text-red-500 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-            ><a href={`https://www.youtube.com/results?q=${movie?.title}+trailer`} target="_blank">Watch Trailer</a>
-              
             </button>
           </div>
         </div>

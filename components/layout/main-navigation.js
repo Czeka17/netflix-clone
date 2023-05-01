@@ -22,9 +22,10 @@ function MainNavigation() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
       }, []);
-return <div>
-{!isDesktop && <MobileNavigation />}
-  {session && isDesktop ? <DesktopNav navBg={navBg} /> : ''}
-</div>
+return <>
+{session && !isDesktop && <MobileNavigation />}
+  {session && isDesktop && <DesktopNav navBg={navBg} />}
+</>
 }
+
 export default MainNavigation;

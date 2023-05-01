@@ -29,7 +29,7 @@ function SignupModal({showModal, hideModal, createUser}) {
                   password: enteredPassword,
                 });
                 setRequestStatus('success')
-                router.replace('/');
+                router.replace('/Greetings');
             }catch(error){
               setRequestError(error.message)
               setRequestStatus('error')
@@ -85,7 +85,7 @@ function SignupModal({showModal, hideModal, createUser}) {
 
         <div className="inline-block align-bottom bg-red-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <h2 className="text-white text-2xl flex justify-center items-center p-4">Sign Up</h2>
-            <form className="flex flex-col p-6" onSubmit={submitHandler}>
+            <form className="flex flex-col p-6 text-white" onSubmit={submitHandler}>
                 <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef} />
                 <input type="email" id="email" placeholder="email"
                 className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={emailInputRef} />

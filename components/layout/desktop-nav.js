@@ -5,8 +5,7 @@ function DesktopNav(props){
     function logoutHandler() {
         signOut();
       }
-    return <header>
-        <nav className={`fixed w-full text-white z-40 duration-300 ${props.navBg}`}>
+    return( <nav className={`fixed w-full text-white z-40 duration-300 ${props.navBg}`}>
      <ul className="flex flex-row my-4 justify-between items-center mr-20 p-2">
         <li>
             <Link href='/' className=" hover:text-red-600 duration-200 mx-20 font-bold">
@@ -32,8 +31,7 @@ function DesktopNav(props){
             <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">Log out<FiLogOut className="mx-2 text-xl stroke-red-600"/></button>
         </li>
     </ul>
-</nav>
-    </header>
+</nav>)
 }
 
 export default DesktopNav;

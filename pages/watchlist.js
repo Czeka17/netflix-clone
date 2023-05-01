@@ -1,6 +1,28 @@
-import { getSession } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 
-function Watchlist({ movies, session }) {
+function Watchlist() {
+  const { data: session, status } = useSession();
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    async function fetchWatchlist() {
+      if (status === 'authenticated') {
+        const response = await fetch('/api/watchlist/getWatchlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: session.user.email }),
+        });
+        const data = await response.json();
+        setMovies(data.watchlist);
+      }
+    }
+    fetchWatchlist();
+  }, [session, status]);
+
   return (
     <section className="py-10">
       <div className="h-[175px] w-[175px] lg:h-[250px] lg:w-[250px]">
@@ -18,17 +40,11 @@ function Watchlist({ movies, session }) {
     </section>
   );
 }
-
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = await getSession({req: context.req});
 
-  if (!session) {
-    // Handle case when session is not available
+  if(!session){
     return {
-      props: {
-        session: null,
-        movies: [],
-      },
       redirect: {
         destination: '/auth',
         permanent: false,
@@ -36,29 +52,8 @@ export async function getServerSideProps(context) {
     };
   }
 
-  // Access session.user.email and fetch data
-  const response = await fetch('http://localhost:3000/api/watchlist/getWatchlist', {
-    method: 'POST',
-    body: JSON.stringify({ email: session.user.email }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch movie list');
-  }
-
-  const data = await response.json();
-  const movies = data.watchlist;
-
   return {
-    props: {
-      movies,
-      session, // Include session data in the props
-    },
+    props: { session },
   };
 }
-
 export default Watchlist;

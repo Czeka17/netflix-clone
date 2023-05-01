@@ -3,6 +3,8 @@ import { connectToDatabase } from '@/lib/db';
 export default async (req, res) => {
   const { email } = req.body;
 
+  if (req.method === 'POST') {
+
 
   const client = await connectToDatabase();
   const db = client.db();
@@ -26,4 +28,6 @@ export default async (req, res) => {
     client.close();
     res.status(500).json({ message: 'Failed to fetch movie list' });
   }
+}
+client.close();
 };

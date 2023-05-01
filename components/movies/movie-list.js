@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
@@ -78,8 +78,9 @@ function MovieList({ title, movieslist }) {
 
   const responsive = {
     0: { items: 2 },
-    568: { items: 3 },
-    1024: { items: 5 },
+    576: { items: 3 },
+    1024: { items: 4 },
+    1440: { items: 5 }
 };
 
   const handleMovieHover = (movie) => {

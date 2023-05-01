@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { signIn } from 'next-auth/react'
 import { useRouter } from "next/router";
 import SignupModal from "./signup-modal";
+import Notification from "../layout/notification";
 async function createUser(email,name,password){
     const response = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -21,9 +22,20 @@ async function createUser(email,name,password){
 function AuthForm() {
     const router = useRouter()
     const [showModal, setShowModal] = useState(false)
+    const [requestStatus, setRequestStatus] = useState();
 
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
+
+    useEffect(() => {
+        if(requestStatus === 'success' || requestStatus === 'error'){
+            const timer = setTimeout(() =>{
+                setRequestStatus(null);
+            }, 3000);
+  
+            return () => clearTimeout(timer);
+        }
+    }, [requestStatus])
 
     const handleModalClick = () => {
         setShowModal(true);
@@ -37,6 +49,7 @@ function AuthForm() {
 
     async function submitHandler(event){
         event.preventDefault();
+        setRequestStatus('pending')
             const enteredEmail = emailInputRef.current.value;
             const enteredPassword = passwordInputRef.current.value;
 
@@ -45,9 +58,38 @@ function AuthForm() {
         password:enteredPassword
     })
     if(!result.error){
+        setRequestStatus('success')
         router.replace('/Greetings')
+    }else{
+        setRequestStatus('error')
     }
         }
+
+
+    let notification;
+
+  if(requestStatus === 'pending'){
+    notification = {
+        status: 'pending',
+        title: 'Checking...',
+        message: 'Checking credentials'
+    }
+}
+
+if(requestStatus === 'success') {
+    notification = {
+        status: 'success',
+        title: 'Success!',
+        message: 'logged in successfully'
+    }
+}
+if(requestStatus === 'error') {
+    notification = {
+        status: 'error',
+        title: 'Error!',
+        message: 'Invalid inputs!'
+    }
+}
     return(
         <section className="z-20 bg-black m-4 bg-opacity-70 py-6 px-10 h-[550px] rounded">
             <div className="z-20 font-mono">
@@ -66,6 +108,7 @@ function AuthForm() {
             <button className="text-white border-2 w-full py-2 rounded bg-neutral-800" onClick={handleModalClick}>Create new account</button>
             </div>
             {showModal && <SignupModal createUser={createUser} showModal={showModal} hideModal={hideModal} />}
+            {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
         </section>
     )
 }
