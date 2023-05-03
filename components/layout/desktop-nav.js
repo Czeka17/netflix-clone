@@ -23,11 +23,6 @@ function DesktopNav(props){
             </Link>
         </li>
         <li>
-            <Link href='/profile' className="hover:text-red-600 duration-200 flex flex-row items-center">
-            Profile
-            </Link>
-        </li>
-        <li>
             <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">Log out<FiLogOut className="mx-2 text-xl stroke-red-600"/></button>
         </li>
     </ul>

@@ -44,9 +44,6 @@ function MobileNavigation() {
           <li onClick={hideNavHandler}>
             <Link href="/watchlist">My List</Link>
           </li>
-          <li onClick={hideNavHandler}>
-            <Link href="/profile">Profile</Link>
-          </li>
           <li>
             <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">
               Log out<FiLogOut className="mx-2 text-xl stroke-white"/>

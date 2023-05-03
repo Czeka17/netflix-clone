@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
 import { BsPlusLg } from "react-icons/bs";
-
 function Movie(props){
   const [isLiked, setIsLiked] = useState(false)
   function likeHandler(){
     setIsLiked((prevstate) => !prevstate)
   }
-     return <div
+
+     return  <div
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
@@ -34,14 +34,14 @@ function Movie(props){
                         {isLiked ? 'liked' : 'like'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group" onClick={props.addToWatchlistHandler}>
+                    <div className="flex flex-col justify-center items-center group text-white" onClick={props.addToWatchlistHandler}>
                       <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
                       <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         {props.isInWatchlist ? 'Delete from list' : 'Add to list'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group">
-                      <AiOutlineEllipsis className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"
+                    <div className="flex flex-col justify-center items-center group text-white">
+                      <AiOutlineEllipsis className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white"
   onClick={props.handleMovieClick}
 />
                 <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
