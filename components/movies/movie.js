@@ -43,9 +43,13 @@ function Movie(props){
   const { data: session, status } = useSession()
   const [isLiked, setIsLiked] = useState(false)
   const [isInWatchlist, setIsInWatchlist] = useState([])
+  const [newWatchlist, setNewWatchlist] = useState([...isInWatchlist])
+
   async function addToWatchlistHandler() {
     try{
     const result = await addMovieHandler(session.user.email, props.selectedMovie)
+    const updatedWatchlist =  [...newWatchlist, props.selectedMovie]
+    setNewWatchlist(updatedWatchlist)
     console.log(result)
     return result
     }catch(error){
@@ -56,12 +60,17 @@ function Movie(props){
    async function removeFromWatchlistHandler() {
     try{
     const result = await deleteMovieHandler(session.user.email, props.selectedMovie)
+    const updatedWatchlist = newWatchlist.filter(movie => movie !== props.selectedMovie);
+    setNewWatchlist(updatedWatchlist)
     console.log(result)
     return result
     }catch(error){
       console.log(error)
     }
   }
+  useEffect(() => {
+    setNewWatchlist([...isInWatchlist]);
+  }, [isInWatchlist]);
   function likeHandler(){
     setIsLiked((prevstate) => !prevstate)
   }
@@ -85,7 +94,7 @@ function Movie(props){
                 alt={props.movie?.title}
                 onClick={props.handleMovieClick}
               />
-             {props.selectedMovie?.title !== props.movie.title && <p className='flex justify-center items-center text-center'>{props.movie.title}</p>}
+             {props.selectedMovie?.title !== props.movie.title && <p className='flex justify-center items-center text-center text-white'>{props.movie.title}</p>}
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
                 <div className="absolute -bottom-1/2 left-0 right-0 bg-gray-700 rounded-b text-center py-2">
                   <h2 className=" text-white pb-2">{props.movie?.title}</h2>
@@ -99,11 +108,11 @@ function Movie(props){
                         {isLiked ? 'liked' : 'like'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group text-white" onClick={isInWatchlist.map(item => item.id).includes(props.movie.id) ? () => removeFromWatchlistHandler() : () => addToWatchlistHandler()}>
-                    {isInWatchlist.map(item => item.id).includes(props.movie.id)? <HiMinus className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"  /> : <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+                    <div className="flex flex-col justify-center items-center group text-white" onClick={newWatchlist.map(item => item.id).includes(props.movie.id) ? () => removeFromWatchlistHandler() : () => addToWatchlistHandler()}>
+                    {newWatchlist.map(item => item.id).includes(props.movie.id)? <HiMinus className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"  /> : <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
                       }
                       <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {isInWatchlist.map(item => item.id).includes(props.movie.id)? 'Delete from list' : 'Add to list'}
+                      {newWatchlist.map(item => item.id).includes(props.movie.id)? 'Delete from list' : 'Add to list'}
                       </span>
                     </div>
                     <div className="flex flex-col justify-center items-center group text-white">

@@ -92,7 +92,7 @@ if(requestStatus === 'error') {
 }
     return(
         <section className="z-20 bg-black m-4 bg-opacity-70 py-6 px-10 h-[550px] rounded">
-            <div className="z-20 font-mono">
+            <div className="z-20 font-mono text-center">
                 <h1 className="text-center text-4xl font-bold tracking-wide text-white">Moowiz</h1>
                 <p className="text-white">Log in or create a free account now!</p>
                 <p className="text-white">Watch tons of movies in one place!</p>
