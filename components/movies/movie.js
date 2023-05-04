@@ -42,7 +42,7 @@ async function deleteMovieHandler(email, movie) {
 function Movie(props){
   const { data: session, status } = useSession()
   const [isLiked, setIsLiked] = useState(false)
-  const [isInWatchlist, SetIsInWatchlist] = useState([])
+  const [isInWatchlist, setIsInWatchlist] = useState([])
   async function addToWatchlistHandler() {
     try{
     const result = await addMovieHandler(session.user.email, props.selectedMovie)
@@ -67,7 +67,7 @@ function Movie(props){
   }
 
   useEffect(() => {
-    SetIsInWatchlist(props.watchlist)
+    setIsInWatchlist(props.watchlist)
   })
 
 

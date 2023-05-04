@@ -61,7 +61,7 @@ function MovieList({ title, movieslist }) {
     }
   }
   getWatchlistMovies()
-  }, []);
+  }, [watchlist]);
 
 
   useEffect(() => {
