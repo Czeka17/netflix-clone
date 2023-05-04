@@ -27,6 +27,7 @@ function Watchlist() {
       }
     }
     fetchWatchlist();
+    console.log(movies)
   }, []);
 
   const handleMovieClick = () => {
@@ -90,8 +91,8 @@ if(requestStatus === 'error') {
       <h2 className='text-white pt-40 text-3xl text-center'>Your list</h2>
       <section className="py-10 flex flex-wrap">
      {movies.map((movie, index) => (
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/4 p-2 px-10">
-          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+        <div className="w-full sm:w-1/1 md:w-1/3 lg:w-1/4 xl:w-1/4 py-2 px-6 flex justify-center items-center">
+          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} />
           </div>
           ))}
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}

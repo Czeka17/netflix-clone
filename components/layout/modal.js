@@ -12,11 +12,12 @@ const Modal = ({ movie, showModal, hideModal }) => {
     }
   }, [showModal]);
 
-  // const apiKey = 'AIzaSyDd8qd3v5UTYoA0K2vxp9GSjt5Llju5QcA'
+  const movieid = movie.id
+
   useEffect(() => {
     const fetchTrailerUrl = async () => {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movie.id}/videos`,
+        `https://api.themoviedb.org/3/movie/${movieid}/videos`,
         {
           params: {
             api_key: '502c330772f772740b274f7363e5b00a',
@@ -30,7 +31,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
       }
     };
     fetchTrailerUrl();
-  }, [movie.id]);
+  }, [movieid]);
 
   return (
     <div

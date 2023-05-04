@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
@@ -7,21 +6,8 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
 import Notification from "../layout/notification";
 import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
-async function addMovieHandler(email,movie){
-  const response = await fetch('/api/watchlist/watchlist', {
-    method: 'POST',
-    body: JSON.stringify({email,movie}),
-    headers: {
-			'Content-Type': 'application/json'
-		}
-  })
-  const data = await response.json();
 
-    if(!response.ok){
-        throw new Error(data.message || 'Something went wrong!')
-    }
-    return data;
-}
+
 function MovieList({ title, movieslist }) {
   const { data: session, status } = useSession()
 
@@ -31,6 +17,7 @@ function MovieList({ title, movieslist }) {
   const [isHovering, setIsHovering] = useState(false);
   const [requestStatus, setRequestStatus] = useState();
   const [requestError, setRequestError] = useState();
+  const [watchlist, setWatchlist] = useState([]);
   const carouselRef = useRef()
 
     useEffect(() => {
@@ -44,18 +31,6 @@ function MovieList({ title, movieslist }) {
       }
   }, [requestStatus])
 
-  async function addToWatchlistHandler() {
-    try{
-      setRequestStatus('pending')
-    const result = await addMovieHandler(session.user.email, selectedMovie)
-    console.log(result)
-    setRequestStatus('success')
-    return result
-    }catch(error){
-      setRequestError(error.message)
-      setRequestStatus('error')
-    }
-  }
 
   const handlePrevButtonClick = () => {
     carouselRef.current.slidePrev(); 
@@ -71,6 +46,23 @@ function MovieList({ title, movieslist }) {
   const hideModal = () => {
     setShowModal(false);
   };
+  useEffect(() => {
+    async function getWatchlistMovies(){
+    if (status === 'authenticated') {
+      const response = await fetch('/api/watchlist/getWatchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: session.user.email }),
+      });
+      const data = await response.json();
+      setWatchlist(data.watchlist);
+    }
+  }
+  getWatchlistMovies()
+  }, []);
+
 
   useEffect(() => {
       setMovies(movieslist);
@@ -94,6 +86,7 @@ function MovieList({ title, movieslist }) {
       setIsHovering(false)
     }
   };
+
 
   let notification;
 
@@ -120,6 +113,8 @@ if(requestStatus === 'error') {
     }
 }
 
+  console.log('movie-list')
+
   return (
     <div className="py-2 px-2 lg:px-10 w-full text-white overflow-visible">
       <h2 className="m-2 text-3xl font-bold">{title}</h2>
@@ -133,12 +128,12 @@ if(requestStatus === 'error') {
   ref={carouselRef} 
           >
         {movies.map((movie, index) => (
-          <Movie movie={movie} index={index} isHovering={isHovering} addToWatchlistHandler={addToWatchlistHandler} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={watchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
           ))}
           </AliceCarousel>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
           <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3 text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3  text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
         onClick={handlePrevButtonClick}
       >
         <MdArrowBackIosNew />
