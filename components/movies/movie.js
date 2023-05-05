@@ -45,41 +45,32 @@ function Movie(props){
   const [isInWatchlist, setIsInWatchlist] = useState([])
   const [newWatchlist, setNewWatchlist] = useState([...isInWatchlist])
 
-  async function addToWatchlistHandler() {
-    try{
-    const result = await addMovieHandler(session.user.email, props.selectedMovie)
-    const updatedWatchlist =  [...newWatchlist, props.selectedMovie]
-    setNewWatchlist(updatedWatchlist)
-    console.log(result)
-    return result
-    }catch(error){
-      console.log(error)
-    }
+  async function movielistHandler() {
+      if(newWatchlist.map(item => item.id).includes(props.movie.id)){
+        const result = await deleteMovieHandler(session.user.email, props.selectedMovie)
+        const indexToDelete = newWatchlist.findIndex(movie => movie.id === props.selectedMovie.id);
+        const updatedWatchlist = [...newWatchlist.slice(0, indexToDelete), ...newWatchlist.slice(indexToDelete + 1)];
+        setNewWatchlist(updatedWatchlist)
+        return result
+      }else{
+        const result = await addMovieHandler(session.user.email, props.selectedMovie)
+        const updatedWatchlist =  [...newWatchlist, props.selectedMovie]
+        setNewWatchlist(updatedWatchlist)
+        return result
+      }
   }
 
-   async function removeFromWatchlistHandler() {
-    try{
-    const result = await deleteMovieHandler(session.user.email, props.selectedMovie)
-    const updatedWatchlist = newWatchlist.filter(movie => movie !== props.selectedMovie);
-    setNewWatchlist(updatedWatchlist)
-    console.log(result)
-    return result
-    }catch(error){
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    setNewWatchlist([...isInWatchlist]);
-  }, [isInWatchlist]);
   function likeHandler(){
     setIsLiked((prevstate) => !prevstate)
   }
 
   useEffect(() => {
+    setNewWatchlist([...isInWatchlist]);
+  }, [isInWatchlist]);
+
+  useEffect(() => {
     setIsInWatchlist(props.watchlist)
-  })
-
-
+  }, [])
 
      return  <div
             key={props.index}
@@ -108,11 +99,11 @@ function Movie(props){
                         {isLiked ? 'liked' : 'like'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group text-white" onClick={newWatchlist.map(item => item.id).includes(props.movie.id) ? () => removeFromWatchlistHandler() : () => addToWatchlistHandler()}>
-                    {newWatchlist.map(item => item.id).includes(props.movie.id)? <HiMinus className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"  /> : <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+                    <div className="flex flex-col justify-center items-center group text-white" onClick={movielistHandler}>
+                    {newWatchlist.map(item => item.id).includes(props.movie.id) ? <HiMinus className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"  /> : <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
                       }
                       <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {newWatchlist.map(item => item.id).includes(props.movie.id)? 'Delete from list' : 'Add to list'}
+                      {newWatchlist.map(item => item.id).includes(props.movie.id) ? 'Delete from list' : 'Add to list'}
                       </span>
                     </div>
                     <div className="flex flex-col justify-center items-center group text-white">

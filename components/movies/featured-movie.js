@@ -30,12 +30,12 @@ function FeaturedMovie() {
 
 
   return (
-    <div className="w-full h-[650px] text-white mb-10">
+    <div className="w-full h-[650px] text-white">
       {showModal && <Modal hideModal={hideModal} movie={movie} showModal={showModal} />}
       <div className="w-full h-full relative">
         <div className="absolute w-full h-[650px] bg-gradient-to-r from-black"></div>
     <img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.title} />
-    <div className="absolute w-full bottom-0 p-4 md:p-8">
+    <div className="absolute w-full bottom-0 p-4 md:p-10">
       <h2 className="my-4 text-2xl lg:text-5xl font-bold max-w-2xl">{movie?.title}</h2>
       <p className="max-w-xs text-sm lg:text-md my-4">
   {movie?.overview && movie.overview.length > 100

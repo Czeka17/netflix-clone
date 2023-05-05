@@ -46,22 +46,23 @@ function MovieList({ title, movieslist }) {
   const hideModal = () => {
     setShowModal(false);
   };
-  useEffect(() => {
-    async function getWatchlistMovies(){
-    if (status === 'authenticated') {
-      const response = await fetch('/api/watchlist/getWatchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: session.user.email }),
-      });
-      const data = await response.json();
-      setWatchlist(data.watchlist);
-    }
-  }
-  getWatchlistMovies()
-  }, []);
+  // useEffect(() => {
+  //   async function getWatchlistMovies(){
+  //   if (status === 'authenticated') {
+  //     const response = await fetch('/api/watchlist/getWatchlist', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ email: session.user.email }),
+  //     });
+  //     const data = await response.json();
+  //     setWatchlist(data.watchlist);
+  //     console.log(watchlist)
+  //   }
+  // }
+  // getWatchlistMovies()
+  // }, []);
 
 
   useEffect(() => {
@@ -116,8 +117,13 @@ if(requestStatus === 'error') {
   console.log('movie-list')
 
   return (
-    <div className="py-2 px-2 lg:px-10 w-full text-white overflow-visible">
-      <h2 className="m-2 text-3xl font-bold">{title}</h2>
+    <section className="relative py-2 px-2 lg:px-10 w-full text-white overflow-visible bg-neutral-900">
+  <div className="absolute top-0 left-0 w-0 h-0 ml-10 border-solid border-t-[0px] border-t-transparent
+    border-l-[90vw] border-l-red-700
+    border-b-[120px] border-b-transparent"></div>
+      <div className="relative w-[30%]">
+      <h2 className="m-2 p-4 text-3xl font-bold rounded w-[50%]">{title}</h2>
+      </div>
       <div className="relative">
         <AliceCarousel
         infinite
@@ -133,13 +139,13 @@ if(requestStatus === 'error') {
           </AliceCarousel>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
           <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3  text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3  text-5xl text-red-700 h-1/2 hover:bg-neutral-900 hover:bg-opacity-50 duration-200 hover:scale-125"
         onClick={handlePrevButtonClick}
       >
         <MdArrowBackIosNew />
       </button>
       <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 p-3 text-5xl text-red-800 h-1/2 hover:bg-black hover:bg-opacity-50 duration-200"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 p-3 text-5xl text-red-700 h-1/2 hover:bg-neutral-900 hover:bg-opacity-50 duration-200 hover:scale-125"
         onClick={handleNextButtonClick}
       >
         <MdArrowForwardIos />
@@ -147,7 +153,7 @@ if(requestStatus === 'error') {
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
       <hr className="border-t border-red-800 my-4"/>
-    </div>
+    </section>
   );
 }
 

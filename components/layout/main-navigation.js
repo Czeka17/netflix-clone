@@ -13,7 +13,7 @@ function MainNavigation() {
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
         if (currentScrollPos > 0) {
-          setNavBg("bg-black");
+          setNavBg("bg-neutral-900");
         } else {
           setNavBg("bg-transparent"); 
         }
