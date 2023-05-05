@@ -11,7 +11,9 @@ function Home({ popularMovies, topRatedMovies, upcomingMovies }) {
     <div>
       <FeaturedMovie />
       <MovieList title={'Popular'} movieslist={popularMovies} />
+      <hr className="border-t border-red-800 my-4"/>
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
+      <hr className="border-t border-red-800 my-4"/>
       <MovieList title={'Upcoming'} movieslist={upcomingMovies} />
       <Footer />
     </div>

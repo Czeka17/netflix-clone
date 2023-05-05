@@ -46,23 +46,23 @@ function MovieList({ title, movieslist }) {
   const hideModal = () => {
     setShowModal(false);
   };
-  // useEffect(() => {
-  //   async function getWatchlistMovies(){
-  //   if (status === 'authenticated') {
-  //     const response = await fetch('/api/watchlist/getWatchlist', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ email: session.user.email }),
-  //     });
-  //     const data = await response.json();
-  //     setWatchlist(data.watchlist);
-  //     console.log(watchlist)
-  //   }
-  // }
-  // getWatchlistMovies()
-  // }, []);
+  useEffect(() => {
+    async function getWatchlistMovies(){
+    if (status === 'authenticated') {
+      const response = await fetch('/api/watchlist/getWatchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: session.user.email }),
+      });
+      const data = await response.json();
+      setWatchlist(data.watchlist);
+      console.log(watchlist)
+    }
+  }
+  getWatchlistMovies()
+  }, []);
 
 
   useEffect(() => {
@@ -152,7 +152,6 @@ if(requestStatus === 'error') {
       </button>
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
-      <hr className="border-t border-red-800 my-4"/>
     </section>
   );
 }

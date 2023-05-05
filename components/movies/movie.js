@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
-import { BsPlusLg } from "react-icons/bs";
-import {HiMinus} from "react-icons/hi"
+import { BsPlusLg, BsCheckLg } from "react-icons/bs";
+
 import { useSession } from 'next-auth/react';
 
 async function addMovieHandler(email,movie){
@@ -94,18 +94,22 @@ function Movie(props){
                 }`}>Vote average: {props.movie?.vote_average}</p>
                   <div className="flex justify-evenly">
                     <div className="flex flex-col justify-center items-center group">
-                      <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 ${isLiked ? 'fill-blue-700' : 'fill-white'}`} onClick={likeHandler}  style={{ transform: isLiked ? 'scale(1.2)' : 'scale(1)' }}/>
+                      <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 ${isLiked ? 'fill-blue-700' : ''}`} onClick={likeHandler}  style={{ transform: isLiked ? 'scale(1.2)' : 'scale(1)' }}/>
                       <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isLiked ? 'text-blue-700' : 'text-white'}`}>
                         {isLiked ? 'liked' : 'like'}
                       </span>
                     </div>
                     <div className="flex flex-col justify-center items-center group text-white" onClick={movielistHandler}>
-                    {newWatchlist.map(item => item.id).includes(props.movie.id) ? <HiMinus className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500"  /> : <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
-                      }
-                      <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {newWatchlist.map(item => item.id).includes(props.movie.id) ? 'Delete from list' : 'Add to list'}
-                      </span>
-                    </div>
+  {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
+    <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+  ) : (
+    <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+  )}
+  <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    {newWatchlist.map(item => item.id).includes(props.movie.id) ? 'Delete from list' : 'Add to list'}
+  </span>
+</div>
+
                     <div className="flex flex-col justify-center items-center group text-white">
                       <AiOutlineEllipsis className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white"
   onClick={props.handleMovieClick}
