@@ -18,8 +18,16 @@ function MovieList({ title, movieslist }) {
   const [requestStatus, setRequestStatus] = useState();
   const [requestError, setRequestError] = useState();
   const [watchlist, setWatchlist] = useState([]);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const carouselRef = useRef()
 
+  const handleSlideChanged = (event) => {
+    if (!hasScrolled) {
+      setHasScrolled(true);
+    }
+    setActiveSlideIndex(event.item);
+  };
     useEffect(() => {
       if(requestStatus === 'success' || requestStatus === 'error'){
           const timer = setTimeout(() =>{
@@ -117,39 +125,45 @@ if(requestStatus === 'error') {
   console.log('movie-list')
 
   return (
-    <section className="relative py-2 px-2 lg:px-10 w-full text-white overflow-visible bg-neutral-900">
-  <div className="absolute top-0 left-0 w-0 h-0 ml-10 border-solid border-t-[0px] border-t-transparent
+    <section className="relative py-2 px-2 w-full text-white overflow-visible bg-neutral-900">
+  <div className="absolute top-0 left-0 w-0 h-0 ml-4 lg:ml-10 border-solid border-t-[0px] border-t-transparent
     border-l-[90vw] border-l-red-700
     border-b-[120px] border-b-transparent"></div>
-      <div className="relative w-[30%]">
-      <h2 className="m-2 p-4 text-3xl font-bold rounded w-[50%]">{title}</h2>
+      <div className="relative">
+      <h2 className="ml-6 p-4 text-3xl font-bold rounded">{title}</h2>
       </div>
       <div className="relative">
+        <div className="mx-6 lg:pl-20 lg:pr-12 mx-2">
         <AliceCarousel
-        infinite
           items={movies}
           responsive={responsive}
   disableDotsControls={true}
   disableButtonsControls={true}
-  ref={carouselRef} 
+  ref={carouselRef}
+  onSlideChanged={handleSlideChanged}
           >
         {movies.map((movie, index) => (
-          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={watchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+          <div aria-label={`List of ${title} movies`}>
+            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={watchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+            </div>
           ))}
           </AliceCarousel>
+        </div>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
-          <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 p-3  text-5xl text-red-700 h-1/2 hover:bg-neutral-900 hover:bg-opacity-50 duration-200 hover:scale-125"
+          {hasScrolled && activeSlideIndex > 0 && <button
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 pb-10 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-50"
         onClick={handlePrevButtonClick}
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         <MdArrowBackIosNew />
-      </button>
-      <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 p-3 text-5xl text-red-700 h-1/2 hover:bg-neutral-900 hover:bg-opacity-50 duration-200 hover:scale-125"
+      </button>}
+      {activeSlideIndex < movies.length-5 && <button
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 pb-10 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-50"
         onClick={handleNextButtonClick}
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         <MdArrowForwardIos />
-      </button>
+      </button>}
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </section>
