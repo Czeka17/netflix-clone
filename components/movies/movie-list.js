@@ -18,6 +18,7 @@ function MovieList({ title, movieslist }) {
   const [requestStatus, setRequestStatus] = useState();
   const [requestError, setRequestError] = useState();
   const [watchlist, setWatchlist] = useState([]);
+  const [newWatchlist, setNewWatchlist] = useState([])
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const carouselRef = useRef()
@@ -70,12 +71,22 @@ function MovieList({ title, movieslist }) {
     }
   }
   getWatchlistMovies()
-  }, []);
+  }, [session, status]);
+
+  useEffect(() => {
+    if (watchlist.length === 0) {
+      setNewWatchlist([]);
+      return;
+    }
+    setNewWatchlist([...watchlist]);
+  }, [watchlist]);
 
 
   useEffect(() => {
       setMovies(movieslist);
   }, [movieslist]);
+
+  console.log(newWatchlist)
 
   const responsive = {
     0: { items: 2 },
@@ -122,7 +133,7 @@ if(requestStatus === 'error') {
     }
 }
 
-  console.log('movie-list')
+  console.log(newWatchlist)
 
   return (
     <section className="relative py-2 px-2 w-full text-white overflow-visible bg-neutral-900">
@@ -144,7 +155,7 @@ if(requestStatus === 'error') {
           >
         {movies.map((movie, index) => (
           <div aria-label={`List of ${title} movies`}>
-            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={watchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
             </div>
           ))}
           </AliceCarousel>

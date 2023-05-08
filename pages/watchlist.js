@@ -90,7 +90,7 @@ if(requestStatus === 'error') {
 }
 
   return (
-    <div className='pt-20 '>
+    <div className='pt-20'>
       {!isLoading && movies.length === 0 && <p className='text-center text-white text-3xl p-4 mt-6'>Your list is empty!</p>}
       {isLoading ? <div className="flex justify-center items-center h-screen">
       <div className="flex space-x-2">
@@ -100,7 +100,7 @@ if(requestStatus === 'error') {
       </div>
     </div>
  :
-      <section className="pt-10 pb-20 flex flex-wrap">
+      <section className="py-10 flex flex-wrap">
      {movies.map((movie, index) => (
         <div className="w-full sm:w-1/1 md:w-1/3 lg:w-1/4 xl:w-1/4 py-2 px-10 flex justify-center items-center">
           <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} />

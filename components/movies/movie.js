@@ -43,8 +43,7 @@ async function deleteMovieHandler(email, movie) {
 function Movie(props){
   const { data: session, status } = useSession()
   const [likes, setLikes] = useState(loadLikesFromLocalStorage());
-  const [isInWatchlist, setIsInWatchlist] = useState([])
-  const [newWatchlist, setNewWatchlist] = useState([...isInWatchlist])
+  const [newWatchlist, setNewWatchlist] = useState([])
 
   async function movielistHandler() {
       if(newWatchlist.map(item => item.id).includes(props.movie.id)){
@@ -80,12 +79,9 @@ function Movie(props){
   }
 
   useEffect(() => {
-    setNewWatchlist([...isInWatchlist]);
-  }, [isInWatchlist]);
+    setNewWatchlist([...props.watchlist]);
+  }, [props.watchlist]);
 
-  useEffect(() => {
-    setIsInWatchlist(props.watchlist)
-  }, [])
 
      return  <div
             key={props.index}
@@ -115,7 +111,7 @@ function Movie(props){
                       </span>
                     </div>
                     <div className="flex flex-col justify-center items-center group text-white h-[50px] w-[100px] overflow-hidden" onClick={movielistHandler}>
-  {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
+                    {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
     <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
   ) : (
     <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
