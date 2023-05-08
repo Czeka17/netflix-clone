@@ -27,6 +27,8 @@ export default async (req, res) => {
     console.log(error);
     client.close();
     res.status(500).json({ message: 'Failed to fetch movie list' });
+  }finally {
+    client.close();
   }
 }
 };
