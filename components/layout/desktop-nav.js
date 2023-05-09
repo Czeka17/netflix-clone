@@ -48,7 +48,7 @@ function DesktopNav(props){
   ref={inputRef}
 />
         <ImSearch
-          className="absolute right-0 text-xl mx-3 cursor-pointer hover:fill-red-700 duration-300"
+          className="absolute right-0 text-xl mx-3 hover:fill-red-700 duration-300"
           onClick={SearchHandler}
         />
       </li>

@@ -87,7 +87,7 @@ function Movie(props){
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-full w-full lg:h-[250px] md:w-[250px] md:h-[250px] lg:w-[250px] my-2 cursor-pointer pr-4 pl-6" tabindex="0"
+            className="h-[250px] w-[210px] lg:h-[250px] md:w-[250px] md:h-[250px] lg:w-[250px] my-2 cursor-pointer pr-12 pl-6" tabindex="0"
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 my-24 py-4 duration-300 overflow-visible" tabindex="0">

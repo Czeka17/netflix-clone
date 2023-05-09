@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import requests from "@/Requests";
 import axios from "axios";
 import {AiOutlineQuestionCircle} from 'react-icons/ai'
-import {BsFillPlayCircleFill} from 'react-icons/bs'
+import {AiOutlineEllipsis, AiOutlineLike} from 'react-icons/ai'
+import { BsPlusLg, BsCheckLg } from "react-icons/bs";
 import Modal from "../layout/modal";
 function FeaturedMovie() {
 
@@ -45,6 +46,10 @@ function FeaturedMovie() {
 <p className={`${
                   movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
                 }`}>Vote average: {movie?.vote_average}</p>
+                <div className="flex flex-row py-2">
+                <AiOutlineLike className="text-5xl border-2 rounded-full p-2 mr-2" />
+                <BsCheckLg className="text-5xl border-2 rounded-full p-2 mx-2"  />
+                </div>
       <div className="flex flex-col items-start">
         <button className="py-2 px-8 my-2 bg-neutral-700  rounded font-bold flex items-center hover:bg-neutral-800 duration-300" onClick={handleMovieClick }><AiOutlineQuestionCircle className="m-1 text-xl" /> More information</button>
       </div>

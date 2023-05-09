@@ -1,0 +1,52 @@
+@keyframes slide {
+    0% {
+     top: 10%;
+     left: 10%;
+    }
+    50%{
+      left: 70%;
+      top: 10%;
+    }
+    100% {
+        top: 10%;
+        left: 10%;
+       }
+  }
+@keyframes slide2 {
+    0% {
+     bottom: 0%;
+     right: 10%;
+    }
+    50%{
+      right: 70%;
+      bottom: 0%;
+    }
+    100% {
+        bottom: 0%;
+        right: 10%;
+       }
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes spin2 {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  .animate {
+    animation: slide 220s ease-out infinite, spin 120s linear infinite;
+  }
+  .animate2 {
+    animation: slide2 180s ease-out infinite, spin2 100s linear infinite;
+  }
