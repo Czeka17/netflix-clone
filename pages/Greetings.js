@@ -20,7 +20,7 @@ function Greetings(){
       }, [status]);
     return(
         <div className="w-screen fixed h-screen flex justify-center items-center z-50 bg-black">
-            <h2 className="text-white shadow-2xl p-2 shadow-red-700 text-6xl">Hello {session.user.name}</h2>
+            <h2 className="text-white shadow-2xl p-2 shadow-red-700 text-6xl">Hello {session.user.name}!</h2>
         </div>
     )
 }
