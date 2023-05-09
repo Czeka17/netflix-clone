@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Hamburger from "hamburger-react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { FiLogOut } from "react-icons/fi";
+import { useRouter } from "next/router";
+import { ImSearch } from "react-icons/im";
 function logoutHandler() {
   signOut();
 }
@@ -12,6 +14,20 @@ function MobileNavigation() {
   function hideNavHandler() {
     setIsOpen(false)
   }
+  const [isSearching, setIsSearching] = useState(false)
+  const router = useRouter()
+  const inputRef = useRef(null);
+
+
+
+const handleInputChange = (event) => {
+  const searchQuery = event.target.value;
+router.push(`/search?q=${searchQuery}`);
+};
+function SearchHandler(){
+  setIsSearching((prevstate) => !prevstate)
+  inputRef.current.focus();
+}
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -28,6 +44,22 @@ function MobileNavigation() {
         <Link href="/" className="text-lg font-bold left-0 z-50">
           MOOWIZ
         </Link>
+        <li className="flex flex-row items-center min-w-[250px] relative">
+          <input
+            className={`absolute right-8 w-48 mx-2 py-1 px-2 rounded bg-gray-800 text-white ${
+                isSearching ? 'opacity-100' : 'opacity-0'
+              }`}
+        
+            type="text"
+            placeholder="Search for a movie"
+            onChange={handleInputChange}
+            ref={inputRef}
+          />
+        <ImSearch
+          className="absolute right-0 text-xl mx-3 cursor-pointer"
+          onClick={SearchHandler}
+        />
+      </li>
         <Hamburger
           toggled={isOpen}
           toggle={setIsOpen}

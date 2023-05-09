@@ -133,10 +133,19 @@ if(requestStatus === 'error') {
     }
 }
 
+useEffect(() => {
+  const body = document.querySelector("body");
+  if (showModal) {
+    body.classList.add("overflow-hidden");
+  } else {
+    body.classList.remove("overflow-hidden");
+  }
+}, [showModal]);
+
   console.log(newWatchlist)
 
   return (
-    <section className="relative py-2 px-2 w-full text-white overflow-visible bg-neutral-900">
+    <section className="relative py-2 px-2 w-full text-white overflow-visible">
   <div className="absolute top-0 left-0 w-0 h-0 ml-4 lg:ml-10 border-solid border-t-[0px] border-t-transparent
     border-l-[90vw] border-l-red-700
     border-b-[120px] border-b-transparent"></div>
@@ -144,7 +153,7 @@ if(requestStatus === 'error') {
       <h2 className="ml-6 p-4 text-3xl font-bold rounded">{title}</h2>
       </div>
       <div className="relative">
-        <div className="mx-6 lg:pl-20 lg:pr-12 mx-2">
+        <div className="lg:pl-12 lg:pr-12 mx-6">
         <AliceCarousel
           items={movies}
           responsive={responsive}
@@ -162,14 +171,14 @@ if(requestStatus === 'error') {
         </div>
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
           {hasScrolled && activeSlideIndex > 0 && <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 pb-10 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-50"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 pb-10 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
         onClick={handlePrevButtonClick}
         style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         <MdArrowBackIosNew />
       </button>}
       {activeSlideIndex < movies.length-5 && <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 pb-10 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-50"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 pb-10 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
         onClick={handleNextButtonClick}
         style={{ WebkitTapHighlightColor: 'transparent' }}
       >

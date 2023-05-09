@@ -3,8 +3,12 @@ function saveLikesToLocalStorage(likes) {
   }
 
   function loadLikesFromLocalStorage() {
-    const likes = localStorage.getItem('likes');
-    return likes ? JSON.parse(likes) : {};
+    if (typeof window !== 'undefined') {
+      const likes = localStorage.getItem('likes');
+      return likes ? JSON.parse(likes) : {};
+    } else {
+      return {};
+    }
   }
 
   export { saveLikesToLocalStorage, loadLikesFromLocalStorage };

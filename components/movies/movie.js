@@ -87,7 +87,7 @@ function Movie(props){
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-full w-full lg:h-[250px] md:w-[250px] md:h-[250px] lg:w-[250px] my-2 cursor-pointer px-4" tabindex="0"
+            className="h-full w-full lg:h-[250px] md:w-[250px] md:h-[250px] lg:w-[250px] my-2 cursor-pointer pr-4 pl-6" tabindex="0"
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 my-24 py-4 duration-300 overflow-visible" tabindex="0">
@@ -103,14 +103,14 @@ function Movie(props){
                   <p className={`pb-2 text-xs ${
                   props.movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
                 }`}>Vote average: {props.movie?.vote_average}</p>
-                  <div className="flex justify-evenly">
+                  <div className="flex justify-around items-center">
                     <div className="flex flex-col justify-center items-center group">
                       <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>
                       <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${likes[props.movie.id] ? 'text-blue-700' : 'text-white'}`}>
                       {likes[props.movie.id] ? 'Liked' : 'Like'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group text-white h-[50px] w-[100px] overflow-hidden" onClick={movielistHandler}>
+                    <div className="flex flex-col justify-center items-center group text-white " onClick={movielistHandler}>
                     {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
     <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
   ) : (

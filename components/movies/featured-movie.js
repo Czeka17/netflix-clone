@@ -46,8 +46,7 @@ function FeaturedMovie() {
                   movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
                 }`}>Vote average: {movie?.vote_average}</p>
       <div className="flex flex-col items-start">
-        <a href={`https://www.youtube.com/results?q=${movie?.title}+trailer`} target="_blank" className="py-2 px-8 my-2 bg-white text-black rounded font-bold flex items-center"><BsFillPlayCircleFill className="m-1 text-xl'" /> Play</a>
-        <button className="py-2 px-8 my-2 bg-neutral-700  rounded font-bold flex items-center" onClick={handleMovieClick }><AiOutlineQuestionCircle className="m-1 text-xl" /> More information</button>
+        <button className="py-2 px-8 my-2 bg-neutral-700  rounded font-bold flex items-center hover:bg-neutral-800 duration-300" onClick={handleMovieClick }><AiOutlineQuestionCircle className="m-1 text-xl" /> More information</button>
       </div>
     </div>
       </div>

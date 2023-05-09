@@ -83,7 +83,7 @@ function SignupModal({showModal, hideModal, createUser}) {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <div className="inline-block align-bottom bg-red-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block align-bottom bg-red-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <h2 className="text-white text-2xl flex justify-center items-center p-4">Sign Up</h2>
             <form className="flex flex-col p-6 text-white" onSubmit={submitHandler}>
                 <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef} />
@@ -92,8 +92,8 @@ function SignupModal({showModal, hideModal, createUser}) {
                 <input type="password" id="password" placeholder="password" 
                 className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={passwordInputRef}/>
                 <div className="flex flex-row justify-end items-end">
-                <button onClick={() => hideModal()} className="text-white p-2 m-2">Cancel</button>
-                <button className="border-2 border-white bg-white text-red-700 bg-red-700 p-2 m-2 rounded-lg hover:text-white hover:bg-red-700 duration-300">Sign up</button>
+                <button onClick={() => hideModal()} className="text-white p-2 m-2 border-2 border-white rounded-lg">Cancel</button>
+                <button className="border-2 border-white bg-white text-red-700 bg-red-700 p-2 m-2 rounded-lg hover:text-white hover:bg-red-800 duration-300">Sign up</button>
                 </div>
             </form>
         </div>
