@@ -161,6 +161,7 @@ useEffect(() => {
   disableButtonsControls={true}
   ref={carouselRef}
   onSlideChanged={handleSlideChanged}
+  mouseTracking={true}
           >
         {movies.map((movie, index) => (
           <div aria-label={`List of ${title} movies`}>

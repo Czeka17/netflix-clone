@@ -95,6 +95,7 @@ function Movie(props){
                 className="overflow-visible z-20 focus:outline-none"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
                 alt={props.movie?.title}
+                onClick={props.isHovering ? props.handleMovieClick : undefined}
               />
              {props.selectedMovie?.title !== props.movie.title && <p className='flex justify-center items-center text-center text-white text-xs lg:text-base p-2'>{props.movie.title}</p>}
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
@@ -105,12 +106,12 @@ function Movie(props){
                 }`}>Vote average: {props.movie?.vote_average}</p>
                   <div className="flex justify-around items-center">
                     <div className="flex flex-col justify-center items-center group">
-                      <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>
+                      <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 hover:fill-blue-500 w-[25px] ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>
                       <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${likes[props.movie.id] ? 'text-blue-700' : 'text-white'}`}>
                       {likes[props.movie.id] ? 'Liked' : 'Like'}
                       </span>
                     </div>
-                    <div className="flex flex-col justify-center items-center group text-white " onClick={movielistHandler}>
+                    <div className="flex flex-col justify-center items-center group text-white w-[70px]" onClick={movielistHandler}>
                     {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
     <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
   ) : (

@@ -1,9 +1,13 @@
-import React, { useState, useEffect,} from "react";
+import React, { useState, useEffect, } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
+import { FaSpinner } from "react-icons/fa";
+
 const Modal = ({ movie, showModal, hideModal }) => {
   const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (showModal) {
       setShow(true);
@@ -16,6 +20,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
 
   useEffect(() => {
     const fetchTrailerUrl = async () => {
+      setIsLoading(true);
       const response = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieid}/videos`,
         {
@@ -29,6 +34,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
       if (trailer) {
         setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
       }
+      setIsLoading(false);
     };
     fetchTrailerUrl();
   }, [movieid]);
@@ -50,14 +56,20 @@ const Modal = ({ movie, showModal, hideModal }) => {
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="flex justify-center items-center">
-            <ReactPlayer url={trailerUrl} controls={true}/>
+            {isLoading ? (
+              <FaSpinner className="animate-spin h-6 w-6 text-white" />
+            ) : (
+              <ReactPlayer url={trailerUrl} controls={true} />
+            )}
           </div>
           <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 bg-black">
             <h3 className="text-lg leading-6 font-medium text-white">
               {movie?.title}
             </h3>
             <div className="mt-2">
-            <p className="text-sm text-gray-400 py-2">Release date: {movie?.release_date}</p>
+              <p className="text-sm text-gray-400 py-2">
+                Release date: {movie?.release_date}
+              </p>
               <p
                 className={`text-sm ${
                   movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"

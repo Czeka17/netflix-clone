@@ -6,7 +6,6 @@ import { ImSearch } from "react-icons/im";
 import { useRouter } from 'next/router';
 function DesktopNav(props){
 
-    const [isSearching, setIsSearching] = useState(false)
     const router = useRouter()
     const inputRef = useRef(null);
 
@@ -17,7 +16,6 @@ function DesktopNav(props){
   router.push(`/search?q=${searchQuery}`);
   };
   function SearchHandler(){
-    setIsSearching((prevstate) => !prevstate)
     inputRef.current.focus();
   }
 
@@ -43,9 +41,7 @@ function DesktopNav(props){
       </li>
       <li className="flex flex-row items-center min-w-[250px] relative">
       <input
-  className={`absolute right-8 w-48 mx-2 py-1 px-2 rounded bg-gray-800 text-white transition-opacity border-2 border-red-700 outline-none ${
-    isSearching ? 'opacity-100 duration-500 ease-in' : 'opacity-0 duration-200 ease-out'
-  }`}
+  className={`absolute right-8 w-48 mx-2 py-1 px-2 rounded bg-transparent text-white transition-opacity border-2 border-white outline-none focus:border-red-700`}
   type="text"
   placeholder="Search for a movie"
   onChange={handleInputChange}

@@ -5,19 +5,18 @@ import { signOut } from "next-auth/react";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { ImSearch } from "react-icons/im";
-function logoutHandler() {
-  signOut();
-}
+
 function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   function hideNavHandler() {
     setIsOpen(false)
   }
-  const [isSearching, setIsSearching] = useState(false)
   const router = useRouter()
   const inputRef = useRef(null);
-
+  function logoutHandler() {
+    signOut();
+  }
 
 
 const handleInputChange = (event) => {
@@ -25,7 +24,6 @@ const handleInputChange = (event) => {
 router.push(`/search?q=${searchQuery}`);
 };
 function SearchHandler(){
-  setIsSearching((prevstate) => !prevstate)
   inputRef.current.focus();
 }
 
@@ -44,12 +42,9 @@ function SearchHandler(){
         <Link href="/" className="text-lg font-bold left-0 z-50">
           MOOWIZ
         </Link>
-        <li className="flex flex-row items-center min-w-[250px] relative">
+        <li className="flex flex-row items-center min-w-[220px] relative">
           <input
-            className={`absolute right-8 w-48 mx-2 py-1 px-2 rounded bg-gray-800 text-white ${
-                isSearching ? 'opacity-100' : 'opacity-0'
-              }`}
-        
+            className={`absolute right-8 w-40 mx-2 py-1 px-2 rounded bg-transparent border-2 border-white text-white`}
             type="text"
             placeholder="Search for a movie"
             onChange={handleInputChange}
