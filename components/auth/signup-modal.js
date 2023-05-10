@@ -2,7 +2,23 @@ import React, { useState, useEffect, useRef } from "react";
 import Notification from "../layout/notification";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-function SignupModal({showModal, hideModal, createUser}) {
+
+async function createUser(email,name,password){
+  const response = await fetch('/api/auth/signup', {
+      method: 'POST',
+  body: JSON.stringify({email, name, password}),
+  headers: {
+    'Content-Type': 'application/json'
+  }
+  })
+  const data = await response.json();
+
+  if(!response.ok){
+      throw new Error(data.message || 'Something went wrong!')
+  }
+  return data;
+}
+function SignupModal({showModal, hideModal}) {
   const router = useRouter()
     const [show, setShow] = useState(false);
     const [requestStatus, setRequestStatus] = useState();
@@ -83,12 +99,16 @@ function SignupModal({showModal, hideModal, createUser}) {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <div className="inline-block align-bottom bg-red-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block align-bottom bg-red-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" onKeyDown={(event) => {
+          if(event.key === 'Enter') {
+            event.preventDefault();
+          }
+        }}>
           <h2 className="text-white text-2xl flex justify-center items-center p-4">Sign Up</h2>
             <form className="flex flex-col p-6 text-white" onSubmit={submitHandler}>
                 <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef} />
                 <input type="email" id="email" placeholder="email"
-                className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={emailInputRef} />
+                className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={emailInputRef} required={true} />
                 <input type="password" id="password" placeholder="password" 
                 className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={passwordInputRef}/>
                 <div className="flex flex-row justify-end items-end">

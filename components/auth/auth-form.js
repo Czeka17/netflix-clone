@@ -3,21 +3,6 @@ import { signIn } from 'next-auth/react'
 import { useRouter } from "next/router";
 import SignupModal from "./signup-modal";
 import Notification from "../layout/notification";
-async function createUser(email,name,password){
-    const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-		body: JSON.stringify({email, name, password}),
-		headers: {
-			'Content-Type': 'application/json'
-		}
-    })
-    const data = await response.json();
-
-    if(!response.ok){
-        throw new Error(data.message || 'Something went wrong!')
-    }
-    return data;
-}
 
 function AuthForm() {
     const router = useRouter()
@@ -107,7 +92,7 @@ if(requestStatus === 'error') {
             </form>
             <button className="text-white border-2 w-full py-2 rounded bg-neutral-800" onClick={handleModalClick}>Create new account</button>
             </div>
-            {showModal && <SignupModal createUser={createUser} showModal={showModal} hideModal={hideModal} />}
+            {showModal && <SignupModal showModal={showModal} hideModal={hideModal} />}
             {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
         </section>
     )
