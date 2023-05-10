@@ -9,7 +9,7 @@ function Footer(){
     const currentYear = getCurrentYear();
 
     return(
-        <section className="h-[150px] bg-red-700 text-white mt-10">
+        <section className="h-[150px] bg-red-700 text-white mt-20">
             <div className="py-6">
                 <ul className="flex flex-row justify-evenly items-center">
                 <li className="p-2 hover:text-neutral-900 duration-300"><a className="flex flex-row justify-center items-center" href="https://github.com/Czeka17" target="_blank"><AiFillGithub className="text-3xl mx-2" />Czeka17</a></li>

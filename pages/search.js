@@ -6,7 +6,8 @@ import Movie from "@/components/movies/movie";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "@/components/layout/modal";
-import Footer from "@/components/layout/footer";
+import { getWatchlistMovies } from "@/lib/api";
+import Fuse from "fuse.js";
 function Search({ popularMovies, topRatedMovies, upcomingMovies }){
     const { data: session, status } = useSession()
     const [isHovering, setIsHovering] = useState(false);
@@ -20,32 +21,36 @@ function Search({ popularMovies, topRatedMovies, upcomingMovies }){
       m.id === movie.id
     ))
   );
+
+  const options = {
+    keys: ['title'],
+    threshold: 0.4,
+    includeScore: true,
+  };
+  const fuse = new Fuse(uniqueMovies, options);
   
     const router = useRouter();
   const searchQuery = router.query.q; 
-  const filteredMovies = uniqueMovies.filter((movie) =>
-  movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-);
+  let filteredMovies
+  if (searchQuery) {
+    const searchResults = fuse.search(searchQuery);
+    filteredMovies = searchResults.map(result => result.item);
+  }
+
 const sortedMovies = filteredMovies.sort((a, b) => a.title.localeCompare(b.title));
 
 
+
 useEffect(() => {
-    async function getWatchlistMovies(){
+  async function fetchWatchlist() {
     if (status === 'authenticated') {
-      const response = await fetch('/api/watchlist/getWatchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: session.user.email }),
-      });
-      const data = await response.json();
-      setWatchlist(data.watchlist);
-      console.log(watchlist)
+      const watchlist = await getWatchlistMovies(session.user.email);
+      setWatchlist(watchlist);
     }
   }
-  getWatchlistMovies()
-  }, [session, status]);
+
+  fetchWatchlist();
+}, [session, status]);
 
   useEffect(() => {
     if (watchlist.length === 0) {
@@ -76,11 +81,11 @@ const handleMovieHover = (movie) => {
     
       return (
         <>
-        <div className="flex flex-col items-center justify-center pt-20 text-white">
+        <div className="flex flex-col items-center justify-center pt-40 text-white">
   <h1 className="text-xl">Search Results for <span className="font-bold">{searchQuery}</span></h1>
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
     {sortedMovies.map((movie, index) => (
-      <div key={movie.id} aria-label={`search result`}>
+      <div key={movie.id} className="p-2 my-24 md:my-10 mx-10 md:mx-1 h-[10rem]" aria-label={`search result`}>
         <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
       </div>
     ))}
@@ -88,7 +93,6 @@ const handleMovieHover = (movie) => {
   {filteredMovies.length === 0 && <p className="text-white text-2xl text-center flex justify-center items-center p-6">Cant find movie that you are looking for.</p>}
   {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
 </div>
-<Footer />
 </>
       );
 }

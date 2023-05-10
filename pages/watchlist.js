@@ -3,35 +3,28 @@ import { useSession } from 'next-auth/react';
 import { getSession } from 'next-auth/react';
 import Movie from '@/components/movies/movie';
 import Modal from '@/components/layout/modal';
-import Footer from '@/components/layout/footer';
+import { getWatchlistMovies } from '@/lib/api';
+
 function Watchlist() {
   const { data: session, status } = useSession();
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [requestStatus, setRequestStatus] = useState();
-  const [requestError, setRequestError] = useState();
   const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
     async function fetchWatchlist() {
       if (status === 'authenticated') {
-        const response = await fetch('/api/watchlist/getWatchlist', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: session.user.email }),
-        });
-        const data = await response.json();
-        setMovies(data.watchlist);
+        const watchlist = await getWatchlistMovies(session.user.email);
+        setMovies(watchlist);
         setIsLoading(false)
       }
     }
+  
     fetchWatchlist();
-    console.log(movies)
-  }, []);
+  }, [session, status]);
 
   const handleMovieClick = () => {
     setShowModal(true);
@@ -53,44 +46,8 @@ function Watchlist() {
   };
 
 
-  useEffect(() => {
-    if(requestStatus === 'success' || requestStatus === 'error'){
-        const timer = setTimeout(() =>{
-            setRequestStatus(null);
-            setRequestError(null)
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }
-}, [requestStatus])
-
-let notification;
-
-if(requestStatus === 'pending'){
-  notification = {
-      status: 'pending',
-      title: 'Checking if movie is in list...',
-      message: 'Checking if movie is in list'
-  }
-}
-
-if(requestStatus === 'success') {
-  notification = {
-      status: 'success',
-      title: 'Success!',
-      message: 'Movie added successfully'
-  }
-}
-if(requestStatus === 'error') {
-  notification = {
-      status: 'error',
-      title: 'Error!',
-      message: requestError
-  }
-}
-
   return (
-    <div className='pt-20'>
+    <div className='py-20 mb-10 relative'>
       {!isLoading && movies.length === 0 && <p className='text-center text-white text-3xl p-4 mt-6'>Your list is empty!</p>}
       {isLoading ? <div className="flex justify-center items-center h-screen">
       <div className="flex space-x-2">
@@ -100,15 +57,14 @@ if(requestStatus === 'error') {
       </div>
     </div>
  :
-      <section className="py-10 flex flex-wrap">
+      <section className="pb-20 flex flex-wrap justify-center">
      {movies.map((movie, index) => (
-        <div className="w-full sm:w-1/1 md:w-1/3 lg:w-1/4 xl:w-1/4 py-2 px-10 flex justify-center items-center">
+        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 py-10 my-20 md:my-10 mx-10 sm:mx-0 md:mx-0 px-10 h-[10rem] flex justify-center items-center">
           <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} />
           </div>
           ))}
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
     </section>}
-    <Footer />
     </div>
   );
 }

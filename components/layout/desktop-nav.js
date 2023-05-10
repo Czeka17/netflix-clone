@@ -1,7 +1,7 @@
 import { FiLogOut } from "react-icons/fi";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { useState,useRef } from 'react';
+import { useRef } from 'react';
 import { ImSearch } from "react-icons/im";
 import { useRouter } from 'next/router';
 function DesktopNav(props){
@@ -48,7 +48,7 @@ function DesktopNav(props){
   ref={inputRef}
 />
         <ImSearch
-          className="absolute right-0 text-xl mx-3 hover:fill-red-700 duration-300"
+          className="absolute right-9 text-xl mx-3 hover:fill-red-700 duration-300"
           onClick={SearchHandler}
         />
       </li>

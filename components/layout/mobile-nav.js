@@ -21,6 +21,7 @@ function MobileNavigation() {
 
 const handleInputChange = (event) => {
   const searchQuery = event.target.value;
+  setIsOpen(false)
 router.push(`/search?q=${searchQuery}`);
 };
 function SearchHandler(){
@@ -39,19 +40,19 @@ function SearchHandler(){
   return (
     <div className="fixed w-full h-16 bg-red-700 text-white z-40 duration-300">
       <div className="flex justify-between items-center px-4 h-full">
-        <Link href="/" className="text-lg font-bold left-0 z-50">
+        <Link href="/" className="font-bold mr-4 left-0 z-50">
           MOOWIZ
         </Link>
-        <li className="flex flex-row items-center min-w-[220px] relative">
+        <li className="flex flex-row items-center relative w-[70%] mx-2">
           <input
-            className={`absolute right-8 w-40 mx-2 py-1 px-2 rounded bg-transparent border-2 border-white text-white`}
+            className={`absolute w-[100%] py-1 px-2 rounded bg-transparent border-2 border-white text-white`}
             type="text"
-            placeholder="Search for a movie"
+            placeholder="Search"
             onChange={handleInputChange}
             ref={inputRef}
           />
         <ImSearch
-          className="absolute right-0 text-xl mx-3 cursor-pointer"
+          className="absolute right-0 text-xl mx-2 cursor-pointer"
           onClick={SearchHandler}
         />
       </li>

@@ -16,7 +16,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
     }
   }, [showModal]);
 
-  const movieid = movie.id
+  const movieid = movie?.id
 
   useEffect(() => {
     const fetchTrailerUrl = async () => {

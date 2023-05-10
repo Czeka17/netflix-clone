@@ -44,6 +44,18 @@ function Movie(props){
   const { data: session, status } = useSession()
   const [likes, setLikes] = useState(loadLikesFromLocalStorage());
   const [newWatchlist, setNewWatchlist] = useState([])
+  const [showButtons, setShowButtons] = useState(false);
+
+  
+
+  useEffect(() => {
+    function handleResize() {
+      setShowButtons(window.innerWidth >= 1024); 
+    }
+    handleResize(); 
+    window.addEventListener("resize", handleResize); 
+    return () => window.removeEventListener("resize", handleResize); 
+  }, []);
 
   async function movielistHandler() {
       if(newWatchlist.map(item => item.id).includes(props.movie.id)){
@@ -87,7 +99,7 @@ function Movie(props){
             key={props.index}
             onMouseEnter={() => props.handleMovieHover(props.movie)}
             onMouseLeave={() => props.handleMouseLeave()}
-            className="h-[250px] w-[210px] lg:h-[250px] md:w-[250px] md:h-[250px] lg:w-[250px] my-2 cursor-pointer pr-12 pl-6" tabindex="0"
+            className="h-full w-full my-2 cursor-pointer" tabindex="0"
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
             <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 my-24 py-4 duration-300 overflow-visible" tabindex="0">
@@ -104,31 +116,31 @@ function Movie(props){
                   <p className={`pb-2 text-xs ${
                   props.movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
                 }`}>Vote average: {props.movie?.vote_average}</p>
-                  <div className="flex justify-around items-center">
+                  <div className="flex justify-around items-center pb-2">
                     <div className="flex flex-col justify-center items-center group">
-                      <AiOutlineLike className={`text-2xl cursor-pointer mx-1 transition-all duration-300 group-hover:text-blue-500 hover:fill-blue-500 w-[25px] ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>
-                      <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${likes[props.movie.id] ? 'text-blue-700' : 'text-white'}`}>
+                      <AiOutlineLike className={`text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 hover:fill-blue-500 md:w-[34px] py-1 md:py-0 ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>
+                      {showButtons && <span className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${likes[props.movie.id] ? 'text-blue-700' : 'text-white'}`}>
                       {likes[props.movie.id] ? 'Liked' : 'Like'}
-                      </span>
+                      </span>}
                     </div>
-                    <div className="flex flex-col justify-center items-center group text-white w-[70px]" onClick={movielistHandler}>
+                    <div className="flex flex-col justify-center items-center group text-white md:w-[70px]" onClick={movielistHandler}>
                     {newWatchlist.map(item => item.id).includes(props.movie.id) ? (
-    <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+    <BsCheckLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 py-1 md:py-0" />
   ) : (
-    <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500" />
+    <BsPlusLg className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 py-1 md:py-0" />
   )}
-  <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+  {showButtons &&<span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
     {newWatchlist.map(item => item.id).includes(props.movie.id) ? 'Added to list' : 'Add to list'}
-  </span>
+  </span>}
 </div>
 
                     <div className="flex flex-col justify-center items-center group text-white">
-                      <AiOutlineEllipsis className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white"
+                      <AiOutlineEllipsis className="text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white py-1 md:py-0"
   onClick={props.handleMovieClick}
 />
-                <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {showButtons && <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     More
-                  </span>
+                  </span>}
                 </div>
                 </div>
                 </div>

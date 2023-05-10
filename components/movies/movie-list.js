@@ -4,9 +4,9 @@ import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
-import Notification from "../layout/notification";
 import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
 import classes from './movies-list.module.css'
+import { getWatchlistMovies } from "@/lib/api";
 
 
 function MovieList({ title, movieslist }) {
@@ -16,14 +16,11 @@ function MovieList({ title, movieslist }) {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [requestStatus, setRequestStatus] = useState();
-  const [requestError, setRequestError] = useState();
   const [watchlist, setWatchlist] = useState([]);
   const [newWatchlist, setNewWatchlist] = useState([])
   const [hasScrolled, setHasScrolled] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
-  const [svgPosition, setSvgPosition] = useState(0);
   const carouselRef = useRef()
 
   const handleSlideChanged = (event) => {
@@ -32,29 +29,7 @@ function MovieList({ title, movieslist }) {
     }
     setActiveSlideIndex(event.item);
   };
-    useEffect(() => {
-      if(requestStatus === 'success' || requestStatus === 'error'){
-          const timer = setTimeout(() =>{
-              setRequestStatus(null);
-              setRequestError(null)
-          }, 3000);
 
-          return () => clearTimeout(timer);
-      }
-  }, [requestStatus])
-
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setSvgPosition(window.pageYOffset);
-    };
-  
-    window.addEventListener("scroll", handleScroll);
-  
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
 
   useEffect(() => {
@@ -82,21 +57,14 @@ function MovieList({ title, movieslist }) {
     setShowModal(false);
   };
   useEffect(() => {
-    async function getWatchlistMovies(){
-    if (status === 'authenticated') {
-      const response = await fetch('/api/watchlist/getWatchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: session.user.email }),
-      });
-      const data = await response.json();
-      setWatchlist(data.watchlist);
-      console.log(watchlist)
+    async function fetchWatchlist() {
+      if (status === 'authenticated') {
+        const watchlist = await getWatchlistMovies(session.user.email);
+        setWatchlist(watchlist);
+      }
     }
-  }
-  getWatchlistMovies()
+  
+    fetchWatchlist();
   }, [session, status]);
 
   useEffect(() => {
@@ -134,31 +102,6 @@ function MovieList({ title, movieslist }) {
   };
 
 
-  let notification;
-
-  if(requestStatus === 'pending'){
-    notification = {
-        status: 'pending',
-        title: 'Checking if movie is in list...',
-        message: 'Checking if movie is in list'
-    }
-}
-
-if(requestStatus === 'success') {
-    notification = {
-        status: 'success',
-        title: 'Success!',
-        message: 'Movie added successfully'
-    }
-}
-if(requestStatus === 'error') {
-    notification = {
-        status: 'error',
-        title: 'Error!',
-        message: requestError
-    }
-}
-
 useEffect(() => {
   const body = document.querySelector("body");
   if (showModal) {
@@ -181,7 +124,7 @@ useEffect(() => {
       <h2 className="ml-6 p-4 text-3xl font-bold rounded">{title}</h2>
       </div>
       <div className="relative">
-        <div className="lg:pl-12 lg:pr-12">
+        <div className="lg:pl-14 lg:pr-14">
         <AliceCarousel
           items={movies}
           responsive={responsive}
@@ -192,7 +135,7 @@ useEffect(() => {
   mouseTracking={true}
           >
         {movies.map((movie, index) => (
-          <div aria-label={`List of ${title} movies`}>
+          <div className="px-5 lg:mx-2" aria-label={`List of ${title} movies`}>
             <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
             </div>
           ))}
@@ -214,7 +157,6 @@ useEffect(() => {
         <MdArrowForwardIos />
       </button>}
       </div>
-      {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </section>
   );
 }
