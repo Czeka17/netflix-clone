@@ -33,10 +33,8 @@ async function deleteMovieHandler(email, movie) {
       },
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
     throw new Error(error.message || 'Something went wrong!');
   }
 };

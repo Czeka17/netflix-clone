@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import Modal from "@/components/layout/modal";
 import { getWatchlistMovies } from "@/lib/api";
 import Fuse from "fuse.js";
+import Head from "next/head";
 function Search({ popularMovies, topRatedMovies, upcomingMovies }){
     const { data: session, status } = useSession()
     const [isHovering, setIsHovering] = useState(false);
@@ -83,6 +84,10 @@ const handleMovieHover = (movie) => {
     
       return (
         <>
+        <Head>
+        <title>Search</title>
+        <meta name="description" content={`Search results for ${searchQuery}`} />
+      </Head>
         <div className="flex flex-col items-center justify-center pt-24 text-white">
   <h1 className="text-xl">Search Results for <span className="font-bold">{searchQuery}</span></h1>
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Notification from "../layout/notification";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import ReactDOM from "react-dom";
 
 async function createUser(email,name,password){
   const response = await fetch('/api/auth/signup', {
@@ -86,7 +87,8 @@ function SignupModal({showModal, hideModal}) {
           message: requestError
       }
   }
-    return <div
+    return ReactDOM.createPortal((
+      <div
       className={`fixed z-50 inset-0 overflow-y-auto ${
         show ? "opacity-100 visible" : "opacity-0 invisible"
       } transition-opacity duration-500`}
@@ -120,6 +122,7 @@ function SignupModal({showModal, hideModal}) {
       </div>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
     </div>
+    ), document.getElementById('modals'));
 }
 
 export default SignupModal;

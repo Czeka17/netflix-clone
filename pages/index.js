@@ -4,11 +4,17 @@ import MovieList from "@/components/movies/movie-list";
 import requests from "@/Requests";
 import { getSession } from "next-auth/react";
 import axios from 'axios';
+import Head from "next/head";
 
 function Home({ popularMovies, topRatedMovies, upcomingMovies }) {
 
   return (
     <div>
+      <Head>
+        <title>Moowiz</title>
+        <meta name="description" content="Browse huge library of movies! Watch trailers and discover upcoming films" />
+        <meta name="keywords" content="Movies, Films, Trailers, Cinema" />
+      </Head>
       <FeaturedMovie />
       <MovieList title={'Popular'} movieslist={popularMovies} />
       <hr className="border-t border-red-800 my-4"/>

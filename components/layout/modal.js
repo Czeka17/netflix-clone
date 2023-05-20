@@ -2,13 +2,14 @@ import React, { useState, useEffect, } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { FaSpinner } from "react-icons/fa";
-
+import ReactDOM  from "react-dom";
 const Modal = ({ movie, showModal, hideModal }) => {
   const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    
     if (showModal) {
       setShow(true);
     } else {
@@ -19,6 +20,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
   const movieid = movie?.id
 
   useEffect(() => {
+    
     const fetchTrailerUrl = async () => {
       setIsLoading(true);
       const response = await axios.get(
@@ -39,8 +41,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
     fetchTrailerUrl();
   }, [movieid]);
 
-  return (
-    <div
+  return  ReactDOM.createPortal((<div
       className={`fixed z-50 inset-0 overflow-y-auto ${
         show ? "opacity-100 visible" : "opacity-0 invisible"
       } transition-opacity duration-500`}
@@ -94,7 +95,7 @@ const Modal = ({ movie, showModal, hideModal }) => {
         </div>
       </div>
     </div>
-  );
+  ),document.getElementById('modals'));
 };
 
 export default Modal;

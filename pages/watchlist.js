@@ -4,6 +4,7 @@ import { getSession } from 'next-auth/react';
 import Movie from '@/components/movies/movie';
 import Modal from '@/components/layout/modal';
 import { getWatchlistMovies } from '@/lib/api';
+import Head from 'next/head';
 
 function Watchlist() {
   const { data: session, status } = useSession();
@@ -48,6 +49,10 @@ function Watchlist() {
 
   return (
     <div className='py-20 mb-10 relative'>
+      <Head>
+        <title>Watchlist</title>
+        <meta name="description" content="Movies that you added to your watchlist" />
+      </Head>
       {!isLoading && movies.length === 0 && <p className='text-center text-white text-3xl p-4 mt-6'>Your list is empty!</p>}
       {isLoading ? <div className="flex justify-center items-center h-screen">
       <div className="flex space-x-2">

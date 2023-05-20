@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react"
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
+import Head from "next/head";
 function Greetings(){
     const { data: session, status } = useSession()
 
@@ -11,7 +12,7 @@ function Greetings(){
         if (status === "authenticated") {
           const redirectTimer = setTimeout(() => {
             router.push("/");
-          }, 5000);
+          }, 3000);
       
           return () => clearTimeout(redirectTimer);
         } else {
@@ -20,6 +21,11 @@ function Greetings(){
       }, [status]);
     return(
         <div className="w-screen fixed h-screen flex justify-center items-center z-50 bg-black">
+          <Head>
+        <title>Welcome
+        </title>
+        <meta name="description" content='Greetings page for moowiz' />
+      </Head>
             <h2 className="text-white shadow-2xl p-2 shadow-red-700 text-4xl lg:text-6xl text-center">Hello {session.user.name}!</h2>
         </div>
     )

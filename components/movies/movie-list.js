@@ -80,7 +80,6 @@ function MovieList({ title, movieslist }) {
       setMovies(movieslist);
   }, [movieslist]);
 
-  console.log(newWatchlist)
 
   const responsive = {
     0: { items: 2 },
@@ -111,7 +110,6 @@ useEffect(() => {
   }
 }, [showModal]);
 
-  console.log(newWatchlist)
 
   return (
     <section className="relative py-2 px-2 w-full text-white overflow-hidden">
