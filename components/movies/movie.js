@@ -45,7 +45,22 @@ function Movie(props){
   const [showButtons, setShowButtons] = useState(false);
 
   
+  useEffect(() => {
+    const storedLikes = loadLikesFromLocalStorage();
+    setLikes(storedLikes);
+  }, []);
 
+  useEffect(() => {
+    saveLikesToLocalStorage(likes);
+  }, [likes]);
+
+  function likeHandler(movieId) {
+    setLikes((prevLikes) => {
+      const updatedLikes = { ...prevLikes, [movieId]: !prevLikes[movieId] };
+      return updatedLikes;
+    });
+  }
+  
   useEffect(() => {
     function handleResize() {
       setShowButtons(window.innerWidth >= 1024); 
@@ -70,23 +85,7 @@ function Movie(props){
       }
   }
 
-  
 
-  useEffect(() => {
-    const storedLikes = loadLikesFromLocalStorage();
-    setLikes(storedLikes);
-  }, []);
-
-  useEffect(() => {
-    saveLikesToLocalStorage(likes);
-  }, [likes]);
-
-  function likeHandler(movieId) {
-    setLikes((prevLikes) => {
-      const updatedLikes = { ...prevLikes, [movieId]: !prevLikes[movieId] };
-      return updatedLikes;
-    });
-  }
 
   useEffect(() => {
     setNewWatchlist([...props.watchlist]);
