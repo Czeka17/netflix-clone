@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
         `https://api.themoviedb.org/3/movie/${movieid}/videos`,
         {
           params: {
-            api_key: (`${process.env.MOVIEDB_KEY}`),
+            api_key: '502c330772f772740b274f7363e5b00a',
           },
         }
       );
