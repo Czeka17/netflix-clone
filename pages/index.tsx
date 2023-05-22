@@ -25,7 +25,7 @@ const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovi
         <meta name="description" content="Browse huge library of movies! Watch trailers and discover upcoming films" />
         <meta name="keywords" content="Movies, Films, Trailers, Cinema" />
       </Head>
-      <FeaturedMovie />
+      <FeaturedMovie Movies={popularMovies} />
       <MovieList title={'Popular'} movieslist={popularMovies} />
       <hr className="border-t border-red-800 my-4"/>
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />

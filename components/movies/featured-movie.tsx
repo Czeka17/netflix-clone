@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import requests from "../../Requests";
-import axios from "axios";
 import {AiOutlineQuestionCircle} from 'react-icons/ai'
 import Modal from "../layout/modal";
 import { Movieobj } from "../../lib/types";
-function FeaturedMovie() {
+interface FeaturedMovieProps {
+  Movies: Movieobj[];
+}
+const FeaturedMovie: React.FC<FeaturedMovieProps> = ({ Movies }) => {
 
   const [movies,setMovies] = useState<Movieobj[]>([])
   const [showModal, setShowModal] = useState(false);
@@ -20,9 +21,7 @@ function FeaturedMovie() {
     setShowModal(false);
   };
   useEffect(() => {
-    axios.get(requests.requestPopular).then((response) => {
-      setMovies(response.data.results)
-    })
+    setMovies(Movies)
   }, [])
   const randomMovie = Math.floor(Math.random() * movies.length);
   const movie = selectedMovie || movies[randomMovie];
