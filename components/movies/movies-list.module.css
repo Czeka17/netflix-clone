@@ -1,4 +1,4 @@
-@keyframes slide {
+@keyframes slideFromLeft {
     0% {
      top: 10%;
      left: 10%;
@@ -12,7 +12,7 @@
         left: 10%;
        }
   }
-@keyframes slide2 {
+@keyframes slideFromRight {
     0% {
      bottom: 0%;
      right: 10%;
@@ -35,7 +35,7 @@
       transform: rotate(360deg);
     }
   }
-  @keyframes spin2 {
+  @keyframes spinBackwards {
     0% {
       transform: rotate(0);
     }
@@ -44,9 +44,9 @@
     }
   }
   
-  .animate {
-    animation: slide 220s ease-out infinite, spin 120s linear infinite;
+  .animateTV {
+    animation: slideFromLeft 220s ease-out infinite, spin 120s linear infinite;
   }
-  .animate2 {
-    animation: slide2 180s ease-out infinite, spin2 100s linear infinite;
+  .animateFilm {
+    animation: slideFromRight 180s ease-out infinite, spinBackwards 100s linear infinite;
   }
