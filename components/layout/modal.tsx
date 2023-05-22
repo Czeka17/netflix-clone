@@ -36,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
         `https://api.themoviedb.org/3/movie/${movieid}/videos`,
         {
           params: {
-            api_key: `${process.env.TRAILERS_KEY}`,
+            api_key: (`${process.env.TRAILERS_KEY}`),
           },
         }
       );
