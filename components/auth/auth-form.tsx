@@ -87,10 +87,14 @@ if(requestStatus === 'error') {
                 <div className="w-full flex flex-col items-center">
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double border-red-700 bg-neutral-800 w-full text-white" type="email" id="email" placeholder="email" ref={emailInputRef as LegacyRef<HTMLInputElement>} />
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double  w-full border-red-700 bg-neutral-800 text-white" type="password" id="password" placeholder="password" ref={passwordInputRef as LegacyRef<HTMLInputElement>} />
-                <button className="m-4 py-3 w-full bg-red-700 text-white rounded">Log in</button>
+                <button className="m-4 py-3 w-full bg-red-700 text-white rounded hover:bg-red-600 duration-200">Log in</button>
                 </div>
             </form>
-            <button className="text-white border-2 w-full py-2 rounded bg-neutral-800" onClick={handleModalClick}>Create new account</button>
+            <button className="text-white border-2 w-full py-2 rounded bg-neutral-800 hover:bg-neutral-700 duration-200" onClick={handleModalClick}>Create new account</button>
+            <div className="w-full flex flex-col items-center pt-2">
+            <p className="text-white">email: test@test.pl</p>
+            <p className="text-white">password: test123</p>
+            </div>
             </div>
             {showModal && <SignupModal showModal={showModal} hideModal={hideModal} />}
             {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}

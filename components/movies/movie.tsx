@@ -135,7 +135,7 @@ function Movie(props: MovieProps){
                   <p className="text-xs text-white pb-2 lg:text-base">{props.movie?.title}</p>
                   <p className={`pb-2 text-xs ${
                   props.movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
-                }`}>Vote average: {props.movie?.vote_average}</p>
+                }`}>Vote average: {props.movie?.vote_average.toFixed(2)}</p>
                   <div className="flex justify-around items-center pb-2">
                     <div className="flex flex-col justify-center items-center group">
                       <AiOutlineLike className={`text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 hover:fill-blue-500 md:w-[34px] py-1 md:py-0 ${likes[props.movie.id] ? 'fill-blue-700' : 'fill-white'}`} onClick={() => likeHandler(props.movie.id)}  style={{ transform: likes[props.movie.id] ? 'scale(1.2)' : 'scale(1)' }}/>

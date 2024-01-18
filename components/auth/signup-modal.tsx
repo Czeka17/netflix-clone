@@ -120,7 +120,7 @@ function SignupModal({ showModal, hideModal }: SignupModalProps) {
                 <input type="password" id="password" placeholder="password" 
                 className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={passwordInputRef as LegacyRef<HTMLInputElement>}/>
                 <div className="flex flex-row justify-end items-end">
-                <button onClick={() => hideModal()} className="text-white p-2 m-2 border-2 border-white rounded-lg">Cancel</button>
+                <button onClick={() => hideModal()} className="text-white p-2 m-2 border-2 border-white rounded-lg hover:bg-neutral-800 duration-300">Cancel</button>
                 <button className="border-2 border-white bg-white text-red-700 bg-red-700 p-2 m-2 rounded-lg hover:text-white hover:bg-red-800 duration-300">Sign up</button>
                 </div>
             </form>

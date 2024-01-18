@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
@@ -12,7 +12,7 @@ import { Movieobj } from "../../lib/types";
   interface MovieListProps {
     title: string;
     movieslist: Movieobj[];
-  }
+  };
 
 function MovieList({ title, movieslist }: MovieListProps) {
   const { data: session, status } = useSession()

@@ -26,7 +26,7 @@ function DesktopNav(props: { navBg: string }){
     <ul className="flex flex-row my-4 justify-between items-center p-2">
       <li>
         <Link href='/' className="hover:text-red-600 duration-200 mx-20 font-bold">
-          MOOWIZ
+          Moowiz
         </Link>
       </li>
       <li>

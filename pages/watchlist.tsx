@@ -56,6 +56,7 @@ function Watchlist() {
         <title>Watchlist</title>
         <meta name="description" content="Movies that you added to your watchlist" />
       </Head>
+      <h2 className='text-center text-white text-2xl'>You'r list</h2>
       {!isLoading && movies.length === 0 && <p className='text-center text-white text-3xl p-4 mt-6'>Your list is empty!</p>}
       {isLoading ? <div className="flex justify-center items-center h-screen">
       <div className="flex space-x-2">

@@ -6,7 +6,7 @@ import requests from '../Requests'
 import { getSession } from "next-auth/react";
 import axios from 'axios';
 import Head from "next/head";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Movieobj } from '../lib/types';
 
 interface HomeProps {
@@ -18,19 +18,33 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovies }) => {
 
+  const [isLoading,setIsLoading] = useState(true)
+
+  useEffect(() => {
+    if(popularMovies && topRatedMovies && upcomingMovies){
+      setIsLoading(false)
+    }
+  },[topRatedMovies,popularMovies,upcomingMovies])
   return (
     <div>
       <Head>
         <title>Moowiz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charSet="UTF-8" />
+        <meta name="author" content="Jakub Czekański" />
         <meta name="description" content="Browse huge library of movies! Watch trailers and discover upcoming films" />
         <meta name="keywords" content="Movies, Films, Trailers, Cinema" />
       </Head>
-      <FeaturedMovie Movies={popularMovies} />
+      {!isLoading ?<div>
+        <FeaturedMovie Movies={popularMovies} />
       <MovieList title={'Popular'} movieslist={popularMovies} />
       <hr className="border-t border-red-800 my-4"/>
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
       <hr className="border-t border-red-800 my-4"/>
       <MovieList title={'Upcoming'} movieslist={upcomingMovies} />
+      </div> : <div className='flex justify-center items-center h-[100vh]'>
+           <p className='text-white'>Loading...</p>
+           </div>}
       <Footer />
     </div>
   );

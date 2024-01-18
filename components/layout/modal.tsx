@@ -65,9 +65,9 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
         </div>
 
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center h-[100%]">
             {isLoading ? (
-              <FaSpinner className="animate-spin h-6 w-6 text-white" />
+              <FaSpinner className="animate-spin h-6 w-6 my-6" fill="black" />
             ) : (
               <ReactPlayer url={trailerUrl} controls={true} />
             )}
@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
                   movie?.vote_average > 6.9 ? "text-green-500" : "text-yellow-500"
                 }`}
               >
-                vote average: {movie?.vote_average}
+                vote average: {movie?.vote_average.toFixed(2)}
               </p>
             </div>
             <div className="mt-2">
