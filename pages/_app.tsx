@@ -49,7 +49,9 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
     <SessionProvider session={session}>
           {!delayedTransition ? <div className={`transition-opacity duration-500 ${appLoading ? '' : 'opacity-0'}`}>
            <div className='flex justify-center items-center h-[100vh]'>
-           <p className='text-white'>Loading...</p>
+           <div className="max-w-[200px] max-h-[200px]">
+        <img src="/logo.png"/>
+        </div>
            </div>
           </div>
           :

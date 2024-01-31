@@ -117,8 +117,8 @@ useEffect(() => {
 
 
   return (
-    <section className="relative py-2 px-2 w-full text-white overflow-hidden">
-  <div className="absolute top-0 left-0 w-0 h-0 ml-4 lg:ml-10 border-solid border-t-[0px] border-t-transparent
+    <section className="relative px-2 w-full text-white overflow-hidden">
+  <div className="absolute top-0 left-0 w-0 h-0 border-solid border-t-[0px] border-t-transparent
     border-l-[90vw] border-l-red-700
     border-b-[120px] border-b-transparent"></div>
     <img src="/svg/tv.svg" className={`absolute w-20 lg:w-40 h-40 m-8 opacity-50  ${classes.animateTV}`} alt="" />
@@ -127,7 +127,7 @@ useEffect(() => {
       <h2 className="ml-6 p-4 text-3xl font-bold rounded">{title}</h2>
       </div>
       <div className="relative">
-        <div className="lg:pl-14 lg:pr-14">
+        <div className="lg:pl-14 lg:pr-14 py-6">
         <AliceCarousel
           items={movies}
           responsive={responsive}
@@ -138,22 +138,22 @@ useEffect(() => {
   mouseTracking={true}
           >
         {movies.map((movie, index) => (
-          <div className="px-5 lg:mx-2" aria-label={`List of ${title} movies`}>
-            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} />
+          <div className="px-6 md:px-10 lg:px-6 lg:py-6 lg:mx-2 max-w-[100vw]" aria-label={`List of ${title} movies`}>
+            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} isWatchlist={false} />
             </div>
           ))}
           </AliceCarousel>
         </div>
           {selectedMovie && showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
           {showButtons && hasScrolled && activeSlideIndex > 0 && <button
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 pb-10 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
         onClick={handlePrevButtonClick}
         style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         <MdArrowBackIosNew />
       </button>}
       {showButtons && activeSlideIndex < movies.length-5 && <button
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 pb-10 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
         onClick={handleNextButtonClick}
         style={{ WebkitTapHighlightColor: 'transparent' }}
       >

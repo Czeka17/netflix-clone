@@ -16,6 +16,9 @@ function Watchlist() {
   const [showModal, setShowModal] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
+  const [delayedTransition,setDelayedTransition] = useState(false)
+
+
 
 
   useEffect(() => {
@@ -24,6 +27,9 @@ function Watchlist() {
         const watchlist = await getWatchlistMovies(session.user.email);
         setMovies(watchlist);
         setIsLoading(false)
+        setTimeout(() => {
+          setDelayedTransition(true)
+        }, 300)
       }
     }
   
@@ -56,23 +62,21 @@ function Watchlist() {
         <title>Watchlist</title>
         <meta name="description" content="Movies that you added to your watchlist" />
       </Head>
-      <h2 className='text-center text-white text-2xl'>You'r list</h2>
+      <h2 className='text-center text-white text-2xl'>Your list</h2>
       {!isLoading && movies.length === 0 && <p className='text-center text-white text-3xl p-4 mt-6'>Your list is empty!</p>}
-      {isLoading ? <div className="flex justify-center items-center h-screen">
-      <div className="flex space-x-2">
-        <div className="w-10 h-10 rounded-full bg-gray-600 animate-pulse"></div>
-        <div className="w-10 h-10 rounded-full bg-gray-700 animate-pulse delay-150"></div>
-        <div className="w-10 h-10 rounded-full bg-gray-800 animate-pulse delay-300"></div>
-      </div>
-    </div>
+      {!delayedTransition ? <div className={`flex justify-center items-center mt-20 transition-opacity ${!isLoading ? 'opacity-0' : 'opacity-100'} duration-300`}>
+  <img src="/logo.png" className='animate-spin-slow max-w-[50%]'/>
+</div>
  :
-      <section className="pb-20 flex flex-wrap justify-center">
+      <section className={`flex flex-wrap justify-center items-center`}>
+        <div className='max-w-[1400px] pb-20 flex flex-wrap justify-center items-center mt-10'>
      {movies.map((movie, index) => (
-        <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 py-10 my-20 md:my-10 mx-10 sm:mx-0 md:mx-0 px-10 h-[10rem] flex justify-center items-center">
-          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} />
+        <div className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 my-40 md:my-10 mx-10 sm:mx-0 md:mx-0 px-10  flex justify-center items-center h-[15rem]'>
+          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} isWatchlist={true} />
           </div>
           ))}
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
+          </div>
     </section>}
     </div>
   );

@@ -6,7 +6,6 @@ import { useSession } from 'next-auth/react';
 import {saveLikesToLocalStorage, loadLikesFromLocalStorage} from '../../store/storage'
 import { Movieobj } from '../../lib/types';
 interface MovieProps {
-    
     movie: Movieobj
     index: number;
     isHovering: boolean;
@@ -21,6 +20,7 @@ interface MovieProps {
     handleMovieClick: () => void;
     handleMovieHover: (movie: Movieobj) => void;
     handleMouseLeave: () => void;
+    isWatchlist: boolean;
   }
 async function addMovieHandler(email: string,movie: { id: number; title: string }){
   const response = await fetch('/api/watchlist/watchlist', {
@@ -122,14 +122,14 @@ function Movie(props: MovieProps){
             className="h-full w-full my-2 cursor-pointer" tabIndex={0}
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
-            <div className="hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 my-24 py-4 duration-300 overflow-visible" tabIndex={0}>
+            <div className={`hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 py-4 duration-300 overflow-visible ${props.isWatchlist ? 'my-4' : 'my-32'}`} tabIndex={0}>
               <img
                 className="overflow-visible z-20 focus:outline-none"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
                 alt={props.movie?.title}
                 onClick={props.isHovering ? props.handleMovieClick : undefined}
               />
-             {props.selectedMovie?.title !== props.movie.title && <p className='flex justify-center items-center text-center text-white text-xs lg:text-base p-2'>{props.movie.title}</p>}
+             {props.selectedMovie?.title !== props.movie.title && <p className='absolute text-center w-[100%] mt-2 text-white'>{props.movie.title}</p>}
               {props.isHovering && props.selectedMovie?.id === props.movie.id && (
                 <div className="absolute -bottom-100 left-0 right-0 bg-gray-700 rounded-br rounded-bl text-center py-2">
                   <p className="text-xs text-white pb-2 lg:text-base">{props.movie?.title}</p>

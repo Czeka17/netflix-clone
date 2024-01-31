@@ -35,17 +35,14 @@ const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovi
         <meta name="description" content="Browse huge library of movies! Watch trailers and discover upcoming films" />
         <meta name="keywords" content="Movies, Films, Trailers, Cinema" />
       </Head>
-      {!isLoading ?<div>
+      {!isLoading ?<div className='flex items-center justify-center flex-col'>
         <FeaturedMovie Movies={popularMovies} />
-      <MovieList title={'Popular'} movieslist={popularMovies} />
-      <hr className="border-t border-red-800 my-4"/>
+   <div className='flex items-center justify-center flex-col w-[100%] max-w-[1400px]'><MovieList title={'Popular'} movieslist={popularMovies} />
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
-      <hr className="border-t border-red-800 my-4"/>
-      <MovieList title={'Upcoming'} movieslist={upcomingMovies} />
+      <MovieList title={'Upcoming'} movieslist={upcomingMovies} /></div>
       </div> : <div className='flex justify-center items-center h-[100vh]'>
-           <p className='text-white'>Loading...</p>
+      <img src="/logo.png"/>
            </div>}
-      <Footer />
     </div>
   );
 }

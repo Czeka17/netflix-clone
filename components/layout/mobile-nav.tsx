@@ -40,7 +40,10 @@ function SearchHandler(){
   return (
     <div className="fixed w-full h-16 bg-red-700 text-white z-40 duration-300">
       <div className="flex justify-between items-center px-4 h-full">
-        <Link href="/" className="font-bold mr-4 left-0 z-50">
+        <Link href="/" className="font-bold mr-4 left-0 z-50 flex flex-row items-center justify-center">
+        <div className="max-w-[75px] max-h-[75px] mx-2">
+        <img src="/logo.png"/>
+        </div>
           Moowiz
         </Link>
         <li className="flex flex-row items-center relative w-[70%] mx-2">

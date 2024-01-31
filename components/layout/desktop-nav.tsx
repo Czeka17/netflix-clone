@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { ChangeEvent, useRef } from 'react';
 import { ImSearch } from "react-icons/im";
 import { useRouter } from 'next/router';
+
 function DesktopNav(props: { navBg: string }){
 
     const router = useRouter()
@@ -25,17 +26,20 @@ function DesktopNav(props: { navBg: string }){
     return( <nav className={`fixed w-full text-white z-40 duration-300 ${props.navBg}`}>
     <ul className="flex flex-row my-4 justify-between items-center p-2">
       <li>
-        <Link href='/' className="hover:text-red-600 duration-200 mx-20 font-bold">
+        <Link href='/' className="hover:text-red-600 duration-200 mx-20 font-bold flex items-center justify-center">
+        <div className="max-w-[45px] max-h-[45px] mx-2">
+        <img src="/logo.png"/>
+        </div>
           Moowiz
         </Link>
       </li>
       <li>
-        <Link href='/' className="hover:text-red-600 duration-200 w-48">
+      <Link href='/' className={`hover:text-red-600 duration-200 w-48 ${router.pathname === '/' ? 'text-red-600' : ''}`}>
           Films
         </Link>
       </li>
       <li className="ml-6">
-        <Link href='/watchlist' className=" hover:text-red-600 duration-200 inline-block">
+      <Link href='/watchlist' className={`hover:text-red-600 duration-200 inline-block ${router.pathname === '/watchlist' ? 'text-red-600' : ''}`}>
           My List
         </Link>
       </li>
