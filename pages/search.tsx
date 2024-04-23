@@ -11,6 +11,7 @@ import Fuse from "fuse.js";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { Movieobj } from "../lib/types";
+import Footer from "../components/layout/footer";
   
   interface SearchProps {
     popularMovies: Movieobj[];
@@ -98,7 +99,7 @@ const handleMovieHover = (movie: Movieobj) => {
         <title>Search</title>
         <meta name="description" content={`Search results for ${searchQuery}`} />
       </Head>
-        <div className="flex flex-col items-center justify-center pt-24 text-white pb-6">
+        <div className="flex flex-col items-center justify-center pt-24 text-white pb-28 min-h-[100vh]">
   <h1 className="text-xl">Search Results for <span className="font-bold">{searchQuery}</span></h1>
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-[1400px]">
     {sortedMovies && sortedMovies.map((movie, index) => (
@@ -110,6 +111,7 @@ const handleMovieHover = (movie: Movieobj) => {
   {filteredMovies.length === 0 && searchQuery !== '' && <p className="text-white text-2xl text-center flex justify-center items-center p-6">Cant find movie that you are looking for.</p>}
   {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
 </div>
+<Footer/>
 </>
       );
 }

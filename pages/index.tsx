@@ -40,9 +40,11 @@ const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovi
    <div className='flex items-center justify-center flex-col w-[100%] max-w-[1400px]'><MovieList title={'Popular'} movieslist={popularMovies} />
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
       <MovieList title={'Upcoming'} movieslist={upcomingMovies} /></div>
+      
       </div> : <div className='flex justify-center items-center h-[100vh]'>
       <img src="/logo.png"/>
            </div>}
+           <Footer/>
     </div>
   );
 }

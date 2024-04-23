@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 
 import { Movieobj } from '../lib/types';
+import Footer from '../components/layout/footer';
 
 function Watchlist() {
   const { data: session, status } = useSession();
@@ -57,7 +58,7 @@ function Watchlist() {
 
 
   return (
-    <div className='py-20 mb-10 relative'>
+    <div className='pt-20 relative'>
       <Head>
         <title>Watchlist</title>
         <meta name="description" content="Movies that you added to your watchlist" />
@@ -77,8 +78,11 @@ function Watchlist() {
           ))}
           {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
           </div>
+          
     </section>}
+    <Footer/>
     </div>
+    
   );
 }
 export async function getServerSideProps(context:GetServerSidePropsContext) {
