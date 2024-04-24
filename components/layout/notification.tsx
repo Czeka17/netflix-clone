@@ -1,10 +1,5 @@
 import React from 'react';
-
-interface NotificationProps {
-  title: string;
-  message: string | undefined;
-  status: string;
-}
+import { NotificationProps } from '../../lib/types';
 
 const Notification: React.FC<NotificationProps> = ({ title, message, status }) => {
 

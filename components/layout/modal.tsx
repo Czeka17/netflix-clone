@@ -1,16 +1,16 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState, useEffect, useContext, } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { FaSpinner } from "react-icons/fa";
 import ReactDOM  from "react-dom";
 import {Movieobj} from '../../lib/types'
+import MovieContext from "../../context/MovieContext";
 interface ModalProps {
     movie:Movieobj | null
-    showModal: boolean;
-    hideModal: () => void;
   }
 
-const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
+const Modal: React.FC<ModalProps> = ({ movie }) => {
+  const movieCtx = useContext(MovieContext)
   const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -19,12 +19,12 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
   }
   useEffect(() => {
     
-    if (showModal) {
+    if (movieCtx.showModal) {
       setShow(true);
     } else {
       setShow(false);
     }
-  }, [showModal]);
+  }, [movieCtx.showModal]);
 
   const movieid = movie?.id
 
@@ -59,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
         <div
           className="fixed inset-0 transition-opacity"
           aria-hidden="true"
-          onClick={() => hideModal()}
+          onClick={() => movieCtx.hideModal()}
         >
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({ movie, showModal, hideModal }) => {
             <button
               type="button"
               className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm my-2 "
-              onClick={() => hideModal()}
+              onClick={() => movieCtx.hideModal()}
             >
               Close
             </button>

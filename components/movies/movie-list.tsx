@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import Modal from "../layout/modal";
 import { useSession } from "next-auth/react";
 import AliceCarousel from "react-alice-carousel";
@@ -7,20 +7,14 @@ import Movie from "./movie";
 import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
 import classes from './movies-list.module.css'
 import { getWatchlistMovies } from "../../lib/api";
-import { Movieobj } from "../../lib/types";
+import { Movieobj,MovieListProps  } from "../../lib/types";
+import MovieContext from "../../context/MovieContext";
 
-  interface MovieListProps {
-    title: string;
-    movieslist: Movieobj[];
-  };
 
 function MovieList({ title, movieslist }: MovieListProps) {
   const { data: session, status } = useSession()
-
+  const movieCtx = useContext(MovieContext)
   const [movies, setMovies] = useState<Movieobj[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movieobj |null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [watchlist, setWatchlist] = useState<Movieobj[]>([]);
   const [newWatchlist, setNewWatchlist] = useState<Movieobj[]>([])
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -54,13 +48,7 @@ function MovieList({ title, movieslist }: MovieListProps) {
   const handleNextButtonClick = () => {
     carouselRef.current?.slideNext();
   };
-  const handleMovieClick = () => {
-    setShowModal(true);
-  };
 
-  const hideModal = () => {
-    setShowModal(false);
-  };
   useEffect(() => {
     async function fetchWatchlist() {
       if (status === 'authenticated' && session?.user) {
@@ -93,27 +81,6 @@ function MovieList({ title, movieslist }: MovieListProps) {
     1440: { items: 5 }
 };
 
-  const handleMovieHover = (movie: Movieobj) => {
-    setSelectedMovie(movie);
-    setIsHovering(true)
-  };
-
-  const handleMouseLeave = () => {
-    if (!showModal) {
-      setSelectedMovie(null);
-      setIsHovering(false)
-    }
-  };
-
-
-useEffect(() => {
-  const body = document.querySelector("body");
-  if (showModal) {
-    body?.classList.add("overflow-hidden");
-  } else {
-    body?.classList.remove("overflow-hidden");
-  }
-}, [showModal]);
 
 
   return (
@@ -139,12 +106,12 @@ useEffect(() => {
           >
         {movies.map((movie, index) => (
           <div className="px-6 md:px-10 lg:px-6 lg:py-6 lg:mx-2 max-w-[100vw]" aria-label={`List of ${title} movies`}>
-            <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} isWatchlist={false} />
+            <Movie movie={movie} index={index}  watchlist={newWatchlist} isWatchlist={false} />
             </div>
           ))}
           </AliceCarousel>
         </div>
-          {selectedMovie && showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
+          {movieCtx.selectedMovie && movieCtx.showModal && <Modal movie={movieCtx.selectedMovie} />}
           {showButtons && hasScrolled && activeSlideIndex > 0 && <button
         className="absolute top-1/2 left-0 transform -translate-y-1/2 lg:mx-4 text-3xl lg:text-5xl text-red-700 h-1/2 duration-200 hover:scale-125 z-40"
         onClick={handlePrevButtonClick}

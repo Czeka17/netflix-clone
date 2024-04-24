@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {AiOutlineQuestionCircle} from 'react-icons/ai'
 import Modal from "../layout/modal";
-import { Movieobj } from "../../lib/types";
-interface FeaturedMovieProps {
-  Movies: Movieobj[];
-}
+import { FeaturedMovieProps, Movieobj } from "../../lib/types";
+
 const FeaturedMovie: React.FC<FeaturedMovieProps> = ({ Movies }) => {
 
   const [movies,setMovies] = useState<Movieobj[]>([])
@@ -28,7 +26,7 @@ const FeaturedMovie: React.FC<FeaturedMovieProps> = ({ Movies }) => {
 
   return (
     <div className="w-full h-[650px] text-white">
-      {showModal && <Modal hideModal={hideModal} movie={movie} showModal={showModal} />}
+      {showModal && <Modal movie={movie} />}
       <div className="w-full h-full relative">
         <div className="absolute w-full h-[650px] bg-gradient-to-r from-black"></div>
     <img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.title} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { getSession } from 'next-auth/react';
 import Movie from '../components/movies/movie';
@@ -9,17 +9,14 @@ import { GetServerSidePropsContext } from 'next';
 
 import { Movieobj } from '../lib/types';
 import Footer from '../components/layout/footer';
+import MovieContext from '../context/MovieContext';
 
 function Watchlist() {
   const { data: session, status } = useSession();
+  const movieCtx = useContext(MovieContext)
   const [movies, setMovies] = useState<Movieobj[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movieobj|null>(null);
-  const [showModal, setShowModal] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
   const [delayedTransition,setDelayedTransition] = useState(false)
-
-
 
 
   useEffect(() => {
@@ -36,25 +33,6 @@ function Watchlist() {
   
     fetchWatchlist();
   }, [session, status]);
-
-  const handleMovieClick = () => {
-    setShowModal(true);
-  };
-
-  const hideModal = () => {
-    setShowModal(false);
-  };
-  const handleMovieHover = (movie: Movieobj) => {
-    setSelectedMovie(movie);
-    setIsHovering(true)
-  };
-
-  const handleMouseLeave = () => {
-    if (!showModal) {
-      setSelectedMovie(null);
-      setIsHovering(false)
-    }
-  };
 
 
   return (
@@ -73,10 +51,10 @@ function Watchlist() {
         <div className='max-w-[1400px] pb-20 flex flex-wrap justify-center items-center mt-10'>
      {movies.map((movie, index) => (
         <div className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 my-40 md:my-10 mx-10 sm:mx-0 md:mx-0 px-10  flex justify-center items-center h-[15rem]'>
-          <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} watchlist={movies} handleMouseLeave={handleMouseLeave} isWatchlist={true} />
+          <Movie movie={movie} index={index}   watchlist={movies} isWatchlist={true} />
           </div>
           ))}
-          {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
+          {movieCtx.showModal && <Modal movie={movieCtx.selectedMovie} />}
           </div>
           
     </section>}

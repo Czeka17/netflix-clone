@@ -8,15 +8,10 @@ import axios from 'axios';
 import Head from "next/head";
 import React, { useEffect, useState } from 'react';
 import { Movieobj } from '../lib/types';
-
-interface HomeProps {
-    popularMovies: Movieobj[];
-    topRatedMovies: Movieobj[];
-    upcomingMovies: Movieobj[];
-}
+import { MovieObjectProps } from '../lib/types';
 
 
-const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovies }) => {
+const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcomingMovies }) => {
 
   const [isLoading,setIsLoading] = useState(true)
 
@@ -49,7 +44,7 @@ const Home: React.FC<HomeProps> = ({ popularMovies, topRatedMovies, upcomingMovi
   );
 }
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<MovieObjectProps> = async (context) => {
     const session = await getSession({ req: context.req });
   
     if (!session) {

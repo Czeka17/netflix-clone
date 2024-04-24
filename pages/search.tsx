@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 import requests from "../Requests";
 import axios from 'axios';
 import Movie from "../components/movies/movie";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "../components/layout/modal";
 import { getWatchlistMovies } from "../lib/api";
@@ -12,20 +12,15 @@ import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { Movieobj } from "../lib/types";
 import Footer from "../components/layout/footer";
-  
-  interface SearchProps {
-    popularMovies: Movieobj[];
-    topRatedMovies: Movieobj[];
-    upcomingMovies: Movieobj[];
-  }
+  import { MovieObjectProps } from "../lib/types";
+import MovieContext from "../context/MovieContext";
 
-function Search({ popularMovies, topRatedMovies, upcomingMovies }: SearchProps){
+
+function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectProps ){
     const { data: session, status } = useSession()
-    const [isHovering, setIsHovering] = useState(false);
-    const [selectedMovie, setSelectedMovie] = useState<Movieobj | null>(null);
+  const movieCtx = useContext(MovieContext)
     const [watchlist, setWatchlist] = useState<Movieobj[]>([]);
     const [newWatchlist, setNewWatchlist] = useState<Movieobj[]>([])
-    const [showModal, setShowModal] = useState(false);
     const movies = popularMovies.concat(topRatedMovies, upcomingMovies);
     const uniqueMovies = movies.filter((movie, index, self) => 
     index === self.findIndex((m) => (
@@ -74,24 +69,6 @@ useEffect(() => {
     setNewWatchlist([...watchlist]);
   }, [watchlist]);
 
-  const handleMovieClick = () => {
-    setShowModal(true);
-  };
-
-  const hideModal = () => {
-    setShowModal(false);
-  };
-const handleMovieHover = (movie: Movieobj) => {
-    setSelectedMovie(movie);
-    setIsHovering(true)
-  };
-
-  const handleMouseLeave = () => {
-    if (!showModal) {
-      setSelectedMovie(null);
-      setIsHovering(false)
-    }
-  };
     
       return (
         <>
@@ -104,12 +81,12 @@ const handleMovieHover = (movie: Movieobj) => {
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-[1400px]">
     {sortedMovies && sortedMovies.map((movie, index) => (
       <div key={movie.id} className="p-2 my-24 md:my-10 mx-10 md:mx-1 h-[10rem]" aria-label={`search result`}>
-        <Movie movie={movie} index={index} isHovering={isHovering} selectedMovie={selectedMovie} watchlist={newWatchlist} handleMovieClick={handleMovieClick} handleMovieHover={handleMovieHover} handleMouseLeave={handleMouseLeave} isWatchlist={false} />
+        <Movie movie={movie} index={index} watchlist={newWatchlist} isWatchlist={false} />
       </div>
     ))}
   </div>
   {filteredMovies.length === 0 && searchQuery !== '' && <p className="text-white text-2xl text-center flex justify-center items-center p-6">Cant find movie that you are looking for.</p>}
-  {showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} />}
+  {movieCtx.showModal && <Modal movie={movieCtx.selectedMovie} />}
 </div>
 <Footer/>
 </>
