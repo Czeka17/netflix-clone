@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { MovieActionsProps, Movieobj } from "../../lib/types";
+import React, { useState, useEffect } from "react";
+import { MovieActionsProps } from "../../lib/types";
 import { AiOutlineEllipsis, AiOutlineLike } from "react-icons/ai";
 import { BsPlusLg, BsCheckLg } from "react-icons/bs";
 import {
@@ -7,16 +7,16 @@ import {
 	loadLikesFromLocalStorage,
 } from "../../store/storage";
 
-function MovieActions({
+const MovieActions = React.memo(({
 	movie,
 	newWatchlist,
 	handleMovieClick,
 	movielistHandler,
-}: MovieActionsProps) {
+}: MovieActionsProps) => {
+
 	const [likes, setLikes] = useState<{ [key: number]: boolean }>(
 		loadLikesFromLocalStorage()
 	);
-	const [showButtons, setShowButtons] = useState(false);
 	useEffect(() => {
 		const storedLikes = loadLikesFromLocalStorage();
 		setLikes(storedLikes);
@@ -32,14 +32,7 @@ function MovieActions({
 			return updatedLikes;
 		});
 	}
-	useEffect(() => {
-		function handleResize() {
-			setShowButtons(window.innerWidth >= 1024);
-		}
-		handleResize();
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
+
 
 	return (
 		<div className='absolute -bottom-100 left-0 right-0 bg-gray-700 rounded-br rounded-bl text-center py-2'>
@@ -60,15 +53,15 @@ function MovieActions({
 						onClick={() => likeHandler(movie.id)}
 						style={{ transform: likes[movie.id] ? "scale(1.2)" : "scale(1)" }}
 					/>
-					{showButtons && (
+					
 						<span
-							className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+							className={`text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block ${
 								likes[movie.id] ? "text-blue-700" : "text-white"
 							}`}
 						>
 							{likes[movie.id] ? "Liked" : "Like"}
 						</span>
-					)}
+					
 				</div>
 				<div
 					className='flex flex-col justify-center items-center group text-white md:w-[70px]'
@@ -79,13 +72,13 @@ function MovieActions({
 					) : (
 						<BsPlusLg className='text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 py-1 md:py-0' />
 					)}
-					{showButtons && (
-						<span className='text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+					
+						<span className='text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block'>
 							{newWatchlist.map((item) => item.id).includes(movie.id)
 								? "Added to list"
 								: "Add to list"}
 						</span>
-					)}
+					
 				</div>
 
 				<div className='flex flex-col justify-center items-center group text-white'>
@@ -93,14 +86,14 @@ function MovieActions({
 						className='text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white py-1 md:py-0'
 						onClick={handleMovieClick}
 					/>
-					{showButtons && (
-						<span className='text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+					
+						<span className='text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block'>
 							More
 						</span>
-					)}
+					
 				</div>
 			</div>
 		</div>
 	);
-}
+})
 export default MovieActions;

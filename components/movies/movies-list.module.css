@@ -1,3 +1,11 @@
+.animateTV {
+  animation: slideFromLeft 220s ease-out infinite, spin 120s linear infinite;
+}
+.animateFilm {
+  animation: slideFromRight 180s ease-out infinite, spinBackwards 100s linear infinite;
+}
+
+
 @keyframes slideFromLeft {
     0% {
      top: 10%;
@@ -44,9 +52,3 @@
     }
   }
   
-  .animateTV {
-    animation: slideFromLeft 220s ease-out infinite, spin 120s linear infinite;
-  }
-  .animateFilm {
-    animation: slideFromRight 180s ease-out infinite, spinBackwards 100s linear infinite;
-  }

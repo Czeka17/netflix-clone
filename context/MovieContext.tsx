@@ -2,22 +2,13 @@ import { createContext } from 'react';
 import {Movieobj} from '../lib/types'
 // Define the type for the context value
 interface MovieContextProps {
-  showModal:boolean;
-  isHovering:boolean;
-  selectedMovie:Movieobj | null;
-  handleMovieHover:(movie:Movieobj) => void;
-  handleMouseLeave:() => void;
-  handleMovieClick:() => void;
-  hideModal:() => void;
+  watchlist:Movieobj[]
+  watchlistUpdate:(movie:Movieobj[]) => void;
 }
 const defaultMovieContext: MovieContextProps = {
-  showModal: false,
-  isHovering: false,
-  selectedMovie: null,
-  handleMovieHover: (movie: Movieobj) => {},
-  handleMouseLeave: () => {}, 
-  handleMovieClick: () => {}, 
-  hideModal: () => {}, 
+  
+  watchlist: [],
+  watchlistUpdate:(movie:Movieobj[]) => {}
 };
 
 const MovieContext = createContext<MovieContextProps>(defaultMovieContext);

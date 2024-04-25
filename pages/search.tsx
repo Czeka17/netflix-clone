@@ -19,8 +19,6 @@ import MovieContext from "../context/MovieContext";
 function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectProps ){
     const { data: session, status } = useSession()
   const movieCtx = useContext(MovieContext)
-    const [watchlist, setWatchlist] = useState<Movieobj[]>([]);
-    const [newWatchlist, setNewWatchlist] = useState<Movieobj[]>([])
     const movies = popularMovies.concat(topRatedMovies, upcomingMovies);
     const uniqueMovies = movies.filter((movie, index, self) => 
     index === self.findIndex((m) => (
@@ -48,27 +46,6 @@ function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectPr
     sortedMovies = uniqueMovies.sort((a, b) => a.title.localeCompare(b.title));
   }
 
-
-
-useEffect(() => {
-  async function fetchWatchlist() {
-    if (status === 'authenticated' && session?.user) {
-      const watchlist = await getWatchlistMovies(session.user.email);
-      setWatchlist(watchlist);
-    }
-  }
-
-  fetchWatchlist();
-}, [session, status]);
-
-  useEffect(() => {
-    if (watchlist.length === 0) {
-      setNewWatchlist([]);
-      return;
-    }
-    setNewWatchlist([...watchlist]);
-  }, [watchlist]);
-
     
       return (
         <>
@@ -81,7 +58,7 @@ useEffect(() => {
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-[1400px]">
     {sortedMovies && sortedMovies.map((movie, index) => (
       <div key={movie.id} className="p-2 my-24 md:my-10 mx-10 md:mx-1 h-[10rem]" aria-label={`search result`}>
-        <Movie movie={movie} index={index} watchlist={newWatchlist} isWatchlist={false} />
+        <Movie movie={movie} index={index} isWatchlist={false} />
       </div>
     ))}
   </div>

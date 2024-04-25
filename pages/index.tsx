@@ -31,7 +31,7 @@ const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcom
         <meta name="keywords" content="Movies, Films, Trailers, Cinema" />
       </Head>
       {!isLoading ?<div className='flex items-center justify-center flex-col'>
-        <FeaturedMovie Movies={popularMovies} />
+        <FeaturedMovie Movies={topRatedMovies} />
    <div className='flex items-center justify-center flex-col w-[100%] max-w-[1400px]'><MovieList title={'Popular'} movieslist={popularMovies} />
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
       <MovieList title={'Upcoming'} movieslist={upcomingMovies} /></div>
@@ -60,11 +60,11 @@ export const getServerSideProps: GetServerSideProps<MovieObjectProps> = async (c
 const popularMovies = popularMoviesResponse.data.results;
 
 const topRatedMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestTopRated);
+
 const topRatedMovies = topRatedMoviesResponse.data.results;
 
 const upcomingMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestUpcoming);
 const upcomingMovies = upcomingMoviesResponse.data.results;
-
   
     return {
       props: { session, popularMovies, topRatedMovies, upcomingMovies },

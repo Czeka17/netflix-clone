@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import React,{ useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { MovieProps, Movieobj } from '../../lib/types';
+import { MovieProps } from '../../lib/types';
 import MovieContext from '../../context/MovieContext';
 import MovieActions from './movie-actions';
-
+import { Movieobj } from '../../lib/types';
+import Modal from '../layout/modal';
 async function addMovieHandler(email: string,movie: { id: number; title: string }){
   const response = await fetch('/api/watchlist/watchlist', {
     method: 'POST',
@@ -37,42 +38,56 @@ async function deleteMovieHandler(email: string, movie: { id: number; title: str
     throw new Error(error.message || 'Something went wrong!');
   }
 };
-function Movie(props: MovieProps){
+const Movie = React.memo((props: MovieProps) =>{
+  useEffect(() => {
+    console.log(props.movie);
+  });
   const movieCtx = useContext(MovieContext)
   const { data: session, status } = useSession()
-  const [newWatchlist, setNewWatchlist] = useState<{ id: number; title: string }[]>([]);
-
-
+  const [isHovering,setIsHovering] = useState(false)
+  const [selectedMovie, setSelectedMovie] = useState<Movieobj | null>(null);
+  const [showModal, setShowModal] = useState(false)
   async function movielistHandler() {
     if(!session || !session.user){
         return;
     }
-
     const email = session.user.email as string;
 
-      if(newWatchlist.map(item => item.id).includes(props.movie.id)){
-        const result = await deleteMovieHandler(email, movieCtx.selectedMovie!)
-        const indexToDelete = newWatchlist.findIndex(movie => movie.id === movieCtx.selectedMovie!.id);
-        const updatedWatchlist = [...newWatchlist.slice(0, indexToDelete), ...newWatchlist.slice(indexToDelete + 1)];
-        setNewWatchlist(updatedWatchlist)
+      if(movieCtx.watchlist.map(item => item.id).includes(props.movie.id)){
+        const result = await deleteMovieHandler(email, selectedMovie!)
+        const indexToDelete = movieCtx.watchlist.findIndex(movie => movie.id === selectedMovie!.id);
+        const updatedWatchlist = [...movieCtx.watchlist.slice(0, indexToDelete), ...movieCtx.watchlist.slice(indexToDelete + 1)];
+        movieCtx.watchlistUpdate(updatedWatchlist)
         return result
       }else{
-        const result = await addMovieHandler(email, movieCtx.selectedMovie!)
-        const updatedWatchlist: { id: number; title: string }[] = [...newWatchlist, movieCtx.selectedMovie!];
-        setNewWatchlist(updatedWatchlist);
+        const result = await addMovieHandler(email, selectedMovie!)
+        const updatedWatchlist = [...movieCtx.watchlist, selectedMovie!];
+        movieCtx.watchlistUpdate(updatedWatchlist);
         return result
       }
   }
 
-  useEffect(() => {
-    setNewWatchlist([...props.watchlist]);
-  }, [props.watchlist]);
-
+  const handleMovieHover = (movie: Movieobj) => {
+    setSelectedMovie(movie);
+    setIsHovering(true)
+  };
+const handleMovieClick = () => {
+  setShowModal(true);
+  };
+  const handleMouseLeave = () => {
+    if(!showModal){
+      setSelectedMovie(null);
+      setIsHovering(false)
+    
+    }
+  };
+  const hideModal = () =>{
+    setShowModal(false)
+  }
 
      return  <div
-            key={props.index}
-            onMouseEnter={() => movieCtx.handleMovieHover(props.movie)}
-            onMouseLeave={() => movieCtx.handleMouseLeave()}
+            onMouseEnter={() => handleMovieHover(props.movie)}
+            onMouseLeave={() => handleMouseLeave()}
             className="h-full w-full my-2 cursor-pointer" tabIndex={0}
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
@@ -81,13 +96,14 @@ function Movie(props: MovieProps){
                 className="overflow-visible z-20 focus:outline-none"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
                 alt={props.movie?.title}
-                onClick={movieCtx.isHovering ? movieCtx.handleMovieClick : undefined}
+                onClick={isHovering ? handleMovieClick : undefined}
               />
-             {movieCtx.selectedMovie?.title !== props.movie.title && <p className='absolute text-center w-[100%] mt-2 text-white'>{props.movie.title}</p>}
-              {movieCtx.isHovering && movieCtx.selectedMovie?.id === props.movie.id && (
-                <MovieActions movie={props.movie} newWatchlist={newWatchlist} movielistHandler={movielistHandler} handleMovieClick={movieCtx.handleMovieClick} />
+             {selectedMovie?.title !== props.movie.title && <p className='absolute text-center w-[100%] mt-2 text-white'>{props.movie.title}</p>}
+              {isHovering && selectedMovie?.id === props.movie.id && (
+                <MovieActions movie={props.movie} newWatchlist={movieCtx.watchlist} movielistHandler={movielistHandler} handleMovieClick={handleMovieClick} />
               )}
               </div>
+              {selectedMovie && showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal}/>}
             </div>
-}
+})
 export default Movie;

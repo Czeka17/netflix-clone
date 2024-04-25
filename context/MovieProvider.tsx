@@ -1,47 +1,45 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Movieobj} from '../lib/types'
 import MovieContext from './MovieContext'
+import { useSession } from "next-auth/react";
 interface MovieContextProps {
-    showModal:boolean;
-    isHovering:boolean;
-    selectedMovie:Movieobj | null;
-    handleMovieHover:(movie:Movieobj) => void;
-    handleMouseLeave:() => void;
-    handleMovieClick:() => void;
-    hideModal:() => void
+
+    watchlist:Movieobj[]
+    watchlistUpdate:(movie:Movieobj[]) => void
   }
 
 const MovieContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { data: session, status } = useSession()
 
-  const [isHovering,setIsHovering] = useState(false)
-  const [selectedMovie, setSelectedMovie] = useState<Movieobj | null>(null);
-  const [showModal, setShowModal] = useState(false);
+  const [watchlist, setWatchlist] = useState<Movieobj[]>([]);
 
-  const handleMovieHover = (movie: Movieobj) => {
-    setSelectedMovie(movie);
-    setIsHovering(true)
-  };
-const handleMovieClick = () => {
-    setShowModal(true);
-  };
-  const hideModal = () =>{
-    setShowModal(false)
+  useEffect(() => {
+    async function getWatchlistMovies(email:any) {
+        const response = await fetch('/api/watchlist/getWatchlist', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+        console.log('running')
+        const data = await response.json();
+        setWatchlist(data.watchlist)
+      }
+      getWatchlistMovies(session?.user?.email)
+  },[])
+
+
+  function watchlistUpdate(movie:Movieobj[]){
+    setWatchlist(movie)
   }
-  const handleMouseLeave = () => {
-    if (!showModal) {
-      setSelectedMovie(null);
-      setIsHovering(false)
-    }
-  };
+
+
 
   const contextValue: MovieContextProps = {
-    showModal:showModal,
-    isHovering:isHovering,
-    selectedMovie:selectedMovie,
-    handleMovieHover:handleMovieHover,
-    handleMouseLeave:handleMouseLeave,
-    handleMovieClick:handleMovieClick,
-    hideModal:hideModal
+
+    watchlist:watchlist,
+    watchlistUpdate:watchlistUpdate
   };
 
   return <MovieContext.Provider value={contextValue}>{children}</MovieContext.Provider>;

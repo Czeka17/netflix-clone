@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {AiOutlineQuestionCircle} from 'react-icons/ai'
 import Modal from "../layout/modal";
 import { FeaturedMovieProps, Movieobj } from "../../lib/types";
 
 const FeaturedMovie: React.FC<FeaturedMovieProps> = ({ Movies }) => {
-
   const [movies,setMovies] = useState<Movieobj[]>([])
-  const [showModal, setShowModal] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState<Movieobj|null>(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movieobj | null>(null);
+  const [showModal, setShowModal] = useState(false)
+  
+  const randomMovieIndex = useRef<number>(0);
+
+  useEffect(() => {
+    setMovies(Movies);
+    randomMovieIndex.current = Math.floor(Math.random() * Movies.length);
+  }, [Movies]);
 
   const handleMovieClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    setSelectedMovie(movie)
+    setSelectedMovie(movies[randomMovieIndex.current]);
     setShowModal(true);
   };
+  const hideModal = () =>{
+    setShowModal(false)
+  }
+  const movie = selectedMovie || movies[randomMovieIndex.current];
 
-  const hideModal = () => {
-    setShowModal(false);
-  };
-  useEffect(() => {
-    setMovies(Movies)
-  }, [])
-  const randomMovie = Math.floor(Math.random() * movies.length);
-  const movie = selectedMovie || movies[randomMovie];
 
   return (
     <div className="w-full h-[650px] text-white">
-      {showModal && <Modal movie={movie} />}
+      {showModal && <Modal movie={movie} showModal={showModal} hideModal={hideModal} />}
       <div className="w-full h-full relative">
         <div className="absolute w-full h-[650px] bg-gradient-to-r from-black"></div>
     <img className="w-full h-full object-cover" src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`} alt={movie?.title} />

@@ -47,6 +47,7 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
   }, []);
 
   return (
+    
     <SessionProvider session={session}>
         <MovieContextProvider>
         {!delayedTransition ? <div className={`transition-opacity duration-500 ${appLoading ? '' : 'opacity-0'}`}>

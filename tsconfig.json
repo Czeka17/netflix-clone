@@ -21,7 +21,8 @@
 		"pages",
 		"components",
 		"__tests__/_app.test.tsx",
-		"__tests__/auth-form.test.tsx"
+		"__tests__/auth-form.test.tsx",
+		"features"
 	],
 	"exclude": ["node_modules"]
 }

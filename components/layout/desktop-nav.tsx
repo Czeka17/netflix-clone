@@ -10,8 +10,6 @@ function DesktopNav(props: { navBg: string }){
     const router = useRouter()
     const inputRef = useRef<HTMLInputElement>(null);
 
-
-
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const searchQuery = event.target.value;
   router.push(`/search?q=${searchQuery}`);

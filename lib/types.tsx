@@ -10,11 +10,7 @@ export interface Movieobj {
   export interface MovieProps {
     movie: Movieobj
     index: number;
-    watchlist: {
-      id: number;
-      title: string;
-    }[];
-    isWatchlist: boolean;
+    isWatchlist:boolean
   }
   export interface NotificationProps {
     title: string;

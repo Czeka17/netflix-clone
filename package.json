@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-hook/media-query": "^1.1.1",
+    "@reduxjs/toolkit": "^2.2.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/bcryptjs": "^2.4.2",
@@ -34,8 +35,10 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-player": "^2.12.0",
+    "react-redux": "^9.1.1",
     "react-responsive-carousel": "^3.2.23",
     "react-slick": "^0.29.0",
+    "redux": "^5.0.1",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "3.3.1",
     "testing-library": "^0.0.2",
