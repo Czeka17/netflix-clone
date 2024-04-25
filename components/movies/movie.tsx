@@ -75,14 +75,13 @@ const handleMovieClick = () => {
   setShowModal(true);
   };
   const handleMouseLeave = () => {
-    if(!showModal){
       setSelectedMovie(null);
       setIsHovering(false)
-    
-    }
   };
   const hideModal = () =>{
     setShowModal(false)
+    setSelectedMovie(null);
+      setIsHovering(false)
   }
 
      return  <div

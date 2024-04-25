@@ -3,22 +3,16 @@ import { getSession } from "next-auth/react";
 import requests from "../Requests";
 import axios from 'axios';
 import Movie from "../components/movies/movie";
-import { useState, useEffect, useContext } from "react";
-import { useSession } from "next-auth/react";
-import Modal from "../components/layout/modal";
-import { getWatchlistMovies } from "../lib/api";
 import Fuse from "fuse.js";
 import Head from "next/head";
 import { GetServerSidePropsContext } from "next";
 import { Movieobj } from "../lib/types";
 import Footer from "../components/layout/footer";
   import { MovieObjectProps } from "../lib/types";
-import MovieContext from "../context/MovieContext";
 
 
 function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectProps ){
-    const { data: session, status } = useSession()
-  const movieCtx = useContext(MovieContext)
+
     const movies = popularMovies.concat(topRatedMovies, upcomingMovies);
     const uniqueMovies = movies.filter((movie, index, self) => 
     index === self.findIndex((m) => (
@@ -63,7 +57,6 @@ function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectPr
     ))}
   </div>
   {filteredMovies.length === 0 && searchQuery !== '' && <p className="text-white text-2xl text-center flex justify-center items-center p-6">Cant find movie that you are looking for.</p>}
-  {movieCtx.showModal && <Modal movie={movieCtx.selectedMovie} />}
 </div>
 <Footer/>
 </>

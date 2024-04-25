@@ -1,12 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useContext } from 'react';
 import { getSession } from 'next-auth/react';
 import Movie from '../components/movies/movie';
-import Modal from '../components/layout/modal';
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
-
-import { Movieobj } from '../lib/types';
 import Footer from '../components/layout/footer';
 import MovieContext from '../context/MovieContext';
 
@@ -31,7 +27,7 @@ function Watchlist() {
           <Movie movie={movie} index={index} isWatchlist={true} />
           </div>
           ))}
-          {movieCtx.showModal && <Modal movie={movieCtx.selectedMovie} />}
+
           </div>
           
     </section>
