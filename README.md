@@ -1,5 +1,7 @@
 ****Moowiz - netflix clone****
 
+**New update - page now works 200% faster due to code maintaince**
+
 LIVE - [[https://netflix-clone-fawn-sigma.vercel.app/auth](https://netflix-clone-fawn-sigma.vercel.app)]
 
 test account: 
