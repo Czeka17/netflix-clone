@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import {Movieobj} from '../lib/types'
-// Define the type for the context value
 interface MovieContextProps {
   watchlist:Movieobj[]
   watchlistUpdate:(movie:Movieobj[]) => void;

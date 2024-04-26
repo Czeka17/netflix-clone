@@ -53,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal }) => {
   }, [movieid]);
 
   return  ReactDOM.createPortal((<div
-      className={`fixed z-50 inset-0 overflow-y-auto ${
+      className={`fixed z-[100] inset-0 overflow-y-auto ${
         show ? "opacity-100 visible" : "opacity-0 invisible"
       } transition-opacity duration-500`}
     >

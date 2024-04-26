@@ -21,7 +21,7 @@ function DesktopNav(props: { navBg: string }){
     function logoutHandler() {
         signOut();
       }
-    return( <nav className={`fixed w-full text-white z-40 duration-300 ${props.navBg}`}>
+    return( <nav className={`fixed w-full text-white z-50 duration-300 ${props.navBg}`}>
     <ul className="flex flex-row my-4 justify-between items-center p-2">
       <li>
         <Link href='/' className="hover:text-red-600 duration-200 mx-20 font-bold flex items-center justify-center">

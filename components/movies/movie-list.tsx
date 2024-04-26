@@ -1,25 +1,79 @@
-import React, { useRef, useContext, useMemo } from "react";
-import AliceCarousel from "react-alice-carousel";
+import React, { useMemo } from "react";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
 import classes from './movies-list.module.css'
 import { MovieListProps  } from "../../lib/types";
-import MovieContext from "../../context/MovieContext";
-
-
+import Slider from "react-slick";
+import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
 const MovieList = ({ title, movieslist }: MovieListProps) => {
-  const carouselRef = useRef<AliceCarousel | null>(null);
-
-  const responsive = {
-    0: { items: 2 },
-    576: { items: 3 },
-    1024: { items: 4 },
-    1440: { items: 5 }
+  function SampleNextArrow(props:any) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        style={{ ...style }}
+        onClick={onClick}
+      ><MdArrowForwardIos className="absolute top-1/2 left-[101%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
+    );
+  }
+  
+  function SamplePrevArrow(props:any) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        style={{ ...style }}
+        onClick={onClick}
+      ><MdArrowBackIosNew className="absolute top-1/2 left-[-1%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
+    );
+  }
+const settings = {
+  infinite: true,
+  speed: 500,
+  slidesToShow:5,
+  slidesToScroll: 2,   
+  responsive: [
+    {
+      breakpoint: 1440,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1
+      }
+    },
+   { 
+    breakpoint:320,
+    settings:{
+      slidesToShow:1,
+      slidesToScroll:1
+    }
+    }
+  ],
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />
 };
 
 const movieListItems = useMemo(() => {
   return  movieslist.map((movie, index) => (
-    <div key={index} className="px-6 md:px-10 lg:px-6 lg:py-6 lg:mx-2 max-w-[100vw]" aria-label={`List of ${title} movies`}>
+    <div key={index} className="lg:px-12 xl:px-8 py-6 lg:px-4 px-6 max-w-[100vw]" aria-label={`List of ${title} movies`}>
       <Movie movie={movie} index={index} isWatchlist={false} />
       </div>
     ))
@@ -35,22 +89,12 @@ const movieListItems = useMemo(() => {
       <div className="relative">
       <h2 className="ml-6 p-4 text-3xl font-bold rounded">{title}</h2>
       </div>
-      <div className="relative">
-        <div className="lg:pl-14 lg:pr-14 py-6">
-        <AliceCarousel
-          items={movieslist}
-          responsive={responsive}
-  ref={carouselRef}
-  mouseTracking={true}
-          >
+      <div className="relative px-6 py-4">
+        <div className="slider-container relative">
+        <Slider {...settings} className="px-2 ">
         {movieListItems}
-          </AliceCarousel>
-        </div>
-          
-         
-
-     
-        
+        </Slider>
+        </div>    
       </div>
     </section>
   );

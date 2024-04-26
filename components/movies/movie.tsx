@@ -87,10 +87,10 @@ const handleMovieClick = () => {
      return  <div
             onMouseEnter={() => handleMovieHover(props.movie)}
             onMouseLeave={() => handleMouseLeave()}
-            className="h-full w-full my-2 cursor-pointer" tabIndex={0}
+            className="h-full w-full my-2 cursor-pointer py-2" tabIndex={0}
             style={{ WebkitTapHighlightColor: 'transparent' }}
           >
-            <div className={`hover:scale-125 hover:-translate-y-1/2 hover:z-30 relative lg:py-0 py-4 duration-300 overflow-visible ${props.isWatchlist ? 'my-4' : 'my-32'}`} tabIndex={0}>
+            <div className={`hover:scale-110 hover:z-30 relative lg:py-0 py-4 duration-300 overflow-visible ${props.isWatchlist ? 'my-4' : 'my-32'}`} tabIndex={0}>
               <img
                 className="overflow-visible z-20 focus:outline-none"
                 src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
@@ -99,6 +99,7 @@ const handleMovieClick = () => {
               />
              {selectedMovie?.title !== props.movie.title && <p className='absolute text-center w-[100%] mt-2 text-white'>{props.movie.title}</p>}
               {isHovering && selectedMovie?.id === props.movie.id && (
+                
                 <MovieActions movie={props.movie} newWatchlist={movieCtx.watchlist} movielistHandler={movielistHandler} handleMovieClick={handleMovieClick} />
               )}
               </div>

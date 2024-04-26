@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import FontFaceObserver from 'fontfaceobserver'
 import MovieContextProvider from '../context/MovieProvider'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps<{session: Session}>) {
 
 

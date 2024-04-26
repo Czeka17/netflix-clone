@@ -47,11 +47,11 @@ function Search({ popularMovies, topRatedMovies, upcomingMovies }: MovieObjectPr
         <title>Search</title>
         <meta name="description" content={`Search results for ${searchQuery}`} />
       </Head>
-        <div className="flex flex-col items-center justify-center pt-24 text-white pb-28 min-h-[100vh]">
+        <div className="flex flex-col items-center pt-24 text-white pb-40 min-h-[100vh]">
   <h1 className="text-xl">Search Results for <span className="font-bold">{searchQuery}</span></h1>
   <div className="grid grid-cols-1 px-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-[1400px]">
     {sortedMovies && sortedMovies.map((movie, index) => (
-      <div key={movie.id} className="p-2 my-24 md:my-10 mx-10 md:mx-1 h-[10rem]" aria-label={`search result`}>
+      <div key={movie.id} className="p-2 my-24 md:my-20 mx-10 md:mx-1 h-[10rem]" aria-label={`search result`}>
         <Movie movie={movie} index={index} isWatchlist={false} />
       </div>
     ))}

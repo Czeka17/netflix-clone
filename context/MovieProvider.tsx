@@ -26,8 +26,10 @@ const MovieContextProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const data = await response.json();
         setWatchlist(data.watchlist)
       }
-      getWatchlistMovies(session?.user?.email)
-  },[])
+      if(session){
+        getWatchlistMovies(session?.user?.email)
+      }
+  },[session,status])
 
 
   function watchlistUpdate(movie:Movieobj[]){
