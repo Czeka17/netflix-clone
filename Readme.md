@@ -1,15 +1,15 @@
-****Moowiz - Netflix clone****
+****Moowiz - netflix clone****
 
-LIVE - https://netflix-clone-fawn-sigma.vercel.app/auth
+**New update - page now works 200% faster due to code maintaince**
+
+LIVE - [[https://netflix-clone-fawn-sigma.vercel.app/auth](https://netflix-clone-fawn-sigma.vercel.app)]
 
 test account: 
-email: test@test.pl
+username: test@test.pl
 password: test123
 
-**I created this app to practice my reactjs skills. Its my first own project.**
+I used these technologies: **Mongodb, Reactjs, tailwindcss, TypeScript, Nextjs** 
 
-I used these technologies: **Mongodb, Reactjs, Tailwindcss, Nextjs** 
+**Moowiz is a Netflix clone app where users can watch trailers of movies they want, add movies to their list, like them, and search for specific movies within the app.**
 
-**While making this page i faced a lot of problems and fixed it. Like for example making my own authentication.**
-
-**At this page users can add movies to their list, like them and watch trailers. Also it cointains search feature!**
+**While I was making this page, I learned how to use Tailwind CSS, NextAuth, and how to create and integrate my first APIs.**
