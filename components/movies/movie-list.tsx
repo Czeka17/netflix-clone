@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
 import classes from './movies-list.module.css'
 import { MovieListProps  } from "../../lib/types";
