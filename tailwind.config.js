@@ -15,7 +15,10 @@ module.exports = {
       },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
-      }
+      },
+      colors: {
+        customColor: 'rgb(23,23,23)',
+      },
     },
   },
   plugins: [],

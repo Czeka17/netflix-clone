@@ -39,6 +39,7 @@ async function deleteMovieHandler(email: string, movie: { id: number; title: str
   }
 };
 const Movie = React.memo((props: MovieProps) =>{
+ 
   useEffect(() => {
     console.log(props.movie);
   });
@@ -103,7 +104,7 @@ const handleMovieClick = () => {
                 <MovieActions movie={props.movie} newWatchlist={movieCtx.watchlist} movielistHandler={movielistHandler} handleMovieClick={handleMovieClick} />
               )}
               </div>
-              {selectedMovie && showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal}/>}
+              {selectedMovie && showModal && <Modal movie={selectedMovie} showModal={showModal} hideModal={hideModal} isTvSerie={props.isTvSerie} />}
             </div>
 })
 export default Movie;

@@ -11,15 +11,16 @@ import { Movieobj } from '../lib/types';
 import { MovieObjectProps } from '../lib/types';
 
 
-const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcomingMovies }) => {
+const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcomingMovies,popularTvSeries}) => {
 
   const [isLoading,setIsLoading] = useState(true)
 
   useEffect(() => {
-    if(popularMovies && topRatedMovies && upcomingMovies){
+    if(popularMovies && topRatedMovies && upcomingMovies && popularTvSeries){
       setIsLoading(false)
     }
-  },[topRatedMovies,popularMovies,upcomingMovies])
+  },[topRatedMovies,popularMovies,upcomingMovies,popularTvSeries])
+
   return (
     <div>
       <Head>
@@ -34,7 +35,9 @@ const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcom
         <FeaturedMovie Movies={topRatedMovies} />
    <div className='flex items-center justify-center flex-col w-[100%] max-w-[1400px]'><MovieList title={'Popular'} movieslist={popularMovies} />
       <MovieList title={'Top Rated'} movieslist={topRatedMovies} />
-      <MovieList title={'Upcoming'} movieslist={upcomingMovies} /></div>
+      <MovieList title={'Upcoming'} movieslist={upcomingMovies} />
+      <MovieList title={'TV popular'} movieslist={popularTvSeries} isTvSerie={true} />
+      </div>
       
       </div> : <div className='flex justify-center items-center h-[100vh]'>
       <img src="/logo.png"/>
@@ -55,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<MovieObjectProps> = async (c
         },
       };
     }
-  
+
     const popularMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestPopular);
 const popularMovies = popularMoviesResponse.data.results;
 
@@ -66,8 +69,13 @@ const topRatedMovies = topRatedMoviesResponse.data.results;
 const upcomingMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestUpcoming);
 const upcomingMovies = upcomingMoviesResponse.data.results;
   
+const popularTvSeriesResponse = await axios.get<{results: Movieobj[]}>(requests.requestPopularTV);
+const popularTvSeries = popularTvSeriesResponse.data.results.map((tvSeries) => {
+    return { ...tvSeries, title: tvSeries.name };
+});
+
     return {
-      props: { session, popularMovies, topRatedMovies, upcomingMovies },
+      props: { session, popularMovies, topRatedMovies, upcomingMovies,popularTvSeries},
     };
   }
 

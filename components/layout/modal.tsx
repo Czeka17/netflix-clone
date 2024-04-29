@@ -9,9 +9,10 @@ interface ModalProps {
     movie:Movieobj | null
     hideModal:() => void;
     showModal:boolean;
+    isTvSerie?:boolean;
   }
 
-const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal }) => {
+const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal,isTvSerie }) => {
 
   const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
@@ -34,7 +35,18 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal }) => {
     
     const fetchTrailerUrl = async () => {
       setIsLoading(true);
-      const response = await axios.get(
+      let response
+      if(isTvSerie){
+        response = await axios.get(
+          `https://api.themoviedb.org/3/tv/${movieid}/videos`,
+          {
+            params: {
+              api_key: '502c330772f772740b274f7363e5b00a',
+            },
+          }
+        );
+      }else{
+       response = await axios.get(
         `https://api.themoviedb.org/3/movie/${movieid}/videos`,
         {
           params: {
@@ -42,6 +54,7 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal }) => {
           },
         }
       );
+    }
       const videos = response.data.results;
       const trailer = videos.find((video: any) => video.type === 'Trailer');
       if (trailer) {

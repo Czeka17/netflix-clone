@@ -1,11 +1,10 @@
 import React, { useMemo } from "react";
-import 'react-alice-carousel/lib/alice-carousel.css';
 import Movie from "./movie";
 import classes from './movies-list.module.css'
 import { MovieListProps  } from "../../lib/types";
 import Slider from "react-slick";
 import { MdArrowBackIosNew, MdArrowForwardIos} from "react-icons/md";
-const MovieList = ({ title, movieslist }: MovieListProps) => {
+const MovieList = ({ title, movieslist,isTvSerie }: MovieListProps) => {
   function SampleNextArrow(props:any) {
     const { className, style, onClick } = props;
     return (
@@ -74,7 +73,7 @@ const settings = {
 const movieListItems = useMemo(() => {
   return  movieslist.map((movie, index) => (
     <div key={index} className="lg:px-12 xl:px-8 py-6 lg:px-4 px-6 max-w-[100vw]" aria-label={`List of ${title} movies`}>
-      <Movie movie={movie} index={index} isWatchlist={false} />
+      <Movie movie={movie} index={index} isWatchlist={false} isTvSerie={isTvSerie} />
       </div>
     ))
 },[])
