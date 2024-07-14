@@ -7,12 +7,12 @@ import {
 	loadLikesFromLocalStorage,
 } from "../../store/storage";
 
-const MovieActions = React.memo(({
+function MovieActions ({
 	movie,
 	newWatchlist,
 	handleMovieClick,
 	movielistHandler,
-}: MovieActionsProps) => {
+}: MovieActionsProps) {
 
 	const [likes, setLikes] = useState<{ [key: number]: boolean }>(
 		loadLikesFromLocalStorage()
@@ -95,5 +95,5 @@ const MovieActions = React.memo(({
 			</div>
 		</div>
 	);
-})
-export default MovieActions;
+}
+export default React.memo(MovieActions);

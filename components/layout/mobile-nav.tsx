@@ -19,7 +19,7 @@ function MobileNavigation() {
   }
 
 
-const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
   const searchQuery = event.target.value;
   setIsOpen(false)
 router.push(`/search?q=${searchQuery}`);

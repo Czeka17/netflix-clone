@@ -8,14 +8,16 @@ function MainNavigation() {
 
     const { data: session, status } = useSession()
 
-
     const [navBg, setNavBg] = useState("transparent");
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
         if (currentScrollPos > 0) {
           setNavBg("bg-neutral-900");
-        } else {
-          setNavBg("bg-transparent"); 
+          return
+        } 
+        if (currentScrollPos === 0){
+          setNavBg("bg-transparent");
+          return
         }
       };
     useEffect(() => {

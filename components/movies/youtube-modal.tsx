@@ -3,23 +3,14 @@ import ReactPlayer from "react-player";
 import axios from "axios";
 import { FaSpinner } from "react-icons/fa";
 import ReactDOM  from "react-dom";
-import {Movieobj} from '../../lib/types'
+import {ModalProps} from '../../lib/types'
 
-interface ModalProps {
-    movie:Movieobj | null
-    hideModal:() => void;
-    showModal:boolean;
-    isTvSerie?:boolean;
-  }
 
-const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal,isTvSerie }) => {
+function YoutubeModal({ movie,showModal,hideModal,isTvSerie }:ModalProps) {
 
   const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  if (!movie) {
-    return null;
-  }
   useEffect(() => {
     
     if (showModal) {
@@ -33,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal,isTvSerie }) =>
 
   useEffect(() => {
     
-    const fetchTrailerUrl = async () => {
+    async function fetchTrailerUrl() {
       setIsLoading(true);
       let response
       if(isTvSerie){
@@ -64,6 +55,10 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal,isTvSerie }) =>
     };
     fetchTrailerUrl();
   }, [movieid]);
+  
+  if (!movie) {
+    return null;
+  }
 
   return  ReactDOM.createPortal((<div
       className={`fixed z-[100] inset-0 overflow-y-auto ${
@@ -122,4 +117,4 @@ const Modal: React.FC<ModalProps> = ({ movie,showModal,hideModal,isTvSerie }) =>
   ),document.getElementById('modals') as Element);
 };
 
-export default Modal;
+export default YoutubeModal;

@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import ReactDOM from "react-dom";
 import { LegacyRef } from "react";
+import { SignupModalProps } from "../../lib/types";
 
 async function createUser(email:string,name:string,password:string){
   const response = await fetch('/api/auth/signup', {
@@ -21,10 +22,7 @@ async function createUser(email:string,name:string,password:string){
   return data;
 }
 
-interface SignupModalProps {
-  showModal: boolean;
-  hideModal: () => void;
-}
+
 function SignupModal({ showModal, hideModal }: SignupModalProps) {
   const router = useRouter()
     const [show, setShow] = useState(false);

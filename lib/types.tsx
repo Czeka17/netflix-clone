@@ -29,6 +29,15 @@ export interface Movieobj {
     movieslist: Movieobj[];
     isTvSerie?:boolean;
   };
+  export interface MovieContextProps {
+    popularMovies: Movieobj[];
+    topRatedMovies: Movieobj[];
+    upcomingMovies: Movieobj[];
+    popularTvSeries: Movieobj[];
+    isLoading: boolean;
+    watchlist:Movieobj[];
+    watchlistUpdate:(movie:Movieobj[]) => void;
+  }
 
   export interface MovieObjectProps {
     popularMovies: Movieobj[];
@@ -41,4 +50,21 @@ export interface MovieActionsProps {
 	newWatchlist: { id: number; title: string }[];
 	movielistHandler: () => void;
 	handleMovieClick: () => void;
+}
+export interface FiltersProps{
+  applyFilters:(selectedType:number) => void
+  sortByvoteAverage:(selectedDirection:string) => void
+}
+export interface ChildrenProps{
+  children: React.ReactNode;
+}
+export interface ModalProps {
+  movie:Movieobj | null
+  hideModal:() => void;
+  showModal:boolean;
+  isTvSerie?:boolean;
+}
+export interface SignupModalProps {
+  showModal: boolean;
+  hideModal: () => void;
 }

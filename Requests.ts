@@ -1,4 +1,4 @@
-const key = `${process.env.MOVIEDB_KEY}`
+const key = `${process.env.NEXT_PUBLIC_TMDB_MOVIEDB_KEY}`
 
 const requests = {
     requestTrending: `https://api.themoviedb.org/3/trending/movie/day?api_key=${key}`,

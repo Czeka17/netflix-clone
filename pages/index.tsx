@@ -2,24 +2,14 @@ import { GetServerSideProps } from 'next';
 import Footer from '../components/layout/footer';
 import FeaturedMovie from '../components/movies/featured-movie';
 import MovieList from '../components/movies/movie-list';
-import requests from '../Requests'
 import { getSession } from "next-auth/react";
-import axios from 'axios';
 import Head from "next/head";
-import React, { useEffect, useState } from 'react';
-import { Movieobj } from '../lib/types';
-import { MovieObjectProps } from '../lib/types';
+import React from 'react';
 
+import { useMovies } from '../context/MoviesContext';
 
-const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcomingMovies,popularTvSeries}) => {
-
-  const [isLoading,setIsLoading] = useState(true)
-
-  useEffect(() => {
-    if(popularMovies && topRatedMovies && upcomingMovies && popularTvSeries){
-      setIsLoading(false)
-    }
-  },[topRatedMovies,popularMovies,upcomingMovies,popularTvSeries])
+function Home() {
+  const { popularMovies, topRatedMovies, upcomingMovies, popularTvSeries, isLoading } = useMovies();
 
   return (
     <div>
@@ -47,7 +37,7 @@ const Home: React.FC<MovieObjectProps> = ({ popularMovies, topRatedMovies, upcom
   );
 }
 
-export const getServerSideProps: GetServerSideProps<MovieObjectProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     const session = await getSession({ req: context.req });
   
     if (!session) {
@@ -59,23 +49,10 @@ export const getServerSideProps: GetServerSideProps<MovieObjectProps> = async (c
       };
     }
 
-    const popularMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestPopular);
-const popularMovies = popularMoviesResponse.data.results;
-
-const topRatedMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestTopRated);
-
-const topRatedMovies = topRatedMoviesResponse.data.results;
-
-const upcomingMoviesResponse = await axios.get<{ results: Movieobj[] }>(requests.requestUpcoming);
-const upcomingMovies = upcomingMoviesResponse.data.results;
-  
-const popularTvSeriesResponse = await axios.get<{results: Movieobj[]}>(requests.requestPopularTV);
-const popularTvSeries = popularTvSeriesResponse.data.results.map((tvSeries) => {
-    return { ...tvSeries, title: tvSeries.name };
-});
+   
 
     return {
-      props: { session, popularMovies, topRatedMovies, upcomingMovies,popularTvSeries},
+      props: { session},
     };
   }
 

@@ -1,12 +1,12 @@
-.animateTV {
-  animation: slideFromLeft 220s ease-out infinite, spin 120s linear infinite;
+.animate-tv {
+  animation: slide-from-left 220s ease-out infinite, spin 80s linear infinite;
 }
-.animateFilm {
-  animation: slideFromRight 180s ease-out infinite, spinBackwards 100s linear infinite;
+.animate-film {
+  animation: slide-from-right 180s ease-out infinite, spin-backwards 60s linear infinite;
 }
 
 
-@keyframes slideFromLeft {
+@keyframes slide-from-left {
     0% {
      top: 10%;
      left: 10%;
@@ -20,7 +20,7 @@
         left: 10%;
        }
   }
-@keyframes slideFromRight {
+@keyframes slide-from-right {
     0% {
      bottom: 0%;
      right: 10%;
@@ -40,15 +40,15 @@
       transform: rotate(0);
     }
     100% {
-      transform: rotate(360deg);
+      transform: rotate(720deg);
     }
   }
-  @keyframes spinBackwards {
+  @keyframes spin-backwards {
     0% {
       transform: rotate(0);
     }
     100% {
-      transform: rotate(-360deg);
+      transform: rotate(-720deg);
     }
   }
   

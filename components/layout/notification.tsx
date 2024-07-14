@@ -1,19 +1,22 @@
 import React from 'react';
 import { NotificationProps } from '../../lib/types';
 
-const Notification: React.FC<NotificationProps> = ({ title, message, status }) => {
+function Notification({ title, message, status }:NotificationProps) {
 
     let statusClasses = '';
 
     if(status === 'success'){
         statusClasses = 'bg-green-500 text-white'
+        return
     }
 
     if (status === 'error') {
         statusClasses = 'bg-red-500 text-white';
+        return
       }
     if (status === 'pending') {
       statusClasses = 'bg-blue-500 text-white'
+      return
     }
       return(
         <div className={`p-4 rounded-md fixed w-full bottom-0 left-0 z-50 ${statusClasses}`}>

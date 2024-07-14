@@ -1,10 +1,9 @@
 import { Fragment } from "react";
 import MainNavigation from "./main-navigation";
 import { ReactNode } from "react";
-type LayoutProps = {
-    children: ReactNode;
-  };
-function Layout(props: LayoutProps) {
+import { ChildrenProps } from "../../lib/types";
+
+function Layout(props: ChildrenProps) {
 	return (
 		<Fragment>
 			<MainNavigation />

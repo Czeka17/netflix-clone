@@ -22,11 +22,11 @@ function AuthForm() {
         }
     }, [requestStatus])
 
-    const handleModalClick = () => {
+    function handleModalClick() {
         setShowModal(true);
       };
     
-      const hideModal = () => {
+      function hideModal() {
         setShowModal(false);
       };
 

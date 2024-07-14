@@ -5,7 +5,7 @@ import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import FontFaceObserver from 'fontfaceobserver'
-import MovieContextProvider from '../context/MovieProvider'
+import {MoviesProvider} from '../context/MoviesContext'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps<{session: Session}>) {
@@ -51,7 +51,8 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
   return (
     
     <SessionProvider session={session}>
-        <MovieContextProvider>
+      
+        <MoviesProvider>
         {!delayedTransition ? <div className={`transition-opacity duration-500 ${appLoading ? '' : 'opacity-0'}`}>
            <div className='flex justify-center items-center h-[100vh]'>
            <div className="max-w-[200px] max-h-[200px]">
@@ -65,7 +66,7 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
             <Component {...pageProps} />
           </Layout>
           </div>}
-        </MovieContextProvider>
+        </MoviesProvider>
     </SessionProvider>
   );
 }
