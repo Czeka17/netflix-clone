@@ -77,7 +77,7 @@ const movieListItems = useMemo(() => {
       <Movie movie={movie} index={index} isWatchlist={false} isTvSerie={isTvSerie} />
       </div>
     ))
-},[])
+},[isTvSerie,movieslist,title])
 
   return (
     <section className="relative px-2 w-full text-white overflow-hidden">

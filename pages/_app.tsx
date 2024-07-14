@@ -8,6 +8,7 @@ import FontFaceObserver from 'fontfaceobserver'
 import {MoviesProvider} from '../context/MoviesContext'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Image from 'next/image';
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps<{session: Session}>) {
 
 
@@ -56,7 +57,7 @@ export default function App({ Component, pageProps: {session, ...pageProps} }: A
         {!delayedTransition ? <div className={`transition-opacity duration-500 ${appLoading ? '' : 'opacity-0'}`}>
            <div className='flex justify-center items-center h-[100vh]'>
            <div className="max-w-[200px] max-h-[200px]">
-        <img src="/logo.png"/>
+        <Image src="/logo.png" width={200} height={200} alt='Mooviz logo'/>
         </div>
            </div>
           </div>

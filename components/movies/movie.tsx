@@ -5,6 +5,7 @@ import MovieActions from "./movie-actions";
 import { Movieobj } from "../../lib/types";
 import YoutubeModal from "./youtube-modal";
 import { useMovies } from "../../context/MoviesContext";
+
 async function addMovieHandler(
 	email: string,
 	movie: { id: number; title: string }
@@ -107,6 +108,7 @@ function Movie(props: MovieProps) {
 				tabIndex={0}
 			>
 				<img
+				
 					className='overflow-visible z-20 focus:outline-none'
 					src={`https://image.tmdb.org/t/p/original/${props.movie?.backdrop_path}`}
 					alt={props.movie?.title}

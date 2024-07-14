@@ -54,7 +54,7 @@ function YoutubeModal({ movie,showModal,hideModal,isTvSerie }:ModalProps) {
       setIsLoading(false);
     };
     fetchTrailerUrl();
-  }, [movieid]);
+  }, [movieid,isTvSerie]);
   
   if (!movie) {
     return null;

@@ -39,6 +39,7 @@ function FeaturedMovie({ Movies }: FeaturedMovieProps) {
 			<div className='w-full h-full relative'>
 				<div className='absolute w-full h-[650px] bg-gradient-to-r from-black'></div>
 				<img
+				
 					className='w-full h-full object-cover'
 					src={`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`}
 					alt={movie?.title}

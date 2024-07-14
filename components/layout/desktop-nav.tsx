@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { ChangeEvent, useRef } from 'react';
 import { ImSearch } from "react-icons/im";
 import { useRouter } from 'next/router';
+import Image from "next/image";
 
 function DesktopNav(props: { navBg: string }){
 
@@ -26,7 +27,7 @@ function DesktopNav(props: { navBg: string }){
       <li>
         <Link href='/' className="hover:text-red-600 duration-200 mx-20 font-bold flex items-center justify-center">
         <div className="max-w-[45px] max-h-[45px] mx-2">
-        <img src="/logo.png"/>
+        <Image src="/logo.png" width={200} height={200} alt="Mooviz logo"/>
         </div>
           Moowiz
         </Link>

@@ -7,6 +7,7 @@ import Head from "next/head";
 import React from 'react';
 
 import { useMovies } from '../context/MoviesContext';
+import Image from 'next/image';
 
 function Home() {
   const { popularMovies, topRatedMovies, upcomingMovies, popularTvSeries, isLoading } = useMovies();
@@ -30,7 +31,7 @@ function Home() {
       </div>
       
       </div> : <div className='flex justify-center items-center h-[100vh]'>
-      <img src="/logo.png"/>
+      <Image src="/logo.png" width={200} height={200} alt='Mooviz logo'/>
            </div>}
            <Footer/>
     </div>

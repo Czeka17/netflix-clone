@@ -1,7 +1,7 @@
 import { connectToDatabase } from "../../../lib/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+async function getWatchlist(req: NextApiRequest, res: NextApiResponse) {
   const { email } = req.body;
 
   if (req.method === 'POST') {
@@ -33,3 +33,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 };
+export default getWatchlist;

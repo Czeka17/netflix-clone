@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react";
 import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/router";
 import { ImSearch } from "react-icons/im";
+import Image from "next/image";
 
 function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +43,7 @@ function SearchHandler(){
       <div className="flex justify-between items-center px-4 h-full">
         <Link href="/" className="font-bold mr-4 left-0 z-50 flex flex-row items-center justify-center">
         <div className="max-w-[75px] max-h-[75px] mx-2">
-        <img src="/logo.png"/>
+        <Image src="/logo.png" alt="Mooviz logo" width={75} height={75}/>
         </div>
           Moowiz
         </Link>
