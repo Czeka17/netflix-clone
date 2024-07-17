@@ -22,7 +22,7 @@ function Watchlist() {
         <div className='max-w-[1400px] pb-20 flex flex-wrap justify-center items-center mt-10'>
      {watchlist.map((movie, index) => (
         <div key={index} className='w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 my-12 md:my-10 mx-10 sm:mx-0 md:mx-0 px-10  flex justify-center items-center h-[15rem]'>
-          <Movie movie={movie} index={index} isWatchlist={true} />
+          <Movie movie={movie} isWatchlist={true} />
           </div>
           ))}
 
