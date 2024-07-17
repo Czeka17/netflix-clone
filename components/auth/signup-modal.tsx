@@ -1,26 +1,12 @@
+'use client'
 import React, { useState, useEffect, useRef } from "react";
 import Notification from "../layout/notification";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import ReactDOM from "react-dom";
 import { LegacyRef } from "react";
 import { SignupModalProps } from "../../lib/types";
-
-async function createUser(email:string,name:string,password:string){
-  const response = await fetch('/api/auth/signup', {
-      method: 'POST',
-  body: JSON.stringify({email, name, password}),
-  headers: {
-    'Content-Type': 'application/json'
-  }
-  })
-  const data = await response.json();
-
-  if(!response.ok){
-      throw new Error(data.message || 'Something went wrong!')
-  }
-  return data;
-}
+import { createUser } from "../../lib/api";
 
 
 function SignupModal({ showModal, hideModal }: SignupModalProps) {
@@ -111,8 +97,8 @@ function SignupModal({ showModal, hideModal }: SignupModalProps) {
           }
         }}>
           <h2 className="text-white text-2xl flex justify-center items-center p-4">Sign Up</h2>
-            <form className="flex flex-col p-6 text-white" onSubmit={submitHandler}>
-                <input type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef as LegacyRef<HTMLInputElement>} />
+            <form className="flex flex-col p-6 text-white" onSubmit={submitHandler} role="form">
+                <input  type="name" id="name" placeholder="name" className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={nameInputRef as LegacyRef<HTMLInputElement>} />
                 <input type="email" id="email" placeholder="email"
                 className="p-4 mx-10 my-2 rounded-lg bg-neutral-800 border-2 border-white" ref={emailInputRef as LegacyRef<HTMLInputElement>} required={true} />
                 <input type="password" id="password" placeholder="password" 

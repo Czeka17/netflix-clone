@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import SignupModal from "./signup-modal";
 import Notification from "../layout/notification";
 import { LegacyRef } from "react";
@@ -83,7 +83,7 @@ if(requestStatus === 'error') {
                 <p className="text-white">Watch tons of movies in one place!</p>
             </div>
             <div>
-            <form className="z-20 h-full" onSubmit={submitHandler}>
+            <form className="z-20 h-full" onSubmit={submitHandler} role="form">
                 <div className="w-full flex flex-col items-center">
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double border-red-700 bg-neutral-800 w-full text-white" type="email" id="email" placeholder="email" ref={emailInputRef as LegacyRef<HTMLInputElement>} />
                 <input className="py-5 px-10 m-3 rounded-lg border-2 border-double  w-full border-red-700 bg-neutral-800 text-white" type="password" id="password" placeholder="password" ref={passwordInputRef as LegacyRef<HTMLInputElement>} />

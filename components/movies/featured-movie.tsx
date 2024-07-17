@@ -9,7 +9,7 @@ function FeaturedMovie({ Movies }: FeaturedMovieProps) {
 	const [showModal, setShowModal] = useState(false);
 
 	const randomMovieIndex = useRef<number>(0);
-
+	
 	useEffect(() => {
 		setMovies(Movies);
 		randomMovieIndex.current = Math.floor(Math.random() * Movies.length);
@@ -32,7 +32,6 @@ function FeaturedMovie({ Movies }: FeaturedMovieProps) {
 			{showModal && (
 				<Modal
 					movie={movie}
-					showModal={showModal}
 					hideModal={hideModal}
 				/>
 			)}

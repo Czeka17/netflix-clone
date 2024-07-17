@@ -14,11 +14,17 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       animation: {
-        'spin-slow': 'spin 3s linear infinite',
+        'show': 'show 0.3s linear forwards',
       },
       colors: {
         customColor: 'rgb(23,23,23)',
       },
+      keyframes:{
+        show:{
+          '0%':{opacity:0},
+          '100%':{opacity:1}
+        }
+      }
     },
   },
   plugins: [],

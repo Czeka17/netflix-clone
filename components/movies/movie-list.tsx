@@ -12,7 +12,8 @@ function MovieList({ title, movieslist,isTvSerie }: MovieListProps) {
       <div
         style={{ ...style }}
         onClick={onClick}
-      ><MdArrowForwardIos className="absolute top-1/2 left-[101%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
+        data-testid="next-arrow"
+      ><MdArrowForwardIos  className="absolute top-1/2 left-[101%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
     );
   }
   
@@ -22,7 +23,8 @@ function MovieList({ title, movieslist,isTvSerie }: MovieListProps) {
       <div
         style={{ ...style }}
         onClick={onClick}
-      ><MdArrowBackIosNew className="absolute top-1/2 left-[-1%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
+        data-testid="prev-arrow"
+      ><MdArrowBackIosNew  className="absolute top-1/2 left-[-1%] transform -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-5xl text-red-700 duration-200 hover:scale-125 z-40 cursor-pointer"/></div>
     );
   }
 const settings = {
@@ -74,7 +76,7 @@ const settings = {
 const movieListItems = useMemo(() => {
   return  movieslist.map((movie, index) => (
     <div key={index} className="lg:px-12 xl:px-8 py-6 lg:px-4 px-6 max-w-[100vw]" aria-label={`List of ${title} movies`}>
-      <Movie movie={movie} index={index} isWatchlist={false} isTvSerie={isTvSerie} />
+      <Movie movie={movie} isWatchlist={false} isTvSerie={isTvSerie} />
       </div>
     ))
 },[isTvSerie,movieslist,title])

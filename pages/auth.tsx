@@ -2,6 +2,7 @@ import AuthForm from "../components/auth/auth-form";
 import Head from "next/head";
 import { getSession } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
+
 function AuthPage() {
 
   return (
@@ -13,7 +14,7 @@ function AuthPage() {
       <div>
         <div className="absolute h-screen w-screen bottom-0 left-0 bg-black z-10 opacity-50"></div>
       </div>
-      <AuthForm />
+      <AuthForm/>
     </section>
   );
 }

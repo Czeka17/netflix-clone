@@ -1,7 +1,7 @@
+import React, { ChangeEvent, useRef } from "react";
 import { FiLogOut } from "react-icons/fi";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { ChangeEvent, useRef } from 'react';
 import { ImSearch } from "react-icons/im";
 import { useRouter } from 'next/router';
 import Image from "next/image";

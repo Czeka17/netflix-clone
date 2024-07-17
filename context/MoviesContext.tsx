@@ -43,6 +43,9 @@ export function MoviesProvider({ children }:ChildrenProps) {
   }, []);
   useEffect(() => {
     const getWatchlistMovies = async (email: string | null | undefined) => {
+      if(!email){
+        return
+      }
       try {
         const response = await fetch('/api/watchlist/getWatchlist', {
           method: 'POST',

@@ -72,10 +72,10 @@ function SearchHandler(){
       <nav className={`w-screen p-2 h-screen bg-red-700 duration-300 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`} style={{width: '100vw'}}>
         <ul className="flex flex-col justify-evenly items-center h-full text-white text-2xl">
           <li onClick={hideNavHandler}>
-            <Link href="/">Films</Link>
+            <Link href="/" data-testid="films-link">Films</Link>
           </li>
           <li onClick={hideNavHandler}>
-            <Link href="/watchlist">My List</Link>
+            <Link href="/watchlist" data-testid="watchlist-link">My List</Link>
           </li>
           <li>
             <button onClick={logoutHandler} className="flex flex-row items-center hover:text-red-600 duration-300">

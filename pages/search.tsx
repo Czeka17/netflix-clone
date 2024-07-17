@@ -105,7 +105,6 @@ function Search() {
 								>
 									<Movie
 										movie={movie}
-										index={index}
 										isWatchlist={false}
 										isTvSerie={popularTvSeries.includes(movie)}
 									/>

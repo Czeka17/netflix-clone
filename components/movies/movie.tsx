@@ -5,45 +5,7 @@ import MovieActions from "./movie-actions";
 import { Movieobj } from "../../lib/types";
 import YoutubeModal from "./youtube-modal";
 import { useMovies } from "../../context/MoviesContext";
-
-async function addMovieHandler(
-	email: string,
-	movie: { id: number; title: string }
-) {
-	const response = await fetch("/api/watchlist/watchlist", {
-		method: "POST",
-		body: JSON.stringify({ email, movie }),
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
-	const data = await response.json();
-
-	if (!response.ok) {
-		throw new Error(data.message || "Something went wrong!");
-	}
-	return data;
-}
-async function deleteMovieHandler(
-	email: string,
-	movie: { id: number; title: string }
-) {
-	try {
-		console.log(email, movie);
-		const response = await fetch("/api/watchlist/deleteMovie", {
-			method: "POST",
-			body: JSON.stringify({ email, movie }),
-			headers: {
-				Accept: "application/json, text/plain, */*",
-				"Content-Type": "application/json",
-			},
-		});
-		const data = await response.json();
-		return data;
-	} catch (error: any) {
-		throw new Error(error.message || "Something went wrong!");
-	}
-}
+import {deleteMovieHandler, addMovieHandler} from '../../lib/api'
 function Movie(props: MovieProps) {
 	const { watchlist, watchlistUpdate } = useMovies();
 	const { data: session, status } = useSession();
@@ -95,6 +57,7 @@ function Movie(props: MovieProps) {
 
 	return (
 		<div
+		data-testid='movie'
 			onMouseEnter={() => handleMovieHover(props.movie)}
 			onMouseLeave={() => handleMouseLeave()}
 			className='h-full w-full my-2 cursor-pointer py-2'
@@ -131,7 +94,6 @@ function Movie(props: MovieProps) {
 			{selectedMovie && showModal && (
 				<YoutubeModal
 					movie={selectedMovie}
-					showModal={showModal}
 					hideModal={hideModal}
 					isTvSerie={props.isTvSerie}
 				/>

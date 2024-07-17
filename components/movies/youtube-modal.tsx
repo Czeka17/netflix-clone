@@ -1,69 +1,44 @@
+'use server'
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import axios from "axios";
 import { FaSpinner } from "react-icons/fa";
 import ReactDOM  from "react-dom";
 import {ModalProps} from '../../lib/types'
+import { fetchTrailerUrl } from "../../lib/api";
 
+function YoutubeModal({ movie,hideModal,isTvSerie }:ModalProps) {
 
-function YoutubeModal({ movie,showModal,hideModal,isTvSerie }:ModalProps) {
-
-  const [show, setShow] = useState(false);
   const [trailerUrl, setTrailerUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  useEffect(() => {
     
-    if (showModal) {
-      setShow(true);
-    } else {
-      setShow(false);
-    }
-  }, [showModal]);
-
   const movieid = movie?.id
 
+
   useEffect(() => {
-    
-    async function fetchTrailerUrl() {
+    async function getTrailerUrl() {
       setIsLoading(true);
-      let response
-      if(isTvSerie){
-        response = await axios.get(
-          `https://api.themoviedb.org/3/tv/${movieid}/videos`,
-          {
-            params: {
-              api_key: '502c330772f772740b274f7363e5b00a',
-            },
-          }
-        );
-      }else{
-       response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieid}/videos`,
-        {
-          params: {
-            api_key: '502c330772f772740b274f7363e5b00a',
-          },
-        }
-      );
-    }
-      const videos = response.data.results;
-      const trailer = videos.find((video: any) => video.type === 'Trailer');
-      if (trailer) {
-        setTrailerUrl(`https://www.youtube.com/watch?v=${trailer.key}`);
+      try {
+        const url = await fetchTrailerUrl(movieid!, isTvSerie);
+        setTrailerUrl(url);
+      } catch (error) {
+        console.error(error);
+        setTrailerUrl('');
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    };
-    fetchTrailerUrl();
-  }, [movieid,isTvSerie]);
+    }
+    if (movie) {
+      getTrailerUrl();
+    }
+  }, [movie, isTvSerie, movieid]);
   
   if (!movie) {
     return null;
   }
 
-  return  ReactDOM.createPortal((<div
-      className={`fixed z-[100] inset-0 overflow-y-auto ${
-        show ? "opacity-100 visible" : "opacity-0 invisible"
-      } transition-opacity duration-500`}
+  return  ReactDOM.createPortal((<div data-testid="youtube-modal"
+      className={`fixed z-[100] inset-0 overflow-y-auto animate-show transition-opacity duration-500`}
     >
       <div className="flex items-center justify-center min-h-screen p-4 text-center">
         <div
@@ -77,9 +52,9 @@ function YoutubeModal({ movie,showModal,hideModal,isTvSerie }:ModalProps) {
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="flex justify-center items-center h-[100%]">
             {isLoading ? (
-              <FaSpinner className="animate-spin h-6 w-6 my-6" fill="black" />
+              <FaSpinner className="animate-spin h-6 w-6 my-6" fill="black" data-testid='spinner' />
             ) : (
-              <ReactPlayer url={trailerUrl} controls={true} />
+              <ReactPlayer url={trailerUrl} controls={true} data-testid='react-player' />
             )}
           </div>
           <div className="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 bg-black">

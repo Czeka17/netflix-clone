@@ -35,7 +35,7 @@ function MovieActions ({
 
 
 	return (
-		<div className='absolute -bottom-100 left-0 right-0 bg-gray-700 rounded-br rounded-bl text-center py-2'>
+		<div className='absolute -bottom-100 left-0 right-0 bg-gray-700 rounded-br rounded-bl text-center py-2' data-testid='movie-actions'>
 			<p className='text-xs text-white pb-2 lg:text-base'>{movie?.title}</p>
 			<p
 				className={`pb-2 text-xs ${
@@ -47,6 +47,7 @@ function MovieActions ({
 			<div className='flex justify-around items-center pb-2'>
 				<div className='flex flex-col justify-center items-center group'>
 					<AiOutlineLike
+					data-testid="like-button"
 						className={`text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 hover:fill-blue-500 md:w-[34px] py-1 md:py-0 ${
 							likes[movie.id] ? "fill-blue-700" : "fill-white"
 						}`}
@@ -66,6 +67,7 @@ function MovieActions ({
 				<div
 					className='flex flex-col justify-center items-center group text-white md:w-[70px]'
 					onClick={movielistHandler}
+					data-testid='add-button'
 				>
 					{newWatchlist.map((item) => item.id).includes(movie.id) ? (
 						<BsCheckLg className='text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 py-1 md:py-0' />
@@ -81,10 +83,11 @@ function MovieActions ({
 					
 				</div>
 
-				<div className='flex flex-col justify-center items-center group text-white'>
+				<div className='flex flex-col justify-center items-center group text-white' >
 					<AiOutlineEllipsis
 						className='text-2xl cursor-pointer transition-all duration-300 group-hover:text-blue-500 text-white py-1 md:py-0'
 						onClick={handleMovieClick}
+						data-testid="more-button"
 					/>
 					
 						<span className='text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden lg:block'>

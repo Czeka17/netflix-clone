@@ -12,7 +12,6 @@ export interface Movieobj {
 
   export interface MovieProps {
     movie: Movieobj
-    index: number;
     isWatchlist:boolean
     isTvSerie?:boolean
   }
@@ -61,7 +60,6 @@ export interface ChildrenProps{
 export interface ModalProps {
   movie:Movieobj | null
   hideModal:() => void;
-  showModal:boolean;
   isTvSerie?:boolean;
 }
 export interface SignupModalProps {
